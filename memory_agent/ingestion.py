@@ -1,0 +1,190 @@
+from __future__ import annotations
+import uuid
+from datetime import datetime
+
+from memory_agent.llm.client import LLMClient
+from memory_agent.llm.prompts import (
+    CLASSIFY, CLASSIFY_SCHEMA,
+    EXTRACT, EXTRACTION_SCHEMA,
+)
+from memory_agent.models import Edge, Entity, MemoryChunk, Tone, Topic
+from memory_agent.store.base import StoreInterface
+
+
+def _now() -> str:
+    return datetime.utcnow().isoformat()
+
+
+def _classify(turn: str, topics: list[str], llm: LLMClient) -> dict:
+    """Classify turn and assign topic labels. Returns {"category": str, "topics": list[str]}."""
+    topics_str = ", ".join(topics) if topics else "none yet"
+    prompt = CLASSIFY.format(turn=turn, topics=topics_str)
+    result = llm.complete_json([{"role": "user", "content": prompt}], schema=CLASSIFY_SCHEMA)
+    return {
+        "category": result.get("category", "ignore"),
+        "topics": result.get("topics", []),
+    }
+
+
+def _extract(turn: str, context: str, llm: LLMClient) -> dict:
+    """Extract entities, relationships, and optional tone. Returns structured dict."""
+    prompt = EXTRACT.format(turn=turn, context=context)
+    result = llm.complete_json([{"role": "user", "content": prompt}], schema=EXTRACTION_SCHEMA)
+    return {
+        "entities": result.get("entities", []),
+        "relationships": result.get("relationships", []),
+        "tone": result.get("tone"),
+    }
+
+
+def _get_or_create_topic(label: str, store: StoreInterface) -> str:
+    """Return id of topic node with this label, creating it if needed."""
+    candidates = [
+        n for n in store.search_keyword(label, limit=10)
+        if n.node_type == "topic" and n.label.lower() == label.lower()
+    ]
+    if candidates:
+        return candidates[0].id
+    now = _now()
+    topic = Topic(id=str(uuid.uuid4()), label=label)
+    node = topic.to_node()
+    node.created_at = node.updated_at = now
+    store.write_node(node)
+    return node.id
+
+
+def _resolve_entity(label: str, entity_type: str, store: StoreInterface):
+    """Find existing entity node by label (case-insensitive) and type. Returns Node or None."""
+    candidates = [
+        n for n in store.search_keyword(label, limit=10)
+        if n.node_type == "entity"
+        and n.label.lower() == label.lower()
+        and n.data.get("entity_type") == entity_type
+    ]
+    return candidates[0] if candidates else None
+
+
+def ingest(
+    user_input: str,
+    agent_response: str,
+    store: StoreInterface,
+    llm: LLMClient,
+    session_id: str | None = None,
+) -> None:
+    """Extract knowledge from one conversation turn and persist it to the store.
+
+    Synchronous — the caller (agent.py) is responsible for running this in a
+    background thread via ThreadPoolExecutor.
+    """
+    turn = f"User: {user_input}\nAssistant: {agent_response}"
+    existing_topics = store.list_topics()
+
+    # Step 1: Classify
+    classification = _classify(turn, existing_topics, llm)
+    if classification["category"] != "remember":
+        return
+
+    topic_names: list[str] = classification["topics"]
+    context = ", ".join(existing_topics) if existing_topics else "none"
+
+    # Step 2: Extract
+    extraction = _extract(turn, context, llm)
+
+    now = _now()
+
+    # Step 3: Store MemoryChunk
+    chunk_id = str(uuid.uuid4())
+    chunk = MemoryChunk(
+        id=chunk_id,
+        label=turn[:60],
+        raw=turn,
+        source="observe",
+        session_id=session_id,
+    )
+    chunk_node = chunk.to_node()
+    chunk_node.created_at = chunk_node.updated_at = now
+    store.write_node(chunk_node)
+
+    # Step 4: Ensure topic nodes exist; map label → id
+    topic_id_map: dict[str, str] = {
+        t: _get_or_create_topic(t, store) for t in topic_names
+    }
+    primary_topic_id: str | None = next(iter(topic_id_map.values()), None)
+
+    # Step 5: Resolve + store entities, link chunk → entity
+    entity_id_map: dict[str, str] = {}
+    for ent_data in extraction["entities"]:
+        label = ent_data["label"]
+        etype = ent_data.get("type", "concept")
+        attrs = ent_data.get("attributes", {})
+
+        existing = _resolve_entity(label, etype, store)
+        if existing is not None:
+            existing.data["attributes"] = {
+                **existing.data.get("attributes", {}), **attrs
+            }
+            existing.data["access_count"] = existing.data.get("access_count", 0) + 1
+            existing.updated_at = now
+            existing.embedding = None  # re-embed with updated data
+            store.write_node(existing)
+            entity_id_map[label] = existing.id
+        else:
+            entity = Entity(
+                id=str(uuid.uuid4()),
+                label=label,
+                entity_type=etype,
+                topic_id=primary_topic_id,
+                attributes=attrs,
+            )
+            node = entity.to_node()
+            node.created_at = node.updated_at = now
+            store.write_node(node)
+            entity_id_map[label] = node.id
+
+        store.write_edge(Edge(
+            id=str(uuid.uuid4()),
+            from_id=chunk_id,
+            to_id=entity_id_map[label],
+            relation="derived_from",
+            source_chunk_id=chunk_id,
+            created_at=now,
+        ))
+
+    # Step 6: Store entity → entity relationships
+    for rel in extraction["relationships"]:
+        from_id = entity_id_map.get(rel["from"])
+        to_id = entity_id_map.get(rel["to"])
+        if from_id and to_id:
+            store.write_edge(Edge(
+                id=str(uuid.uuid4()),
+                from_id=from_id,
+                to_id=to_id,
+                relation=rel["relation"],
+                weight=float(rel.get("weight", 1.0)),
+                source_chunk_id=chunk_id,
+                created_at=now,
+            ))
+
+    # Step 7: Store tone node if detected
+    tone_data = extraction.get("tone")
+    if tone_data:
+        tone = Tone(
+            id=str(uuid.uuid4()),
+            label=tone_data.get("label", "Unnamed Tone"),
+            tone_type=tone_data.get("tone_type", "neutral"),
+            intensity=float(tone_data.get("intensity", 0.5)),
+            valence=tone_data.get("valence", "neutral"),
+            context=tone_data.get("context", ""),
+            source_chunk_id=chunk_id,
+        )
+        tone_node = tone.to_node()
+        tone_node.created_at = tone_node.updated_at = now
+        store.write_node(tone_node)
+        store.write_edge(Edge(
+            id=str(uuid.uuid4()),
+            from_id=chunk_id,
+            to_id=tone_node.id,
+            relation="expresses",
+            source_chunk_id=chunk_id,
+            created_at=now,
+        ))
