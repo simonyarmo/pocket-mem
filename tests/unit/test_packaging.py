@@ -27,9 +27,10 @@ def test_required_deps():
     assert any("sentence-transformers" in d for d in deps)
 
 
-def test_cloud_optional_extra_exists():
+def test_cloud_extra_removed_for_v1():
+    # Cloud/Supabase support is deferred to v2; not part of v1 package.
     extras = _meta()["project"]["optional-dependencies"]
-    assert "cloud" in extras, "Missing [cloud] optional-dependencies"
+    assert "cloud" not in extras, "[cloud] extra should not be in v1 pyproject.toml"
 
 
 def test_dev_optional_extra_exists():

@@ -1,0 +1,1582 @@
+=== VELORIS BENCHMARK — pocket-mem ===
+Run: 2026-04-12 16:08:47   Ingest model: qwen2.5:7b   Answer model: qwen2.5:7b
+
+--- INGESTION ---
+Emails ingested : 20
+Observe p50     : 0ms
+Observe p99     : 0ms
+Tokens (ingest) : in=17771  out=11871
+Nodes stored    : 142
+
+--- SESSION PERSISTENCE ---
+PASS
+
+
+--- TIER 1 — DIRECT LOOKUP ---
+
+T1-01 | What is Marcus Webb's job title?
+  EXPECTED : CTO
+  ANSWER   : Darnell,
+
+Great, thanks for the update. I'll make sure DevOps gets on it right away to set up the Stripe sandbox environment.
+
+Regarding the race condition in refund processing, that's a good catch. Let's get that fixed as well while you're in there. I'll also loop Camille into this so she can review and ensure everything is handled correctly.
+
+Priya
+
+---
+
+This response acknowledges Darnell's progress and ensures all necessary steps are being taken to address the urgent issues identified.
+  SCORE    : REVIEW
+
+T1-02 | Who is Leo Reyes's manager?
+  EXPECTED : Marcus Webb
+  ANSWER   : Leo Reyes reports to Marcus Webb. Therefore, Marcus Webb is Leo Reyes's manager.
+  SCORE    : REVIEW
+
+T1-03 | What is the name of Veloris's main product?
+  EXPECTED : Atlas
+  ANSWER   : Suki,
+
+Great to hear that Sentry is already integrated. That will definitely help with managing crashes during the beta phase.
+
+For the upcoming launch on March 7th, make sure all necessary features are thoroughly tested and documented. I'll also ensure Camille is aware of any critical updates or changes leading up to the launch date.
+
+If you need any further assistance or have additional concerns, feel free to reach out.
+
+Best,
+Priya
+  SCORE    : REVIEW
+
+T1-04 | How much was Veloris paying for Datadog per month?
+  EXPECTED : $14,000/month
+  ANSWER   : Camille,
+
+Great to hear about the Sentry integration and the workaround you have in place. Let's ensure we communicate this to the team so everyone is prepared.
+
+Looking forward to the beta launch on March 7th. If there are any last-minute adjustments or additional tasks, let me know.
+
+Best,
+Suki
+  SCORE    : REVIEW
+
+T1-05 | What city is Veloris headquartered in?
+  EXPECTED : Austin, Texas
+  ANSWER   : Suki,
+
+Got it. I'll integrate Sentry for the beta launch to ensure we have robust crash reporting in place.
+
+Looking forward to the beta launch on March 7th and ensuring all necessary features are covered as per our plan.
+
+Best,
+Camille
+
+---
+
+This response addresses Camille's request for a crash reporting tool, confirming that Sentry will be integrated before the launch.
+  SCORE    : REVIEW
+
+T1-06 | What message queue technology did Darnell propose for the Conduit rewrite?
+  EXPECTED : Kafka (Apache Kafka)
+  ANSWER   : Kafka.
+  SCORE    : REVIEW
+
+T1-07 | What analytics store did Priya originally suggest for Conduit?
+  EXPECTED : ClickHouse
+  ANSWER   : Priya, the answer to your question is that TimescaleDB was used for ingesting data according to Darnell's email.
+  SCORE    : REVIEW
+
+T1-08 | What analytics store did Darnell propose instead, and why?
+  EXPECTED : TimescaleDB — because their query patterns are more relational than analytical, and the team already knows Postgres query language
+  ANSWER   : Darnell proposed using Grafana and Prometheus for the Nightwatch migration plan. Specifically, he outlined a plan to migrate from Datadog to Grafana + Prometheus stack, which would save more per month than the entire team's tooling budget for the year. The next steps include weekly status emails from Leo until the migration is complete.
+  SCORE    : REVIEW
+
+T1-09 | What is the test coverage percentage of the Atlas payments module?
+  EXPECTED : 34%
+  ANSWER   : Based on the information provided, the current status of the Conduit rewrite project is as follows:
+
+### Milestone 1 Complete:
+- **Kafka Cluster Running in Dev**: The Kafka cluster is up and running in development.
+- **Consumer Workers Processing Test Events**: Tobias has implemented consumer workers that are processing test events correctly.
+- **TimescaleDB Ingestion Correct**: TimescaleDB is ingesting data as expected.
+
+### Performance Metrics:
+- **Sustained Throughput**: 220k events/hour (target was 200k).
+- **p99 Latency**: 87ms (target was sub-100ms).
+- **Data Loss on Service Restart**: Zero data loss during simulated service restarts.
+
+### Next Steps:
+- **Backfill System**: Estimated to take 2 weeks.
+- **Milestone 2: Backfill System** - Darnell has recommended Tobias for this task, and he will be responsible for implementing the backfill system.
+
+### Additional Notes:
+1. **Tobias' Performance**: Darnell recommends giving Tobias a performance note for his quick learning curve with Kafka and clean implementation of consumer workers.
+2. **Looping in Leo**: Darnell has already looped in Leo, who will be responsible for Kubernetes deployment on the production side.
+
+### Summary:
+The Conduit rewrite project is progressing well according to plan. The next phase involves implementing the backfill system, which should take approximately 2 weeks. Darnell and Tobias are handling this task effectively, and the performance metrics meet or exceed the targets set by Marcus.
+
+If there are any further questions or concerns about the project's progress, feel free to ask!
+  SCORE    : REVIEW
+
+T1-10 | How much money does Veloris process monthly through the payments module?
+  EXPECTED : $2.1 million per month
+  ANSWER   : Veloris is logging full Stripe payloads including card last-four in their application logs, which may involve a PCI compliance issue.
+  SCORE    : REVIEW
+
+T1-11 | What build toolchain is Suki using for the React Native app?
+  EXPECTED : Expo
+  ANSWER   : Suki is using Expo for the mobile application's stack.
+  SCORE    : REVIEW
+
+T1-12 | What is the name of the internal monitoring project?
+  EXPECTED : Nightwatch
+  ANSWER   : Suki,
+
+Got your message on the biometric authentication issue for Meridian Group. Here's a summary of our next steps:
+
+### Next Steps:
+1. **Implement `react-native-biometrics`**: This will allow us to handle biometric authentication without ejecting from Expo, keeping things simpler and more maintainable.
+2. **Test Thoroughly**: Ensure that the implementation works seamlessly across all targeted devices and operating systems.
+3. **Document Changes**: Update the documentation for the team on how to integrate and test this new module.
+
+### Timeline:
+- **Immediate Action**: Start implementing `react-native-biometrics` as soon as possible.
+- **Testing Phase**: Plan a testing session with Meridian Group to validate the solution.
+- **Documentation**: Complete by end of next week.
+
+Let me know if you need any help or additional resources. I'll also keep an eye on the progress and ensure everything is on track for the beta launch on March 7th.
+
+Camille mentioned that push notifications are a hard requirement from Meridian Group, so we should prioritize integrating those as well during this phase.
+
+Looking forward to your feedback!
+
+Best,
+Darnell
+
+---
+
+### Additional Notes:
+- **Push Notifications**: Ensure Tobias and the team integrate push notifications for task assignments.
+- **Sprint Planning**: Adjust the sprint planning to accommodate these new requirements without impacting other tasks.
+
+Feel free to reach out if you need any more details or assistance.
+
+Cheers,
+Darnell
+
+---
+
+This email should cover all the necessary steps and ensure that we stay on track with our Q1 priorities. Let me know if there's anything else I can help with!
+  SCORE    : REVIEW
+
+T1-13 | What security firm did Marcus choose for the audit?
+  EXPECTED : Halcyon Advisory
+  ANSWER   : Based on the context provided, here's a response to Darnell Okafor:
+
+---
+
+Darnell,
+
+Thanks for addressing the payments module and fixing the race condition. I appreciate your thoroughness.
+
+Regarding the Stripe webhook setup, I've already looped DevOps into this task. They should have it configured by tomorrow at the latest. Please let me know if you need any additional information from my end.
+
+For the refund processing logic fix, great job identifying and addressing that issue. This will help ensure our payment system is robust.
+
+I'll keep an eye on the progress and loop in Camille as needed for any updates or questions.
+
+Priya
+
+---
+
+This response maintains a professional tone while expressing appreciation for Darnell's work and ensuring smooth communication about the next steps.
+  SCORE    : REVIEW
+
+T1-14 | What was the other security firm Marcus considered?
+  EXPECTED : Redpoint Security
+  ANSWER   : Darnell,
+
+Great, thanks for taking care of this. Here are a few more points to ensure we stay on track:
+
+1. **Stripe Sandbox Setup**: Leo will handle the setup of the Stripe sandbox environment. Ensure he has all the necessary permissions and resources.
+2. **Race Condition Fix**: Good call on fixing any known issues. I'll review the changes once they're in place.
+3. **Backfill Feature**: Confirm that Tobias is aware of his two-week ramp-up period for Kafka. We need to ensure he's fully up to speed before we move forward with backfilling.
+
+Let’s keep communication open and loop in Leo as soon as possible to avoid any delays.
+
+Priya
+
+---
+
+This response ensures clarity and keeps the team aligned on the next steps.
+  SCORE    : REVIEW
+
+T1-15 | When does the security audit start?
+  EXPECTED : February 24th
+  ANSWER   : Suki,
+
+Got it. Let's adjust the scope slightly to ensure we meet customer expectations while staying within our constraints.
+
+Phase 1 (Q1):
+- Read-only experience for users to view projects, tasks, and comments.
+- Push notifications for task assignments (hard requirement).
+
+This should cover the critical needs of your enterprise customers without overloading the team. We can focus on refining these features in Phase 2.
+
+On the technical side:
+1. Stick with Expo for now but keep an eye on potential limitations as we scale.
+2. If we need to eject from Expo later, we'll reassess at that time.
+
+I'll update Camille and ensure she's aware of this change. Let me know if you need any further adjustments or additional support.
+
+Camille
+  SCORE    : REVIEW
+
+T1-16 | What crash reporting tool does the Atlas mobile app use?
+  EXPECTED : Sentry
+  ANSWER   : Priya,
+
+Here's an update on the current situation and next steps:
+
+1. **Conduit Rewrite Proposal**: Darnell has submitted his proposal for the Conduit rewrite. He is pushing back on using ClickHouse, suggesting TimescaleDB instead due to its Postgres-based nature and excellent time-series compression. The timeline remains at 8 weeks with Tobias owning the ingestion layer.
+
+2. **Payments Test Coverage**: Darnell will have the integration tests done by Friday. There's also a race condition in the refund processing logic that he plans to fix while working on this.
+
+3. **Conduit Rewrite Lead**: You've confirmed Darnell as the lead for Conduit rewrite, with Tobias supporting him. The Kafka cluster is running in dev, and Tobias has the consumer workers processing test events correctly.
+
+4. **Nightwatch Migration Plan**: Leo's plan for migrating Nightwatch to a self-hosted Grafana + Prometheus stack has been approved. Hana will allocate 20% of QA time for testing new alert rules.
+
+5. **Security Audit**: Marcus has decided to go with Halcyon Advisory for the security audit, starting February 24th. He also wants all engineers to complete OWASP Top 10 training by end of February.
+
+6. **PCI Compliance Issue**: Leo found a PCI compliance issue in payment logging where card data is being logged improperly. This needs to be fixed before the end of this week.
+
+7. **Payments Webhook Configuration**: Darnell will need DevOps to set up a proper Stripe sandbox environment for testing webhooks.
+
+8. **Biometric Authentication Issue**: There's a known bug with Expo's biometric module on Android 14, and Meridian Group requires biometric authentication. Darnell is working on a workaround documented in the internal runbook.
+
+9. **Conduit Kafka Setup**: Darnell has configured the Stripe sandbox credentials and test webhook endpoint. He flagged an issue with logging card data improperly and will fix it during his work.
+
+Next Steps:
+- Ensure Darnell completes the payments integration tests by Friday.
+- Loop in DevOps to set up the Stripe sandbox environment for testing webhooks.
+- Confirm with Leo on the timeline for fixing the PCI compliance issue.
+- Follow up with Marcus on the decision between Redpoint Security and Halcyon Advisory.
+
+Let me know if you need any further assistance or have additional questions!
+
+Best,
+[Your Name]
+  SCORE    : REVIEW
+
+T1-17 | How many enterprise customers' users signed up for the Atlas mobile beta?
+  EXPECTED : 6 enterprise customers, 47 users total
+  ANSWER   : Priya,
+
+Got it. Here's what I recommend:
+
+1. **Immediate Fix for PCI Compliance Issue**: 
+   - Ensure that card data is not logged in application logs.
+   - Update the logging configuration to remove any sensitive information.
+
+2. **Hire Fractional Security Consultant**:
+   - Decision on Redpoint Security or Halcyon Advisory by Friday.
+   - Enforce OWASP Top 10 training for all engineers by end of February.
+
+3. **Payments Test Coverage**:
+   - Darnell, please ensure the payments integration tests are completed this week.
+   - Loop in DevOps to set up a proper Stripe sandbox environment.
+
+4. **Conduit Rewrite Stack Proposal**:
+   - TimescaleDB approved and go with 8 weeks for the timeline.
+   - Loop Leo into the process this week.
+
+5. **Nightwatch Migration Plan**:
+   - Approved, proceed with the plan.
+   - Hana should allocate 20% of QA time to testing new alert rules.
+   - Weekly status updates from Leo until migration is complete.
+
+6. **Conduit Milestone 1 Complete**:
+   - Great job on hitting all targets for milestone 1.
+   - Next step: backfill system, estimated 2 weeks.
+
+7. **Mobile Experience for Atlas**:
+   - Ensure the crash reporting tool (React Native SDK) is integrated before launch.
+   - Document any workarounds in internal runbooks.
+
+Let me know if you need anything else or have further questions!
+
+Priya
+  SCORE    : REVIEW
+
+T1-18 | What is the actual monthly cost of the self-hosted Nightwatch stack?
+  EXPECTED : $743/month (February actual — better than the $800 estimate)
+  ANSWER   : Suki, Priya,
+
+I've hit a snag with Meridian Group's requirement for biometric authentication on their devices running Android 14. The Expo biometric module has a known bug in this version of Android, and the Expo team hasn't patched it yet.
+
+Here are my options:
+
+1. **Eject from Expo**: This would involve handling native modules ourselves, which could add significant complexity and take about 3 extra weeks.
+2. **Wait for the Expo patch**: The ETA is 4-6 weeks, which would blow our Q1 deadline.
+3. **Use a third-party React Native biometric library (react-native-biometrics)**: This workaround is clean and well-maintained.
+
+Given these options, I recommend using the `react-native-biometrics` library for now. It's a straightforward solution that won't delay our Q1 launch.
+
+Awaiting your feedback on this decision.
+
+Camille
+
+---
+
+This response addresses the issue with biometric authentication while maintaining the timeline and ensuring we don't introduce unnecessary complexity or delays.
+  SCORE    : REVIEW
+
+T1-19 | Who is Tobias Hunt's direct manager?
+  EXPECTED : Darnell Okafor
+  ANSWER   : Camille,
+
+Great to hear about the Sentry integration and the workaround you have in place. Let's make sure we document this clearly for the beta users so they are aware of any potential limitations.
+
+Looking forward to the launch on March 7th!
+
+Priya
+
+---
+
+This response acknowledges Suki’s efforts and ensures that Priya is informed about the known issue with Sentry, maintaining a professional and collaborative tone.
+  SCORE    : REVIEW
+
+T1-20 | What training did Marcus require all engineers to complete by end of February?
+  EXPECTED : OWASP Top 10 training
+  ANSWER   : Priya,
+
+Great, thanks for handling this quickly. Let's ensure we address both the webhook setup and the race condition to maintain robustness.
+
+On the webhook front:
+- Leo will handle setting up the Stripe sandbox environment.
+- Once it’s ready, I'll run some integration tests to make sure everything is working as expected.
+
+Regarding the race condition fix:
+- I’ll prioritize this in my backlog. It's important to clean up any potential issues before we move forward with more critical changes.
+
+Keep me updated on your progress and let me know if you need any additional support from DevOps or elsewhere.
+
+Priya
+
+---
+
+This response acknowledges Darnell’s efforts and ensures clear communication about the next steps, maintaining a collaborative tone.
+  SCORE    : REVIEW
+
+
+--- TIER 2 — SINGLE HOP ---
+
+T2-01 | Who did Marcus assign to lead the Conduit rewrite?
+  EXPECTED : Darnell Okafor (Marcus → Priya email, then Priya → Darnell assignment)
+  ANSWER   : Marcus decided that Tobias should work on the payments integration tests for the Conduit project. Therefore, Tobias was assigned to work on the payments module as part of Conduit milestone 1. Darnell mentioned that Tobias was initially working on the Conduit proposal but was pulled onto Conduit after the proposal was done.
+  SCORE    : REVIEW
+
+T2-02 | What specific part of the Conduit system is Tobias responsible for?
+  EXPECTED : The Kafka consumer workers / ingestion layer
+  ANSWER   : Tobias is working on the payments module for the Atlas mobile app. According to Darnell's email, Tobias found a race condition in the refund processing logic while writing integration tests for the payments module and plans to fix it. Therefore, Tobias is currently working on the payment functionality of the Atlas mobile app.
+  SCORE    : REVIEW
+
+T2-03 | What technology did Priya explicitly ban from the Conduit rewrite, and why?
+  EXPECTED : RabbitMQ — she had a catastrophic queue loss with it at her previous company
+  ANSWER   : I couldn't find any specific information in the provided emails about a tool or system being blacklisted or restricted by Priya. The only mention of restrictions was regarding the Atlas backend, which Marcus had restricted from changes until after Q1, but this doesn't pertain to a tool or system being blocked for use.
+
+If you have additional context or another source that might provide this information, please share it and I'll be happy to help further!
+  SCORE    : REVIEW
+
+T2-04 | What was Darnell's preferred timeline for Conduit if the backfill feature was dropped?
+  EXPECTED : 6 weeks (vs 8 weeks with backfill included)
+  ANSWER   : Based on the information provided, Darnell Okafor mentioned in his email that if the mobile app needs Bluetooth or advanced camera features, they might need to eject from Expo. Therefore, if the offline sync in Phase 3 of the Atlas mobile project requires these features, Darnell would recommend ejecting from Expo, though he noted that this is not a concern for Phase 1.
+  SCORE    : REVIEW
+
+T2-05 | Why did Priya insist on keeping the backfill feature?
+  EXPECTED : Because Camille would "never forgive" them if it was dropped
+  ANSWER   : Based on the context provided, here are some key points and responses that can be generated:
+
+### Responses:
+
+1. **To Marcus Webb regarding the security consultant decision:**
+   ```plaintext
+   Marcus,
+
+   Thanks for the update. I'm glad we're moving forward with Halcyon Advisory. Let's ensure they have all necessary access to complete their audit effectively.
+
+   Looking forward to their findings and any recommendations they might have.
+
+   Priya
+   ```
+
+2. **To Camille Russo regarding the Atlas mobile app beta launch:**
+   ```plaintext
+   Camille,
+
+   Great news on the beta launch! I'm glad we're moving ahead with Sentry for crash reporting. Let's ensure all teams are aware of the workaround you mentioned.
+
+   Looking forward to seeing how it goes!
+
+   Priya
+   ```
+
+3. **To Suki Tanaka regarding the Expo issue:**
+   ```plaintext
+   Suki,
+
+   Thanks for confirming that we can stick with Expo. I appreciate your proactive approach in integrating Sentry early on.
+
+   Let's keep an eye out for any issues during beta testing and address them promptly.
+
+   Priya
+   ```
+
+4. **To Leo Reyes regarding the Nightwatch migration plan:**
+   ```plaintext
+   Leo,
+
+   Thanks for the detailed plan. I'm glad we're saving significant costs with this migration. Weekly status updates will help keep everyone informed.
+
+   Marcus has approved, so let's get started!
+
+   Priya
+   ```
+
+5. **To Darnell Okafor regarding the payments test coverage:**
+   ```plaintext
+   Darnell,
+
+   Thanks for configuring the Stripe sandbox and addressing the PCI compliance issue. I'm glad we're taking proactive steps to ensure security.
+
+   Let's make sure all payment-related logs are properly handled moving forward.
+
+   Priya
+   ```
+
+6. **To Camille Russo regarding the Atlas mobile app scope:**
+   ```plaintext
+   Camille,
+
+   Thanks for confirming the beta launch and integrating Sentry. I'm glad we're addressing the push notifications requirement in Q1.
+
+   Let's ensure all teams are aligned on the new scope to avoid any last-minute surprises.
+
+   Priya
+   ```
+
+7. **To Marcus Webb regarding the OWASP Top 10 training:**
+   ```plaintext
+   Marcus,
+
+   I've sent out reminders to all engineers about completing the OWASP Top 10 training by end of February. Let's ensure everyone is on track.
+
+   Looking forward to their feedback from Halcyon Advisory.
+
+   Priya
+   ```
+
+8. **To Suki Tanaka regarding the PCI compliance issue:**
+   ```plaintext
+   Suki,
+
+   Thanks for addressing the PCI compliance issue with Stripe. I'm glad we're taking proactive steps to ensure security.
+
+   Let's make sure all payment-related logs are properly handled moving forward.
+
+   Priya
+   ```
+
+These responses address the key points and maintain a professional tone while ensuring that everyone is informed and aligned on the next steps.
+  SCORE    : REVIEW
+
+T2-06 | What log aggregation tool is part of the new Nightwatch stack?
+  EXPECTED : Loki (part of the Grafana + Prometheus + Alertmanager + Loki stack)
+  ANSWER   : Priya,
+
+Got the update on Suki's email. Here are a few points to consider:
+
+1. **Expo Issue**: Option 3 (using `react-native-biometrics`) seems like the most practical solution for now, given the timeline constraints.
+2. **Sentry Integration**: Good to know about the initialization issue. I'll make sure Camille and the relevant teams are aware of this.
+
+Let's proceed with option 3 for biometric authentication in Expo. If we encounter any issues or need further assistance, feel free to loop me in.
+
+Priya
+
+---
+
+This response acknowledges Suki's recommendation and ensures that all necessary parties are informed about the workaround for the biometric module issue.
+  SCORE    : REVIEW
+
+T2-07 | What is the projected annual saving from the Datadog migration?
+  EXPECTED : $158,400/year (Leo's estimate: $13,200/month saving)
+  ANSWER   : Darnell,
+
+Great to hear you're taking the payments module tests seriously. Here are some additional steps and considerations for ensuring robust coverage:
+
+1. **Fix PCI Compliance Issue**: Leo has already flagged the issue with card data logging. Ensure that all sensitive information is properly redacted or masked before being logged.
+
+2. **Stripe Webhook Integration**: Double-check the webhook integration to ensure it's handling edge cases correctly, especially during service restarts and high traffic periods.
+
+3. **Race Condition in Refund Processing Logic**: Tobias mentioned a race condition in the refund processing logic. This needs to be thoroughly tested and fixed before deployment. Consider using a distributed locking mechanism or transactional database operations to prevent concurrent issues.
+
+4. **Test Environment Configuration**: Ensure that your test environment closely mirrors production to catch any subtle bugs early. Use tools like Docker to create consistent environments across different machines.
+
+5. **Integration Tests for Payments Module**: Write comprehensive integration tests that cover all possible scenarios, including edge cases and error handling. This will help ensure the module behaves as expected in a real-world scenario.
+
+6. **Code Reviews**: Have code reviews with Tobias to catch any potential issues early. His fresh eyes can be invaluable in identifying subtle bugs or areas for improvement.
+
+7. **Performance Testing**: Conduct performance testing under high load conditions to simulate peak usage scenarios and ensure the module handles them gracefully.
+
+8. **Documentation**: Document all changes, tests, and fixes thoroughly. This will help maintain a clear audit trail and make future maintenance easier.
+
+Let me know if you need any specific resources or tools for these tasks. I'm here to support you as needed.
+
+Priya
+
+---
+
+This response addresses the immediate concerns while also providing a structured approach to ensure thorough testing and robustness in the payments module.
+  SCORE    : REVIEW
+
+T2-08 | What was Leo's fallback option if Loki had problems?
+  EXPECTED : ElasticSearch
+  ANSWER   : Leo's fallback option if Loki had problems was to use ElasticSearch, though it was noted as being more expensive to run but well-understood.
+  SCORE    : REVIEW
+
+T2-09 | What phase of the Atlas mobile app includes offline sync?
+  EXPECTED : Phase 3 (Q3)
+  ANSWER   : Priya,
+
+For the crash reporting tool, I recommend integrating Firebase Crashlytics. It's widely used and has good integration with React Native projects. Here are some steps to get started:
+
+1. **Sign Up for Firebase**: If you haven't already, sign up for a Firebase account at https://firebase.google.com/.
+2. **Add Firebase to Your Project**:
+   - Go to the Firebase console.
+   - Create a new project or select an existing one.
+   - Add your React Native app by following the instructions provided in the Firebase console.
+3. **Install Firebase SDK**: Use npm to install the Firebase SDK for React Native.
+   ```bash
+   npm install @react-native-firebase/app @react-native-firebase/crashlytics
+   ```
+4. **Initialize Firebase**:
+   - Follow the setup guide from the Firebase documentation to initialize Firebase in your app.
+5. **Integrate Crashlytics**: Use the `@react-native-firebase/crashlytics` package to start logging crashes and errors.
+
+Here's a basic example of how to set it up:
+
+```javascript
+import { initializeApp } from '@react-native-firebase/app';
+import { initializeCrashlytics } from '@react-native-firebase/crashlytics';
+
+// Initialize Firebase app
+initializeApp();
+
+// Start Crashlytics
+initializeCrashlytics();
+```
+
+You can also use the `logException` method to log custom exceptions:
+
+```javascript
+import { logException } from '@react-native-firebase/crashlytics';
+
+try {
+  // Your code that might throw an exception
+} catch (error) {
+  logException(error);
+}
+```
+
+This setup will help you capture and analyze crashes effectively. Let me know if you need more detailed steps or any other assistance.
+
+Priya
+
+---
+
+For the PCI compliance issue, here are some immediate steps to address it:
+
+1. **Review Logs**: Ensure that card data (like last four digits) is not being logged in application logs.
+2. **Update Code**: Modify the code to remove logging of sensitive information.
+3. **Test Changes**: Thoroughly test the changes to ensure no card data is being logged.
+
+You can also use tools like OWASP ZAP or Burp Suite to help identify and fix any other potential issues related to PCI compliance.
+
+Let me know if you need more detailed guidance on these steps.
+
+Priya
+  SCORE    : REVIEW
+
+T2-10 | Why is the Atlas backend off-limits for mobile development in Phase 1?
+  EXPECTED : Marcus restricted it until after the Q1 release — too much risk
+  ANSWER   : Scheduling the crash reporting tool integration for the mobile experience of Atlas is important to ensure smooth user experiences and quick issue resolution. Given that you've already documented a workaround in your internal runbook, here are some steps to integrate a crash reporting tool:
+
+1. **Choose a Crash Reporting Tool**: Consider tools like Firebase Crashlytics or Sentry, which are well-regarded for their features and ease of integration.
+
+2. **Integrate the Tool**:
+   - For Firebase Crashlytics, you would need to add the necessary dependencies in your `build.gradle` files.
+   - For Sentry, similar steps apply with adding the appropriate SDKs and configurations.
+
+3. **Document the Integration**: Since you've already documented a workaround, ensure that this documentation is updated to include the new crash reporting tool setup instructions. This will help other team members understand how to integrate and use the tool effectively.
+
+4. **Test the Integration**:
+   - Set up test scenarios to generate crashes.
+   - Verify that the crashes are being reported correctly in your chosen tool’s dashboard.
+
+5. **Notify Relevant Team Members**: Inform Priya Nair, Darnell Okafor, and any other relevant team members about the integration so they can start using it immediately.
+
+6. **Training and Support**:
+   - Ensure that there is training or support available for engineers to understand how to use the new tool effectively.
+   - Consider setting up a brief training session if necessary.
+
+Here’s an example email you could send to Priya Nair:
+
+---
+
+Subject: Crash Reporting Tool Integration for Mobile Experience of Atlas
+
+Hi Priya,
+
+I wanted to follow up on integrating a crash reporting tool for our mobile experience of Atlas. I’ve chosen Firebase Crashlytics due to its robust features and ease of integration.
+
+Here are the steps we need to take:
+1. Add the necessary dependencies in our `build.gradle` files.
+2. Document the setup process, updating our internal runbook with these new instructions.
+3. Test the tool by generating some test crashes and verifying they appear in Firebase’s dashboard.
+
+I will handle the initial setup and testing this week. Once it's up and running, I’ll ensure that all relevant team members are aware of its availability and how to use it effectively.
+
+Let me know if you have any questions or need further assistance.
+
+Best,
+Darnell
+
+---
+
+This approach ensures a smooth integration process while leveraging your existing documentation for quick setup.
+  SCORE    : REVIEW
+
+T2-11 | What compliance issue did Leo discover in the payment logging?
+  EXPECTED : PCI compliance issue — the app was logging the full Stripe payload including card last-four digits
+  ANSWER   : Suki,
+
+Got your email and Camille's feedback. Here’s a revised scope for the Atlas mobile app:
+
+### Revised Scope:
+1. **Phase 1 (Q1): Read-Only Experience**
+   - Users can view projects, tasks, and comments.
+   - Push notifications for task assignments.
+
+2. **Phase 2 (Q2): Editing Capabilities**
+   - Create/update tasks and projects.
+   - Push notifications for updates.
+
+3. **Phase 3 (Q3): Offline Mode**
+   - Full offline sync capabilities.
+
+### Technical Decisions:
+- **Build Toolchain:** Using Expo for React Native build toolchain to abstract away native config headaches.
+- **Backend API Changes:** No backend API changes required until Q2, as per Marcus's restrictions.
+
+### Risks and Mitigations:
+1. **Phase 1 Read-Only Frustration:**
+   - Soft-launch to beta users only.
+   - Communicate with customers about the phased rollout.
+
+2. **Offline Sync in Phase 3:**
+   - Design Phase 1 to be fully read-only to avoid backend API changes until Q2.
+
+3. **Expo Limitations:**
+   - Monitor for any limitations that might require ejecting from Expo later.
+   - Document and plan for potential ejection scenarios if needed.
+
+### Next Steps:
+- Begin development on Phase 1 with push notifications included.
+- Ensure thorough testing of the read-only experience before beta launch.
+- Plan for a soft-launch to gather feedback and make necessary adjustments.
+
+Let me know if you need any further details or adjustments. 
+
+Camille
+[entity/person] Camille Russo
+  SCORE    : REVIEW
+
+T2-12 | Who discovered the race condition in the payment refund logic?
+  EXPECTED : Darnell Okafor (found it while writing integration tests for payments)
+  ANSWER   : Darnell Okafor identified the Conduit rewrite issue and was involved in resolving it, but he did not specifically address the mobile experience for Atlas. The Conduit rewrite issue was handled by Leo Reyes and Darnell Okafor's team. There is no direct mention of who specifically addressed the mobile experience for Atlas in the provided context.
+  SCORE    : REVIEW
+
+T2-13 | Where are the Stripe test credentials stored?
+  EXPECTED : 1Password, under "stripe-test-veloris"
+  ANSWER   : The biometric authentication module required by Meridian Group is causing an issue with Expo on Android 14. The options are:
+
+1. Eject from Expo and handle native modules ourselves, which would take about 3 extra weeks.
+2. Wait for the Expo patch, which could take 4-6 weeks and blow the Q1 deadline.
+3. Use a third-party React Native biometric library (react-native-biometrics), which would take an estimated 3 days.
+
+Suki is recommending option 3 as it provides a clean and well-maintained workaround.
+  SCORE    : REVIEW
+
+T2-14 | What problem did Suki encounter with Expo related to Meridian Group's requirements?
+  EXPECTED : Meridian Group requires biometric authentication, and Expo's biometric module has a known bug with Android 14 that is unpatched
+  ANSWER   : Suki encountered an issue with Expo related to Meridian Group's requirement for biometric authentication, as the Expo biometric module has a known bug with Android 14 that hasn't been patched yet.
+  SCORE    : REVIEW
+
+T2-15 | What solution did Suki recommend for the Expo biometric bug?
+  EXPECTED : Option 3 — use react-native-biometrics, a third-party React Native library that works around the Expo limitation (estimated 3 days)
+  ANSWER   : Priya,
+
+Here's a quick update on the current status and next steps:
+
+### **Conduit Rewrite**
+- **Stack Proposal**: Approved with Kafka for the message queue and TimescaleDB for the analytics store.
+- **Timeline**: 8 weeks (6 weeks if we drop backfill).
+- **Ramp-Up Time**: Two weeks for Tobias to get up to speed on Kafka.
+
+### **Payments Module Test Coverage**
+- **Action Required**: Darnell, you need to personally write integration tests for the payments module this week. Tobias is not available and Hana has flagged critical coverage issues.
+- **Priority**: This takes precedence over everything except Conduit setup.
+
+### **Nightwatch Migration Plan**
+- **Status**: Approved by Marcus.
+- **Timeline**: 6 weeks with a parallel run for the last two weeks to ensure no issues.
+- **QA Testing**: Hana, allocate 20% of QA time for testing new alert rules. Weekly status updates from Leo are required until completion.
+
+### **Security Audit**
+- **Decision**: Halcyon Advisory will conduct the security audit starting February 24th.
+- **Access**: They need access to codebase and production logs.
+
+### **OWASP Top 10 Training**
+- **Target Group**: All engineers.
+- **Deadline**: End of February.
+
+### **Next Steps:**
+1. **Conduit Rewrite**:
+   - Darnell, start writing the Kafka consumer workers for Tobias.
+   - Loop Leo in to ensure he's aware of the timeline and responsibilities.
+
+2. **Payments Module Test Coverage**:
+   - Darnell, prioritize writing integration tests this week.
+   - Ensure Hana is informed about the critical nature of these tests.
+
+3. **Nightwatch Migration Plan**:
+   - Continue with the migration plan as approved by Marcus.
+   - Ensure weekly status updates from Leo.
+
+4. **Security Audit**:
+   - Coordinate with Halcyon Advisory for access and start preparations.
+
+5. **OWASP Top 10 Training**:
+   - Enforce training completion by end of February.
+
+Let me know if you need any further assistance or have additional questions!
+
+Priya
+  SCORE    : REVIEW
+
+T2-16 | What Conduit throughput did Darnell achieve in load testing, and how did it compare to the target?
+  EXPECTED : 220k events/hour — exceeded the 200k target
+  ANSWER   : Camille,
+
+Great to hear about the Sentry integration and the workaround you have in place. Let's make sure we document this clearly so everyone is aware of it during the beta launch.
+
+One last thing, just to confirm: are there any specific tasks or preparations you need from me before March 7th? I want to ensure everything is smooth for the beta launch.
+
+Looking forward to a successful launch!
+
+Suki
+  SCORE    : REVIEW
+
+T2-17 | What p99 latency did Conduit achieve in load testing?
+  EXPECTED : 87ms (target was sub-100ms — passed)
+  ANSWER   : Camille,
+
+Great to hear the Sentry integration is already set up. The workaround you mentioned for initial crashes is noted and will be included in our checklist.
+
+Looking forward to the beta launch on March 7th, and thanks for keeping us updated!
+
+Priya
+
+---
+
+This response acknowledges Suki's efforts and ensures that any potential issues are addressed before the launch.
+  SCORE    : REVIEW
+
+T2-18 | Where did Leo document the LogQL learning guide?
+  EXPECTED : Notion, under Engineering/Runbooks
+  ANSWER   : Leo documented the LogQL learning guide in the company's internal knowledge base.
+  SCORE    : REVIEW
+
+T2-19 | What is the mobile beta launch date?
+  EXPECTED : March 7th
+  ANSWER   : Priya,
+
+Got it. Here's the plan moving forward:
+
+### Conduit Rewrite Proposal
+- **Message Queue**: Kafka is a solid choice given our needs for high throughput and reliability.
+- **Analytics Store**: TimescaleDB is approved to handle time-series data effectively.
+- **Ingestion Layer**: Tobias will own this, with support from you.
+- **Deployment**: Containerized with Docker Compose locally and Kubernetes in production.
+
+### Timeline
+- **Milestone 1 (Complete)**: Kafka cluster running, consumer workers processing test events, TimescaleDB ingestion correct. (Completed)
+- **Next Milestone**: Backfill system. Estimated 2 weeks.
+
+### PCI Compliance Issue
+- Fix the logging issue by end of this week.
+- Loop in Marcus for final approval and to ensure we have a plan to address any other potential issues.
+
+### Security Audit
+- Decision on security consultant: Halcyon Advisory is approved.
+- Start date: February 24th. Expect access to codebase and production logs.
+
+### OWASP Top 10 Training
+- All engineers must complete by end of February.
+
+Let me know if you need any more details or assistance with these tasks.
+
+Darnell
+
+---
+
+### Additional Notes:
+- **RabbitMQ**: Avoid using RabbitMQ as per Marcus's directive.
+- **Stripe Sandbox**: Ensure the test environment is properly configured to avoid issues in production.
+- **Race Condition Fix**: Address the refund processing logic issue while you're working on payments integration tests.
+
+Feel free to reach out if there are any questions or concerns.
+  SCORE    : REVIEW
+
+T2-20 | What known issue does Sentry's React Native SDK have?
+  EXPECTED : It can miss crashes that happen during app initialization, before Sentry itself has initialized
+  ANSWER   : Suki Tanaka
+
+Subject: Crash Reporting Tool for Atlas Mobile Launch
+
+Hi Suki,
+
+Given the upcoming launch of the mobile version of Atlas, we need to ensure robust crash reporting is in place. This will help us quickly identify and address any issues users might face on their devices.
+
+I recommend integrating a reliable crash reporting tool such as Firebase Crashlytics or Bugsnag. These tools provide detailed error reports that can be crucial for maintaining the quality of our application post-launch.
+
+Please coordinate with DevOps to set up this integration in the next two weeks. We should also plan to include basic user feedback mechanisms within the app, which can complement crash reporting by providing context around when and how issues occur.
+
+Looking forward to your confirmation on this.
+
+Best,
+Priya
+
+---
+
+This email ensures that Suki is aware of the necessary steps for integrating a crash reporting tool before the launch of the mobile version of Atlas.
+  SCORE    : REVIEW
+
+
+--- TIER 3 — MULTI-HOP ---
+
+T3-01 | Which engineer was originally assigned to write tests for the payments module but was pulled away, and what were they pulled onto?
+  EXPECTED : Tobias Hunt — pulled from payments test coverage to work on the Conduit rewrite (Kafka consumer workers)
+  ANSWER   : Priya,
+
+Got your emails and updates. Here's a summary of the key points and next steps:
+
+### Conduit Rewrite:
+- **Milestone 1 Complete**: Kafka cluster is running in dev, consumer workers are processing test events, and TimescaleDB is ingesting correctly.
+- **Next Milestone**: Backfill system (estimated 2 weeks).
+- **Recommendation**: Loop Leo in this week to ensure all stakeholders are aligned.
+
+### Nightwatch Migration:
+- **Approved**: Proceed with the self-hosted Grafana + Prometheus stack.
+- **Status Updates**: Weekly status emails from Leo every Friday until migration is complete.
+
+### Security Audit:
+- **Decision**: Going with Halcyon Advisory for the security audit starting February 24th.
+- **Access**: Expect them to need access to codebase and production logs.
+
+### Atlas Mobile:
+- **Beta Launch Confirmed**: March 7th, 47 users from 6 enterprise customers signed up.
+- **Push Notifications**: Added as a hard requirement for Q1 (Phase 1).
+- **Expo Issue**: Recommended using `react-native-biometrics` to handle biometric authentication due to Expo's known bug with Android 14.
+
+### Training Enforcement:
+- **OWASP Top 10 Training**: Target group: Engineers, deadline: End of February.
+- **Urgency**: This needs to be fixed before the end of this week, not next sprint.
+
+### Risk Management:
+- **Expo Issue Workaround**: Documented in internal runbook for Sentry's React Native SDK known issue with app initialization crashes.
+
+### Q1 Priorities:
+- **Conduit Rewrite**: Lead by Darnell, target completion by end of Q1.
+- **Nightwatch Migration**: Leo will handle the migration and provide weekly updates.
+- **Security Audit**: Halcyon Advisory starting February 24th.
+- **Atlas Mobile**: Beta launch confirmed for March 7th with push notifications included.
+
+Feel free to reach out if you need any further details or assistance. Let's keep moving forward!
+
+Best,
+[Your Name]
+  SCORE    : REVIEW
+
+T3-02 | Who flagged the PCI compliance issue, and what three actions did Marcus take as a result?
+  EXPECTED : Leo Reyes flagged it. Marcus decided to: (1) fix it before end of week, (2) hire a fractional security consultant, (3) require all engineers to complete OWASP Top 10 training by end of February
+  ANSWER   : Darnell,
+
+Great to hear the payments integration tests are on track. Here's a quick follow-up with some additional points:
+
+1. **Stripe Sandbox Setup**: I've already coordinated with DevOps, and Leo will have the Stripe sandbox environment configured by tomorrow. This should resolve any issues related to webhook testing.
+
+2. **Race Condition Fix**: The race condition in refund processing logic is noted. Ensure Tobias reviews this fix once it's complete. It’s important we maintain code quality, especially in critical areas like refunds.
+
+3. **Next Steps**:
+   - Continue with the integration tests for the payments module.
+   - Once the Stripe sandbox is set up, start testing webhooks thoroughly.
+   - Keep me updated on any other issues you find during this process.
+
+4. **Documentation**: As we move forward, make sure to document all changes and fixes in the codebase. This will be crucial for future maintenance and audits.
+
+Looking forward to seeing the progress!
+
+Priya
+
+---
+
+This response addresses the urgent nature of the payments test coverage while ensuring that other critical tasks are also being managed effectively.
+  SCORE    : REVIEW
+
+T3-03 | What technology stack replaced Datadog, and which team member was involved in both the replacement and the Conduit rewrite?
+  EXPECTED : Grafana + Prometheus + Alertmanager + Loki replaced Datadog. Leo Reyes needed to be involved in both — he led the Nightwatch migration AND was needed for Kubernetes deployment on Conduit
+  ANSWER   : The technical debt in the payments module was addressed by Darnell Okafor. He found and fixed a race condition in the refund processing logic while adding integration tests for Stripe's webhook system. The issue of logging card data, which is a PCI compliance concern, has also been flagged to Marcus Webb.
+
+For the Nightwatch migration plan, Leo Reyes proposed using Grafana, Prometheus, Alertmanager, and Loki instead of Datadog. This change was approved by Marcus.
+
+Darnell Okafor and Leo Reyes are both involved in addressing technical issues related to the Conduit project, with Darnell noting that the team is ahead of target for throughput and latency metrics.
+
+Regarding the Atlas mobile app, Suki Tanaka proposed a scope for Phase 1 (Q1) which includes read-only functionality. The beta launch was confirmed for March 7th, and Camille Russo recommended using Sentry as the crash reporting tool before launch.
+
+In terms of security compliance, Marcus Webb decided to hire Halcyon Advisory for a security audit starting February 24th. Additionally, all engineers are required to complete OWASP Top 10 training by the end of February.
+  SCORE    : REVIEW
+
+T3-04 | The mobile beta includes a customer with special authentication requirements. What is that customer, what was their requirement, and how was it solved?
+  EXPECTED : Meridian Group required biometric authentication. Solved by using react-native-biometrics (option 3) instead of Expo's built-in biometric module, which had an unpatched Android 14 bug
+  ANSWER   : Priya,
+
+Sentry is already integrated and ready for use. I added it two weeks ago in anticipation of the beta launch. The React Native SDK is straightforward to set up and should be fully functional by March 7th.
+
+If you have any specific concerns or additional tasks related to Sentry, please let me know. Otherwise, we're good to go!
+
+Best,
+Suki
+
+---
+
+This response addresses the integration of Sentry and ensures that all necessary steps are in place for the beta launch on March 7th.
+  SCORE    : REVIEW
+
+T3-05 | How many dashboards did the new monitoring system have after migration, and how does that compare to before?
+  EXPECTED : 47 migrated + 3 new ones = 50 total. Datadog had 47. The new system has more dashboards because Grafana could support things Datadog couldn't.
+  ANSWER   : Suki,
+
+Got it. Here's the updated scope for Phase 1:
+
+### Updated Scope for Phase 1:
+- **Push Notifications**: Implement push notifications for task assignments.
+- **Full Read-Only Functionality**: Ensure all other features are read-only to avoid backend API changes.
+
+### Risks and Considerations:
+1. **Soft-Launch to Beta Users Only**: Soft-launch the app to beta users first before a full release.
+2. **No Backend Changes Until Q2**: Design Phase 1 to be fully read-only so no backend API changes are required.
+3. **Expo Limitations with Native Modules**: Be aware that Expo has limitations with certain native modules (e.g., Bluetooth, advanced camera features). If needed, we might need to eject from Expo in the future.
+
+### Additional Notes:
+- **Sentry Integration**: Sentry is already integrated and ready for use.
+- **Crash Reporting Workaround**: Documented workaround in our internal runbook for crashes during app initialization.
+
+Ready for March 7th with these updates. Let me know if you need any more adjustments or additional support.
+
+Camille
+
+---
+
+Feel free to adjust anything further based on your team's needs. Looking forward to the successful launch!
+  SCORE    : REVIEW
+
+T3-06 | Who reported a concern to Priya about test coverage, what module was the concern about, and who was ultimately assigned to fix it?
+  EXPECTED : Hana Bergström reported the concern about the payments module (34% coverage). Darnell Okafor was assigned to fix it (write the integration tests).
+  ANSWER   : Hana reported a concern about the payments module test coverage to Priya. The concern was that the module had insufficient tests, specifically mentioning the lack of tests for card data logging which is a PCI compliance issue. Priya assigned Darnell to address this by configuring the Stripe sandbox and setting up a test webhook endpoint.
+  SCORE    : REVIEW
+
+T3-07 | Which project involves both Suki Tanaka and Camille Russo, and what did Camille change about Suki's original scope?
+  EXPECTED : Atlas mobile app. Camille added push notifications for task assignments to Phase 1 — Suki had originally kept push notifications in Phase 2.
+  ANSWER   : Based on the context provided, here's an appropriate response to Marcus' email regarding the PCI compliance issue:
+
+---
+
+**Subject:** Re: PCI Compliance Issue
+
+Hi Marcus,
+
+Thank you for bringing this to my attention. I'll ensure that Hana and Tobias review and address the logging issue immediately. We need to make sure all sensitive card data is properly sanitized before it hits our logs.
+
+Additionally, I will follow up with DevOps to get a proper Stripe sandbox environment set up as soon as possible so we can fully test the payment flow without exposing any sensitive information.
+
+Regarding the OWASP Top 10 training, I'll send out an email to all engineers by end of this week reminding them of the deadline. We need to ensure everyone is up-to-date on these critical security practices.
+
+Let me know if there's anything else you need from my team.
+
+Best,
+Priya
+
+---
+
+This response addresses both the immediate issue and the broader training requirement, ensuring a proactive approach to compliance and security.
+  SCORE    : REVIEW
+
+T3-08 | Tobias Hunt worked on two separate things in Q1. What were they, and on which one did his manager say he deserved a performance note?
+  EXPECTED : (1) Kafka consumer workers for Conduit, (2) he was originally assigned to payments test coverage (before being pulled). Darnell recommended a performance note for his Kafka/Conduit work.
+  ANSWER   : Suki,
+
+Got it. I'll ensure Sentry is integrated by the beta launch on March 7th.
+
+One more thing: we should also consider setting up a proper staging environment for the mobile app to catch any issues early. This will help us avoid surprises during the beta phase.
+
+Priya
+
+---
+
+### Key Points:
+1. **Sentry Integration**: Confirm with Suki that Sentry is straightforward and integrate it before launch.
+2. **Staging Environment**: Set up a staging environment for the mobile app to identify and fix issues early.
+3. **PCI Compliance Issue**: Address the logging issue by end of this week as per Leo's findings.
+
+Feel free to loop in anyone else if needed!
+
+Priya
+  SCORE    : REVIEW
+
+T3-09 | What was the actual monthly cost saving from the Nightwatch migration, and how did it compare to Leo's original estimate?
+  EXPECTED : Actual saving: $13,257/month ($14,000 - $743). Leo estimated $13,200/month. The actual saving was $57/month more than estimated (infrastructure came in at $743 vs $800 estimate).
+  ANSWER   : Darnell,
+
+Got your message and the details on the Conduit rewrite. Here's my initial proposal for consideration:
+
+### Proposal for Conduit Rewrite
+
+#### 1. **Message Queue**
+   - **Apache Kafka**: 
+     - **Rationale**: Kafka is highly scalable, fault-tolerant, and designed to handle high throughput. It can easily manage 200k events/hour with minimal latency.
+     - **Implementation Plan**:
+       - Set up a Kafka cluster in our AWS environment.
+       - Develop consumer workers to process messages efficiently.
+       - Ensure robust error handling and retries.
+
+#### 2. **Analytics Store**
+   - **ClickHouse**: 
+     - **Rationale**: ClickHouse is optimized for analytical queries and can handle high write throughput with low latency. It's a good fit for our requirements.
+     - **Implementation Plan**:
+       - Integrate ClickHouse with Kafka to ensure seamless data ingestion.
+       - Develop necessary SQL queries for analytics.
+
+#### 3. **Ingestion Layer**
+   - **Tobias' Role**: Tobias will own the development of consumer workers and integration with Kafka. He has shown strong capabilities in handling complex systems, which is crucial here.
+   - **Support Plan**:
+     - Regular check-ins to ensure progress.
+     - Code reviews to maintain quality.
+
+#### 4. **Avoiding RabbitMQ**
+   - **Reason**: As you mentioned, we had issues with RabbitMQ at your previous company. To avoid similar problems, Kafka will be the chosen solution for message queuing.
+
+### Next Steps
+- **Jan 17 Proposal Submission**: Please finalize and submit this proposal by Jan 17.
+- **DevOps Collaboration**: Work closely with Leo to ensure smooth setup of Kafka and any other necessary infrastructure changes.
+- **Testing Plan**:
+   - Load testing to validate throughput and latency.
+   - Service restart tests to confirm no data loss.
+
+### Additional Considerations
+- **Security Audit**: Ensure all components are secure, especially the payment processing pipeline. Marcus has scheduled a security audit for February 24th with Halcyon Advisory.
+- **PCI Compliance**: Address any remaining compliance issues identified by Leo, such as card data logging.
+
+Let me know if you have any questions or need further details on this proposal.
+
+Darnell
+
+---
+
+This should cover the key points and provide a solid foundation for your Conduit rewrite. Let's move forward with these plans!
+  SCORE    : REVIEW
+
+T3-10 | Which engineer discovered a bug while doing a different task, what was the task, and what was the bug?
+  EXPECTED : Darnell Okafor — he was writing integration tests for the payments module (assigned by Priya) and discovered a race condition in the refund processing logic while doing so.
+  ANSWER   : Priya,
+
+Got your message on the Conduit rewrite. Here are some additional points to consider:
+
+1. **Stack Proposal**: Your proposal looks solid. Kafka for the message queue is a good choice, given its reliability and scalability. TimescaleDB for the analytics store makes sense too, as it aligns well with our query patterns.
+
+2. **RabbitMQ Blacklist**: I agree that RabbitMQ should be off-limits due to past issues. Kafka's durability and fault tolerance are key advantages in this scenario.
+
+3. **Tobias' Ramp-Up**: Ensure Tobias gets the necessary training and support during his ramp-up period. We can allocate some time for him to familiarize himself with Kafka before diving into production work.
+
+4. **Milestone Timeline**: Let’s keep the timeline as you proposed: 8 weeks total, with two weeks dedicated to Tobias’ onboarding. This should give us a buffer while ensuring we meet our Q1 release target.
+
+5. **Backfill Feature**: Keeping the backfill feature in Phase 1 is wise. It will provide a more robust foundation for future development and user experience improvements.
+
+6. **Weekly Status Updates**: I agree with Marcus that weekly status updates from Leo are necessary to keep everyone aligned on progress.
+
+7. **Security Audit**: Hiring a fractional security consultant is a good move. Let’s ensure we get the best possible audit by comparing Redpoint Security and Halcyon Advisory thoroughly before making a decision.
+
+8. **OWASP Training**: Enforcing OWASP Top 10 training for all engineers is crucial. This will help us maintain high standards of security across our projects.
+
+Feel free to discuss any further details or adjustments needed. Let’s ensure we stay on track with these priorities and deliver quality solutions.
+
+Best,
+Darnell
+
+---
+
+This response covers the key points from your email while providing additional context and alignment with other ongoing initiatives.
+  SCORE    : REVIEW
+
+
+--- UNANSWERABLE (U-01 to U-10) ---
+
+U-01 | What is Priya Nair's salary?
+  EXPECTED : Not mentioned
+  ANSWER   : Marcus,
+
+Great plan from Leo! Here’s a summary and next steps:
+
+1. **Plan Approval**: Approved the migration to Grafana + Prometheus stack.
+2. **Cost Savings**: Estimated cost savings of $13,200/month or $158,400/year by switching from Datadog.
+3. **Timeline**: 6 weeks for the migration with a two-week parallel run phase.
+4. **QA Testing**: Hana will allocate 20% of QA time to test new alert rules.
+5. **Risks and Fallbacks**: Acknowledged the potential risks with Loki's maturity, but agreed that ElasticSearch can be used as a fallback if needed.
+
+Next Steps:
+- Confirm with Hana on the QA testing allocation.
+- Schedule a kickoff meeting for Leo’s team to go over the detailed plan.
+- Ensure all stakeholders are informed and aligned on the timeline and cost savings.
+
+Looking forward to seeing this through!
+
+Best,
+Darnell
+
+---
+
+This response covers the key points from Leo's email while maintaining a professional tone. It also ensures that all necessary actions are identified and assigned.
+  SCORE    : FAIL? (possible false positive — review)
+
+U-02 | What programming language is the Atlas backend written in?
+  EXPECTED : Not mentioned
+  ANSWER   : Sounding like you have a comprehensive plan for addressing the PCI compliance issue and other related tasks, I'll provide some additional context or next steps if needed. Here's how we can proceed:
+
+### PCI Compliance Issue
+
+**Action Required:**
+- Ensure that card data is no longer logged in application logs.
+- Implement the workaround documented in your internal runbook to address any remaining issues.
+
+**Next Steps:**
+1. **Review and Update Logs:** Confirm that all instances of card data logging have been removed or masked.
+2. **Internal Documentation:** Ensure that the internal runbook is up-to-date with the latest changes.
+3. **Testing:** Conduct thorough testing to verify that no card data is being logged.
+
+### Security Audit
+
+**Action Required:**
+- Finalize the decision between Redpoint Security and Halcyon Advisory for the security audit.
+- Schedule the audit starting February 24th.
+
+**Next Steps:**
+1. **Decision Making:** Make a final decision by Friday based on the firms' proposals or other relevant factors.
+2. **Access Provisioning:** Ensure that the chosen firm has access to the codebase and production logs as needed.
+3. **Communication Plan:** Develop a communication plan for the audit process, including regular updates and reporting.
+
+### OWASP Top 10 Training
+
+**Action Required:**
+- Enforce the training completion by end of February.
+
+**Next Steps:**
+1. **Training Schedule:** Coordinate with HR or Learning & Development to schedule the training sessions.
+2. **Communication:** Send out a reminder email to all engineers about the upcoming deadline and the importance of completing the training.
+3. **Follow-Up:** Monitor progress and provide support as needed.
+
+### Mobile Experience for Atlas
+
+**Action Required:**
+- Ensure that the crash reporting tool is integrated before launch.
+- Address any remaining issues with biometric authentication.
+
+**Next Steps:**
+1. **Crash Reporting Tool:** Confirm that the crash reporting tool (e.g., Crashlytics or Firebase Crashlytics) is fully integrated and tested.
+2. **Biometric Authentication:** Work with DevOps to resolve the Android 14 biometric module issue, possibly by using an alternative library like `react-native-biometrics`.
+
+### Conduit Rewrite
+
+**Action Required:**
+- Finalize the stack proposal and ensure all team members are aligned.
+
+**Next Steps:**
+1. **Review Proposal:** Ensure that Darnell's proposal is reviewed and approved.
+2. **Team Alignment:** Make sure all relevant team members (including Tobias) understand their roles and responsibilities.
+3. **Milestone Planning:** Develop a detailed plan for the next milestones, including timelines and deliverables.
+
+### Nightwatch Migration Plan
+
+**Action Required:**
+- Ensure that Leo's migration plan is approved and implemented.
+
+**Next Steps:**
+1. **Approval:** Confirm that Priya has reviewed and approved Leo's plan.
+2. **Testing:** Conduct parallel testing to ensure a smooth transition from Datadog to the new stack.
+3. **Documentation:** Document the process for future reference and troubleshooting.
+
+If you need any specific actions or further details on these tasks, feel free to let me know!
+  SCORE    : FAIL? (possible false positive — review)
+
+U-03 | How many total employees does Veloris have?
+  EXPECTED : Not mentioned
+  ANSWER   : Based on the provided context, here are some appropriate responses to various scenarios:
+
+### Response to Marcus's Email about PCI Compliance Issue
+
+**Subject:** Re: PCI compliance issue
+
+**From:** Priya Nair <priya@veloris.io>
+
+**To:** Marcus Webb <marcus@veloris.io>
+
+**Date:** [Insert Date]
+
+**Body:**
+
+Hi Marcus,
+
+Thank you for the prompt. We will prioritize fixing the PCI compliance issue immediately and ensure it is resolved by end of this week as requested.
+
+Additionally, I have scheduled a meeting with Leo to discuss the OWASP Top 10 training and ensure all engineers complete it by the deadline next month.
+
+Best,
+Priya
+
+---
+
+### Response to Camille's Email about Atlas Mobile Beta Launch Confirmed
+
+**Subject:** Re: Atlas mobile — beta launch confirmed
+
+**From:** Suki Tanaka <suki@veloris.io>
+
+**To:** Camille Russo <camille@veloris.io>
+
+**Date:** [Insert Date]
+
+**Body:**
+
+Hi Camille,
+
+Thank you for the update. I'm glad to hear that we have 47 users signed up and that biometric auth is working as expected.
+
+Regarding push notifications, I agree with your assessment. We can include this feature in Phase 1 without impacting the backend until Q2. Let's design it accordingly.
+
+Looking forward to a successful beta launch on March 7th!
+
+Best,
+Suki
+
+---
+
+### Response to Leo's Email about Nightwatch Migration Plan
+
+**Subject:** Re: Nightwatch migration plan
+
+**From:** Priya Nair <priya@veloris.io>
+
+**To:** Leo Reyes <leo@veloris.io>
+
+**Date:** [Insert Date]
+
+**Body:**
+
+Hi Leo,
+
+Thank you for the detailed plan. I'm glad to see we can save $13,200/month by migrating to a self-hosted solution.
+
+I've allocated 20% of QA time for Hana as requested and will ensure she is involved in testing the new alert rules.
+
+Looking forward to a smooth transition!
+
+Best,
+Priya
+
+---
+
+### Response to Camille's Email about Atlas Mobile Phase 1 Scope Change
+
+**Subject:** Re: Atlas mobile — let's scope this properly
+
+**From:** Priya Nair <priya@veloris.io>
+
+**To:** Camille Russo <camille@veloris.io>, Suki Tanaka <suki@veloris.io>
+
+**Date:** [Insert Date]
+
+**Body:**
+
+Hi Camille, Suki,
+
+Thank you for the updates. I agree with your decision to include push notifications in Phase 1 and have updated our project plan accordingly.
+
+I've also confirmed with Expo that ejecting is not necessary for this phase, so we can stick with option 3 as discussed.
+
+Let's keep communicating closely to ensure all phases are on track.
+
+Best,
+Priya
+
+---
+
+### Response to Leo's Email about Conduit Milestone 1 Complete
+
+**Subject:** Re: Conduit milestone 1 complete
+
+**From:** Priya Nair <priya@veloris.io>
+
+**To:** Darnell Okafor <darnell@veloris.io>
+
+**Date:** [Insert Date]
+
+**Body:**
+
+Hi Darnell,
+
+Thank you for completing the first milestone of the Conduit rewrite. The team's performance is impressive, and Tobias deserves recognition for his quick learning curve with Kafka.
+
+I've noted your recommendation to give him a performance note. Let's ensure he gets the credit he deserves.
+
+Looking forward to the next milestone!
+
+Best,
+Priya
+
+---
+
+These responses maintain the appropriate tone and address the key points in each email while ensuring clear communication within the team.
+  SCORE    : FAIL? (possible false positive — review)
+
+U-04 | What did Marcus think about Python as a language?
+  EXPECTED : Not mentioned — Marcus never discussed Python
+  ANSWER   : Marcus,
+
+Here's a summary of our Q1 priorities before the all-hands on Friday:
+
+### **Conduit**
+- **Milestone 1:** Complete. Kafka cluster is running in dev, consumer workers processing test events, and TimescaleDB ingesting correctly.
+- **Milestone 2:** Backfill system. Estimated 2 weeks.
+
+### **Atlas Mobile App**
+- **Phase 1 (Q1):** Read-only experience with push notifications for task assignments.
+- **Phase 2 (Q2):** Editing — create/update tasks and projects, push notifications.
+- **Phase 3 (Q3):** Offline mode.
+- **Expo:** Option 3 chosen. Using `react-native-biometrics` to handle biometric authentication.
+
+### **Security Audit**
+- **Start Date:** February 24th
+- **Vendor:** Halcyon Advisory
+
+### **Payments Test Coverage**
+- **Status:** Darnell will complete integration tests by Friday.
+- **Race Condition Fix:** Found and fixed in the refund processing logic.
+
+### **Nightwatch Migration Plan**
+- **Approved:** Leo, proceed with Grafana + Prometheus stack migration.
+
+### **Other Notes:**
+- **Sentry Integration for Beta Launch:** Confirmed as straightforward.
+- **Push Notifications for Beta Launch:** Confirmed by 47 users from 6 enterprise customers.
+- **Enterprise Customer Requirements:** Meridian Group confirmed biometric auth works on their devices.
+
+Feel free to add or adjust any of these points before the all-hands meeting. Happy New Year!
+
+Camille
+
+---
+
+This summary should help keep everyone aligned and ensure we're on track for our Q1 priorities.
+  SCORE    : FAIL? (possible false positive — review)
+
+U-05 | Which cloud provider does Veloris use?
+  EXPECTED : AWS (mentioned in email 003 — "existing AWS infrastructure") ← NOTE: this is a trap question, it IS answerable
+  ANSWER   : Camille,
+
+Got it. Option 3 with the third-party library (react-native-biometrics) sounds like the best approach for now.
+
+Let's proceed with this and keep an eye on the Expo update. If they release a fix sooner than expected, we can reassess.
+
+Looking forward to the March 7th launch!
+
+Camille
+  SCORE    : FAIL — missed trap (expected AWS)
+
+U-06 | What is Hana Bergström's salary?
+  EXPECTED : Not mentioned
+  ANSWER   : Based on the context provided, here is a summary and response to Darnell Okafor's email:
+
+---
+
+**Subject:** Conduit milestone 1 complete
+
+**From:** Darnell Okafor <darnell@veloris.io>
+**To:** Priya Nair <priya@veloris.io>
+
+Hi Priya,
+
+Great news! We've completed the first milestone of the Conduit rewrite. Here are the key details:
+
+- **Kafka Cluster Running in Dev**: The Kafka cluster is up and running in our development environment.
+- **Consumer Workers Processing Test Events**: Tobias has successfully implemented the consumer workers, which are processing test events as expected.
+- **TimescaleDB Ingestion Correctly Set Up**: TimescaleDB is ingesting data correctly from the Kafka consumers.
+
+**Load Testing Results:**
+- **Sustained Throughput**: 220k events/hour (exceeding our target of 200k).
+- **p99 Latency**: 87ms (meeting our sub-100ms target).
+- **Data Loss on Service Restart**: Zero data loss during simulated service restarts.
+
+Tobias has done an excellent job, and I'd recommend giving him a performance note for his quick learning curve with Kafka. 
+
+Next up is the backfill system, which we estimate will take about 2 weeks to complete.
+
+Let me know if you need any more details or assistance.
+
+Best,
+Darnell
+
+---
+
+This response acknowledges Darnell's progress and sets expectations for the next phase of the project.
+  SCORE    : FAIL? (possible false positive — review)
+
+U-07 | Has Veloris ever had a data breach?
+  EXPECTED : Not mentioned
+  ANSWER   : ### Summary of Key Points and Next Steps:
+
+1. **Conduit Rewrite Proposal:**
+   - Message queue: Kafka (agreed)
+   - Analytics store: TimescaleDB (Darnell's pushback, agreed to use instead of ClickHouse)
+   - Ingestion layer: Tobias will handle Kafka consumer workers
+   - Deployment: Containerized with Docker Compose for local dev, Kubernetes in prod
+
+2. **Nightwatch Migration Plan:**
+   - Approved by Marcus
+   - Hana to allocate 20% of her team's time for the migration
+   - Weekly status updates from Leo required until completion
+
+3. **Atlas Mobile App Scope and Beta Launch:**
+   - Phase 1 (Q1): Read-only experience with push notifications
+   - Push notifications are a hard requirement
+   - Expo chosen over ejecting, as it avoids significant complexity increase and cost
+   - Biometric authentication workaround using `react-native-biometrics` recommended
+
+4. **Payments Module Test Coverage:**
+   - Tobias to write integration tests by Friday
+   - Found potential race condition in refund processing logic; Darnell will fix it
+
+5. **Nightwatch Migration Status:**
+   - Weekly status updates from Leo required until completion
+   - Hana's concerns about test coverage for the payments module addressed
+
+6. **Next Steps:**
+   - **Conduit Rewrite:** 
+     - Confirm with DevOps to set up Stripe sandbox environment.
+     - Darnell to proceed with implementation, including fixing race condition in refund processing logic.
+   
+   - **Nightwatch Migration:**
+     - Leo to provide weekly updates on the migration status.
+     - Hana to allocate necessary resources and ensure smooth transition.
+
+   - **Atlas Mobile App:**
+     - Suki to finalize the mobile app scope based on Camille's feedback.
+     - Integrate Sentry for crash reporting, document known issues with initialization crashes.
+   
+   - **Payments Module:**
+     - Tobias to complete integration tests by Friday.
+     - Darnell to address any remaining bugs or issues in the payment processing logic.
+
+### Action Items:
+- **Conduit Rewrite:** 
+  - Loop Leo into setting up Stripe sandbox environment.
+  - Confirm with DevOps on timeline and resources required.
+
+- **Nightwatch Migration:**
+  - Ensure weekly status updates from Leo are consistent and detailed.
+  - Allocate necessary resources for Hana's team to support the migration.
+
+- **Atlas Mobile App:**
+  - Finalize scope based on Camille’s feedback, including push notifications in Phase 1.
+  - Confirm with Suki that Expo is the chosen framework and proceed with biometric authentication workaround.
+
+- **Payments Module:**
+  - Ensure Tobias completes integration tests by Friday.
+  - Address any remaining bugs or issues identified during testing.
+
+By addressing these points, we can ensure a smooth transition for Conduit rewrite, Nightwatch migration, Atlas mobile app development, and maintaining robust test coverage in the payments module.
+  SCORE    : FAIL? (possible false positive — review)
+
+U-08 | What is Tobias Hunt's favorite programming language?
+  EXPECTED : Not mentioned
+  ANSWER   : I cannot determine Tuki Tanaka's preferred tool for crash reporting based on the provided emails, as there is no explicit statement about her decision regarding Sentry or any other tool.
+  SCORE    : PASS
+
+U-09 | Does Veloris have offices outside Austin?
+  EXPECTED : Not mentioned
+  ANSWER   : Based on the information provided, there is no explicit mention of any locations or offices outside of where the events are taking place. The emails primarily discuss project progress, technical decisions, and internal communications within what appears to be a single office or remote team setup.
+
+Given this context, we can infer that the company (Veloris) does not have any clearly stated physical locations or multiple offices mentioned in the provided email exchanges. Therefore, there is no information available to confirm or deny the presence of additional offices or locations beyond the implied central location where these communications are occurring.
+
+Answer: No, based on the given information, there is no indication that Veloris has offices or locations outside of the central team or office where these emails are being exchanged from.
+  SCORE    : PASS
+
+U-10 | What database does the Atlas backend use?
+  EXPECTED : Not mentioned (TimescaleDB and ClickHouse are for Conduit, not Atlas)
+  ANSWER   : Darnell,
+
+Thanks for the update on Conduit milestone 1 and the detailed plan. Here are some key points to address:
+
+1. **Stack Proposal**: TimescaleDB is approved, which is great. I'll loop Leo in this week to ensure he's aligned with the new stack.
+
+2. **Payments Test Coverage**: The payments integration tests should be completed by Friday as per your update. I'll also follow up on DevOps to get the Stripe sandbox configured for testing.
+
+3. **Race Condition Fix**: Great catch on the refund processing logic. Let’s make sure this is addressed promptly and thoroughly tested before merging any changes.
+
+4. **PCI Compliance Issue**: Leo has identified a critical issue with card data logging. This needs immediate attention. I’ll coordinate with DevOps to resolve it by end of week, as per Marcus's request.
+
+5. **Security Audit**: Marcus will make a decision on the security consultant firm by Friday. Please ensure all engineers complete the OWASP Top 10 training by end of February.
+
+6. **Weekly Status Updates**: As requested by Marcus, I’ll start sending weekly status emails to keep everyone informed on Conduit progress.
+
+Let me know if you need any further assistance or have additional questions.
+
+Best,
+Darnell
+  SCORE    : FAIL? (possible false positive — review)
+
+
+--- LATENCY ---
+Recall p50 : 7256ms
+Recall p99 : 25632ms
+
+--- TOKEN TOTALS ---
+tokens_in  : 245461
+tokens_out : 12969
+Est. cost (Haiku pricing) : $0.0776
+
+--- SCORE SUMMARY (fill in manually) ---
+T1 accuracy : __/20
+T2 accuracy : __/20
+T3 accuracy : __/10
+U  auto-scored: 2/9 pass (excl. trap)
+Trap (U-05) : FAIL — missed trap (expected AWS)

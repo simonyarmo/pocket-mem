@@ -6,7 +6,7 @@ def test_llm_config_defaults():
     assert cfg.base_url == "http://localhost:11434/v1"
     assert cfg.model == "qwen2.5:7b"
     assert cfg.api_key == "ollama"
-    assert cfg.timeout == 30
+    assert cfg.timeout == 45
     assert cfg.temperature == 0.1
     assert cfg.max_tokens == 1024
 

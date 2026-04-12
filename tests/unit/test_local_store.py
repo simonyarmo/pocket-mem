@@ -308,7 +308,8 @@ def test_search_vector_respects_limit(tmp_store):
 
 
 def test_search_vector_semantic_boss(tmp_store):
-    """Canonical test: 'my boss' finds David even though 'boss' is not in label."""
+    """Vector search finds David for 'supervisor' even though neither label nor
+    attributes contain that word — purely semantic via embedding."""
     from memory_agent.models import Entity
     entity = Entity(id="n1", label="David", entity_type="person",
                     topic_id=None, attributes={"role": "boss"})
@@ -317,12 +318,12 @@ def test_search_vector_semantic_boss(tmp_store):
     tmp_store.write_node(node)
 
     from memory_agent.embedding import embed
-    # BM25 should NOT find David for "my boss" (keyword not present)
-    bm25_results = tmp_store.search_keyword("my boss")
+    # BM25 should NOT find David for "supervisor" — word not in any indexed text
+    bm25_results = tmp_store.search_keyword("supervisor")
     assert not any(r.id == "n1" for r in bm25_results)
 
-    # Vector search SHOULD find David for "my boss"
-    vec_results = tmp_store.search_vector(embed("my boss"), limit=5)
+    # Vector search SHOULD find David for "supervisor" (semantic similarity to "boss")
+    vec_results = tmp_store.search_vector(embed("supervisor"), limit=5)
     assert any(r.id == "n1" for r in vec_results)
 
 

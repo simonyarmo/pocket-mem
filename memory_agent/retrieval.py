@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from memory_agent.embedding import embed
 from memory_agent.llm.client import LLMClient
-from memory_agent.llm.prompts import ANSWER
+from memory_agent.llm.prompts import ANSWER, ANSWER_SYSTEM
 from memory_agent.models import Edge, Node
 from memory_agent.store.base import StoreInterface
 
@@ -47,6 +47,7 @@ def traverse(
 def format_context(nodes: list[Node], edges: list[Edge] | None = None) -> str:
     """Render nodes (and optional edges) into a readable text block for prompt injection."""
     lines: list[str] = []
+    included_ids: set[str] = set()
 
     for node in nodes:
         if node.node_type == "entity":
@@ -57,7 +58,7 @@ def format_context(nodes: list[Node], edges: list[Edge] | None = None) -> str:
             if attr_str:
                 line += f" — {attr_str}"
         elif node.node_type == "memory_chunk":
-            text = node.data.get("summary") or node.data.get("raw", "")[:200]
+            text = node.data.get("summary") or node.data.get("raw", "")
             line = f"[memory] {text}"
         elif node.node_type == "tone":
             tone_type = node.data.get("tone_type", "")
@@ -71,11 +72,14 @@ def format_context(nodes: list[Node], edges: list[Edge] | None = None) -> str:
         else:
             line = f"[{node.node_type}] {node.label}"
         lines.append(line)
+        included_ids.add(node.id)
 
     if edges:
         node_labels: dict[str, str] = {n.id: n.label for n in nodes}
         rel_lines: list[str] = []
         for edge in edges:
+            if edge.from_id not in included_ids and edge.to_id not in included_ids:
+                continue
             from_label = node_labels.get(edge.from_id, edge.from_id)
             to_label = node_labels.get(edge.to_id, edge.to_id)
             rel_lines.append(f"  {from_label} -[{edge.relation}]-> {to_label}")
@@ -89,7 +93,11 @@ def format_context(nodes: list[Node], edges: list[Edge] | None = None) -> str:
 def synthesize_answer(query: str, context: str, llm: LLMClient) -> str:
     """Ask the LLM to answer `query` using `context`. Returns plain-text answer."""
     prompt = ANSWER.format(query=query, context=context)
-    return llm.complete([{"role": "user", "content": prompt}])
+    return llm.complete(
+        [{"role": "user", "content": prompt}],
+        system=ANSWER_SYSTEM,
+        model=llm.config.answer_model,
+    )
 
 
 def recall(
@@ -103,9 +111,9 @@ def recall(
     """Entry point for memory retrieval.
 
     Modes:
-      "raw"     → list[Node]  — raw nodes, no formatting
-      "context" → str         — formatted context string
-      "answer"  → str         — LLM-synthesized answer (requires llm)
+      "raw"       → list[Node]  — raw nodes, no formatting
+      "context"   → str         — formatted context string (full retrieved nodes)
+      "answer"    → str         — LLM synthesizes an answer from retrieved context (requires llm=)
     """
     nodes = search(query, store, limit=limit)
     nodes = traverse(nodes, store, hops=hops)

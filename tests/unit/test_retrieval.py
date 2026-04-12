@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock
-from memory_agent.config import StorageConfig
+from memory_agent.config import LLMConfig, StorageConfig
 from memory_agent.store.local import SQLiteStore
 from memory_agent.llm.client import LLMClient
 from memory_agent.models import Entity, MemoryChunk, Tone, Edge
@@ -186,6 +186,7 @@ def test_format_context_includes_edge_relations(tmp_store):
 
 def test_synthesize_answer_calls_llm():
     llm = MagicMock(spec=LLMClient)
+    llm.config = LLMConfig()
     llm.complete.return_value = "David is your boss."
     result = synthesize_answer("Who is my boss?", "David — role: boss", llm)
     assert result == "David is your boss."
@@ -194,6 +195,7 @@ def test_synthesize_answer_calls_llm():
 
 def test_synthesize_answer_includes_query_in_prompt():
     llm = MagicMock(spec=LLMClient)
+    llm.config = LLMConfig()
     llm.complete.return_value = "answer"
     synthesize_answer("Who is my boss?", "context text", llm)
     messages = llm.complete.call_args[0][0]
@@ -202,6 +204,7 @@ def test_synthesize_answer_includes_query_in_prompt():
 
 def test_synthesize_answer_includes_context_in_prompt():
     llm = MagicMock(spec=LLMClient)
+    llm.config = LLMConfig()
     llm.complete.return_value = "answer"
     synthesize_answer("query", "David is the boss", llm)
     messages = llm.complete.call_args[0][0]
@@ -223,17 +226,18 @@ def test_recall_context_returns_string(tmp_store):
     assert "David" in result
 
 
+
 def test_recall_answer_calls_llm(tmp_store):
-    _write_entity(tmp_store, "n1", "David", "person", {"role": "boss"})
-    llm = MagicMock(spec=LLMClient)
-    llm.complete.return_value = "David is your boss."
-    result = recall("Who is my boss?", tmp_store, llm=llm, mode="answer")
-    assert result == "David is your boss."
+    llm = MagicMock()
+    llm.complete.return_value = "Marcus Webb is the CTO."
+    result = recall("job title", tmp_store, llm=llm, mode="answer")
+    assert result == "Marcus Webb is the CTO."
+    llm.complete.assert_called_once()
 
 
 def test_recall_answer_requires_llm(tmp_store):
-    with pytest.raises((ValueError, TypeError)):
-        recall("query", tmp_store, llm=None, mode="answer")
+    with pytest.raises(ValueError, match="llm"):
+        recall("job title", tmp_store, llm=None, mode="answer")
 
 
 # ── as_tool() ────────────────────────────────────────────────────────────────

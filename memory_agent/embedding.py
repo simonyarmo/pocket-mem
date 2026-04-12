@@ -24,7 +24,7 @@ def _embed_text(node: Node) -> str:
         node.data.get("summary")
         or node.data.get("description")
         or node.data.get("context")
-        or node.data.get("raw", "")[:200]
+        or node.data.get("raw", "")[:512]
         or ""
     )
     base = f"{node.node_type}: {node.label}"

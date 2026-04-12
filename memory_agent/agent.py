@@ -42,6 +42,11 @@ class MemoryAgent:
             exc = future.exception()
             if exc:
                 _log.error("observe() ingestion failed: %s", exc, exc_info=exc)
+            else:
+                # Run compaction check on the background thread so that cloud
+                # stores (Supabase) don't block the HTTP request with a stats()
+                # round-trip on every observe() call.
+                self._maybe_compact()
 
         future = self._executor.submit(
             ingest,
@@ -52,7 +57,6 @@ class MemoryAgent:
             self._session_id,
         )
         future.add_done_callback(_done)
-        self._maybe_compact()
 
     def _maybe_compact(self) -> None:
         """Fire background compaction if chunk count exceeds threshold."""
@@ -74,9 +78,9 @@ class MemoryAgent:
     def recall(self, query: str, mode: str = "context") -> list | str:
         """Search memory and return results in the requested mode.
 
-        mode="context" → formatted string (default)
-        mode="raw"     → list of Node objects
-        mode="answer"  → LLM-synthesized answer string
+        mode="context"   → formatted context string (default) — full retrieved nodes
+        mode="raw"       → list of Node objects
+        mode="answer"    → LLM synthesizes an answer from retrieved context
         """
         return _recall(query, self._store, llm=self._llm, mode=mode)
 
@@ -109,6 +113,10 @@ class MemoryAgent:
         """Return counts of stored nodes, edges, and sessions."""
         return self._store.stats()
 
+    def token_stats(self) -> dict:
+        """Return cumulative LLM token counts (tokens_in, tokens_out)."""
+        return self._llm.token_stats()
+
     def as_tool(self) -> dict:
         """Return OpenAI function schema for tool-calling integration (Pattern B)."""
         return _as_tool()
@@ -120,6 +128,11 @@ class MemoryAgent:
     def import_pack(self, path: str) -> None:
         """Merge a .mempack into this agent's store. Upserts — no duplicates."""
         self._store.import_pack(path)
+
+    def flush(self) -> None:
+        """Block until all pending observe() background tasks have completed."""
+        self._executor.shutdown(wait=True)
+        self._executor = ThreadPoolExecutor(max_workers=2)
 
     def close(self) -> None:
         """Shut down the background executor and close the store connection."""

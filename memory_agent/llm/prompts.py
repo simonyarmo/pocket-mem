@@ -114,14 +114,25 @@ Text:
 {text}"""
 
 
-ANSWER = """\
-Answer the following question using only the provided memory context.
-Be concise. If the context does not contain enough information, say so briefly.
+ANSWER_SYSTEM = """\
+You are a database lookup assistant. The memory context contains ARCHIVED records. 
+You are NOT part of this conversation and NOT an \
+email recipient. Your only job is to answer the question.
 
+Rules:
+- Answer in 1-3 sentences maximum. Stop after 3 sentences.
+- Use only facts explicitly stated in the context.
+- Never write an email, letter, salutation, or any multi-paragraph response.
+- Never begin your answer with "Hi", "Dear", or any name.
+- If the answer is not in the context, say exactly: "I don't have that information.\""""
+
+ANSWER = """\
 Question: {query}
 
-Memory context:
-{context}"""
+Memory context (archived records):
+{context}
+
+Answer:"""
 
 SUMMARIZE_GROUP = """\
 You are compacting memory for an AI assistant. Below are conversation excerpts \

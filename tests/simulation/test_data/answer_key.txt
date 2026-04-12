@@ -1,0 +1,196 @@
+ANSWER KEY — Veloris Technologies Benchmark
+All answers derived strictly from the 20 emails above.
+"N/A" = not mentioned in the data (correct answer is "I don't know" or equivalent)
+
+=== TIER 1 — DIRECT LOOKUP (20 questions) ===
+
+T1-01: What is Marcus Webb's job title?
+ANSWER: CTO
+
+T1-02: Who is Leo Reyes's manager?
+ANSWER: Marcus Webb
+
+T1-03: What is the name of Veloris's main product?
+ANSWER: Atlas
+
+T1-04: How much was Veloris paying for Datadog per month?
+ANSWER: $14,000/month
+
+T1-05: What city is Veloris headquartered in?
+ANSWER: Austin, Texas
+
+T1-06: What message queue technology did Darnell propose for the Conduit rewrite?
+ANSWER: Kafka (Apache Kafka)
+
+T1-07: What analytics store did Priya originally suggest for Conduit?
+ANSWER: ClickHouse
+
+T1-08: What analytics store did Darnell propose instead, and why?
+ANSWER: TimescaleDB — because their query patterns are more relational than analytical, and the team already knows Postgres query language
+
+T1-09: What is the test coverage percentage of the Atlas payments module?
+ANSWER: 34%
+
+T1-10: How much money does Veloris process monthly through the payments module?
+ANSWER: $2.1 million per month
+
+T1-11: What build toolchain is Suki using for the React Native app?
+ANSWER: Expo
+
+T1-12: What is the name of the internal monitoring project?
+ANSWER: Nightwatch
+
+T1-13: What security firm did Marcus choose for the audit?
+ANSWER: Halcyon Advisory
+
+T1-14: What was the other security firm Marcus considered?
+ANSWER: Redpoint Security
+
+T1-15: When does the security audit start?
+ANSWER: February 24th
+
+T1-16: What crash reporting tool does the Atlas mobile app use?
+ANSWER: Sentry
+
+T1-17: How many enterprise customers' users signed up for the Atlas mobile beta?
+ANSWER: 6 enterprise customers, 47 users total
+
+T1-18: What is the actual monthly cost of the self-hosted Nightwatch stack?
+ANSWER: $743/month (February actual — better than the $800 estimate)
+
+T1-19: Who is Tobias Hunt's direct manager?
+ANSWER: Darnell Okafor
+
+T1-20: What training did Marcus require all engineers to complete by end of February?
+ANSWER: OWASP Top 10 training
+
+=== TIER 2 — SINGLE HOP (20 questions) ===
+
+T2-01: Who did Marcus assign to lead the Conduit rewrite?
+ANSWER: Darnell Okafor (Marcus → Priya email, then Priya → Darnell assignment)
+
+T2-02: What specific part of the Conduit system is Tobias responsible for?
+ANSWER: The Kafka consumer workers / ingestion layer
+
+T2-03: What technology did Priya explicitly ban from the Conduit rewrite, and why?
+ANSWER: RabbitMQ — she had a catastrophic queue loss with it at her previous company
+
+T2-04: What was Darnell's preferred timeline for Conduit if the backfill feature was dropped?
+ANSWER: 6 weeks (vs 8 weeks with backfill included)
+
+T2-05: Why did Priya insist on keeping the backfill feature?
+ANSWER: Because Camille would "never forgive" them if it was dropped
+
+T2-06: What log aggregation tool is part of the new Nightwatch stack?
+ANSWER: Loki (part of the Grafana + Prometheus + Alertmanager + Loki stack)
+
+T2-07: What is the projected annual saving from the Datadog migration?
+ANSWER: $158,400/year (Leo's estimate: $13,200/month saving)
+
+T2-08: What was Leo's fallback option if Loki had problems?
+ANSWER: ElasticSearch
+
+T2-09: What phase of the Atlas mobile app includes offline sync?
+ANSWER: Phase 3 (Q3)
+
+T2-10: Why is the Atlas backend off-limits for mobile development in Phase 1?
+ANSWER: Marcus restricted it until after the Q1 release — too much risk
+
+T2-11: What compliance issue did Leo discover in the payment logging?
+ANSWER: PCI compliance issue — the app was logging the full Stripe payload including card last-four digits
+
+T2-12: Who discovered the race condition in the payment refund logic?
+ANSWER: Darnell Okafor (found it while writing integration tests for payments)
+
+T2-13: Where are the Stripe test credentials stored?
+ANSWER: 1Password, under "stripe-test-veloris"
+
+T2-14: What problem did Suki encounter with Expo related to Meridian Group's requirements?
+ANSWER: Meridian Group requires biometric authentication, and Expo's biometric module has a known bug with Android 14 that is unpatched
+
+T2-15: What solution did Suki recommend for the Expo biometric bug?
+ANSWER: Option 3 — use react-native-biometrics, a third-party React Native library that works around the Expo limitation (estimated 3 days)
+
+T2-16: What Conduit throughput did Darnell achieve in load testing, and how did it compare to the target?
+ANSWER: 220k events/hour — exceeded the 200k target
+
+T2-17: What p99 latency did Conduit achieve in load testing?
+ANSWER: 87ms (target was sub-100ms — passed)
+
+T2-18: Where did Leo document the LogQL learning guide?
+ANSWER: Notion, under Engineering/Runbooks
+
+T2-19: What is the mobile beta launch date?
+ANSWER: March 7th
+
+T2-20: What known issue does Sentry's React Native SDK have?
+ANSWER: It can miss crashes that happen during app initialization, before Sentry itself has initialized
+
+=== TIER 3 — MULTI-HOP (10 questions) ===
+
+T3-01: Which engineer was originally assigned to write tests for the payments module but was pulled away, and what were they pulled onto?
+ANSWER: Tobias Hunt — pulled from payments test coverage to work on the Conduit rewrite (Kafka consumer workers)
+
+T3-02: Who flagged the PCI compliance issue, and what action did Marcus take as a result?
+ANSWER: Leo Reyes flagged it. Marcus decided to: (1) fix it before end of week, (2) hire a fractional security consultant, (3) require all engineers to complete OWASP Top 10 training by end of February
+
+T3-03: What technology stack replaced Datadog, and which team member needed to be involved in both the replacement AND the Conduit rewrite?
+ANSWER: Grafana + Prometheus + Alertmanager + Loki replaced Datadog. Leo Reyes needed to be involved in both — he led the Nightwatch migration AND was needed for Kubernetes deployment on Conduit
+
+T3-04: The mobile beta includes a customer with special authentication requirements. What is that customer, what was their requirement, and how was it solved?
+ANSWER: Meridian Group required biometric authentication. Solved by using react-native-biometrics (option 3) instead of Expo's built-in biometric module, which had an unpatched Android 14 bug
+
+T3-05: How many dashboards did the new monitoring system have after migration, and how does that compare to before?
+ANSWER: 47 migrated + 3 new ones = 50 total. Datadog had 47. The new system has more dashboards because Grafana could support things Datadog couldn't.
+
+T3-06: Who reported a concern to Priya about test coverage, what module was the concern about, and who was ultimately assigned to fix it?
+ANSWER: Hana Bergström reported the concern about the payments module (34% coverage). Darnell Okafor was assigned to fix it (write the integration tests).
+
+T3-07: Which project involves both Suki Tanaka and Camille Russo working together, and what did Camille change about Suki's original scope?
+ANSWER: Atlas mobile app. Camille added push notifications for task assignments to Phase 1 — Suki had originally kept push notifications in Phase 2.
+
+T3-08: Tobias Hunt worked on two separate things in Q1. What were they, and on which one did his manager say he deserved a performance note?
+ANSWER: (1) Kafka consumer workers for Conduit, (2) he was originally assigned to payments test coverage (before being pulled). Darnell recommended a performance note for his Kafka/Conduit work.
+
+T3-09: What was the actual monthly cost saving achieved from the Nightwatch migration, and how did it compare to Leo's original estimate?
+ANSWER: Actual saving: $13,257/month ($14,000 - $743). Leo estimated $13,200/month. The actual saving was $57/month more than estimated (infrastructure came in at $743 vs $800 estimate).
+
+T3-10: Which engineer discovered a bug while doing a different task, and what were both the task they were doing and the bug they found?
+ANSWER: Darnell Okafor — he was writing integration tests for the payments module (assigned by Priya) and discovered a race condition in the refund processing logic while doing so.
+
+=== UNANSWERABLE QUESTIONS (10 questions) ===
+Correct response = "I don't know" / "not mentioned" / "no information about this"
+
+U-01: What is Priya Nair's salary?
+ANSWER: Not mentioned
+
+U-02: What programming language is the Atlas backend written in?
+ANSWER: Not mentioned
+
+U-03: How many total employees does Veloris have?
+ANSWER: Not mentioned
+
+U-04: What did Marcus think about Python as a language?
+ANSWER: Not mentioned — Marcus never discussed Python
+
+U-05: Which cloud provider does Veloris use?
+ANSWER: AWS (mentioned in email 003 — "existing AWS infrastructure") ← NOTE: this is a trap question, it IS answerable
+
+U-06: What is Hana Bergström's salary?
+ANSWER: Not mentioned
+
+U-07: Has Veloris ever had a data breach?
+ANSWER: Not mentioned
+
+U-08: What is Tobias Hunt's favorite programming language?
+ANSWER: Not mentioned
+
+U-09: Does Veloris have offices outside Austin?
+ANSWER: Not mentioned
+
+U-10: What database does the Atlas backend use?
+ANSWER: Not mentioned (TimescaleDB and ClickHouse are for Conduit, not Atlas)
+
+NOTE ON U-05: This is intentionally a trap — the agent SHOULD answer "AWS" because it IS mentioned.
+If the agent says "not mentioned" for U-05, that is a false negative (incorrect).
+If the agent correctly answers "AWS" for U-05, that shows it can distinguish answerable from unanswerable.

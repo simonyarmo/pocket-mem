@@ -1,5 +1,6 @@
 from __future__ import annotations
 import json
+import re
 import sqlite3
 import tempfile
 import zipfile
@@ -10,6 +11,45 @@ from memory_agent.config import StorageConfig
 from memory_agent.embedding import embed, _embed_text, cosine_similarity
 from memory_agent.models import Node, Edge
 from memory_agent.store.base import StoreInterface
+
+
+_STOP_WORDS = {
+    "what", "is", "are", "was", "were", "the", "a", "an", "how", "who",
+    "when", "where", "why", "which", "did", "does", "do", "for", "and",
+    "or", "but", "in", "on", "at", "to", "from", "by", "with", "his",
+    "her", "their", "of", "has", "have", "been", "this", "that", "it",
+    "its", "not", "any", "all", "one", "two", "about", "into", "than",
+    "then", "them", "they", "also", "much", "many", "some", "would",
+    "could", "should",
+}
+
+
+def _fts_body(node: Node) -> str:
+    """Return clean plain text for FTS5 indexing (no JSON structure)."""
+    if node.node_type == "memory_chunk":
+        return node.data.get("raw", "") or node.data.get("summary", "")
+    if node.node_type == "entity":
+        attrs = node.data.get("attributes", {})
+        attr_text = " ".join(f"{k} {v}" for k, v in attrs.items())
+        extra = " ".join(filter(None, [
+            node.data.get("description", ""),
+            node.data.get("summary", ""),
+        ]))
+        return f"{node.label} {attr_text} {extra}".strip()
+    # Generic fallback: label + any known text fields
+    extras = " ".join(filter(None, [
+        node.data.get("description", ""),
+        node.data.get("summary", ""),
+        node.data.get("context", ""),
+    ]))
+    return f"{node.label} {extras}".strip()
+
+
+def _to_fts_query(query: str) -> str:
+    """Convert a natural language query to an FTS5 OR query over content words."""
+    words = re.findall(r"[a-zA-Z0-9]+", query.lower())
+    content = [w for w in words if w not in _STOP_WORDS and len(w) > 2]
+    return " OR ".join(content) if content else query
 
 
 class SQLiteStore(StoreInterface):
@@ -82,7 +122,7 @@ class SQLiteStore(StoreInterface):
         self._conn.execute("DELETE FROM nodes_fts WHERE id = ?", (node.id,))
         self._conn.execute(
             "INSERT INTO nodes_fts(id, label, body) VALUES (?, ?, ?)",
-            (node.id, node.label, json.dumps(node.data)),
+            (node.id, node.label, _fts_body(node)),
         )
         self._conn.commit()
         return node.id
@@ -126,7 +166,7 @@ class SQLiteStore(StoreInterface):
                 "JOIN nodes n ON n.id = nodes_fts.id "
                 "WHERE nodes_fts MATCH ? "
                 "LIMIT ?",
-                (query, limit),
+                (_to_fts_query(query), limit),
             ).fetchall()
         except Exception:
             return []

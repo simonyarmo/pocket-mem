@@ -111,6 +111,17 @@ def ingest(
     }
     primary_topic_id: str | None = next(iter(topic_id_map.values()), None)
 
+    # Link chunk → each topic it belongs to
+    for tid in topic_id_map.values():
+        store.write_edge(Edge(
+            id=str(uuid.uuid4()),
+            from_id=chunk_id,
+            to_id=tid,
+            relation="belongs_to",
+            source_chunk_id=chunk_id,
+            created_at=now,
+        ))
+
     # Step 5: Resolve + store entities, link chunk → entity
     entity_id_map: dict[str, str] = {}
     for ent_data in extraction["entities"]:

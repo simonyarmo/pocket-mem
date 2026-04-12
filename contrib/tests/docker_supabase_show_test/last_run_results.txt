@@ -1,0 +1,331 @@
+=== VELORIS DOCKER/SUPABASE TEST ===
+Run     : 2026-04-09 16:40:24
+Backend : supabase
+Model   : qwen2.5:7b
+
+--- INGESTION ---
+Emails ingested : 20
+Observe p50     : 16ms
+Observe p99     : 439ms
+Nodes stored    : 122
+
+--- SESSION PERSISTENCE ---
+PASS
+
+--- SAMPLE RECALL ---
+Q: What is Marcus Webb's job title?
+A: Based on the context provided, here are some responses addressing the concerns and risks:
+
+### Response to Suki Tanaka
+
+**Subject:** Atlas Mobile - Beta Launch Confirmed
+
+**To:** Suki Tanaka <suki@veloris.io>
+
+---
+
+Dear Suki,
+
+Thank you for confirming the beta launch details. I've noted your recommendation to use `react-native-biometrics` as a workaround for the Expo biometric module issue with Android 14.
+
+Given that this is a one-off requirement and considering the cost and complexity, it seems like the best approach. Let's proceed with option 3:
+
+1. **Option 3: Use react-native-biometrics**
+   - Estimated Cost: 3 days
+   - This will ensure we meet our Q1 deadline without significant disruptions.
+
+I'll start integrating this library into the project and document any necessary steps in our internal runbook to avoid similar issues in the future.
+
+Looking forward to a successful beta launch on March 7th!
+
+Best regards,
+
+Suki
+
+---
+
+### Response to Camille Russo
+
+**Subject:** Atlas Mobile - Let's Scope This Properly
+
+**To:** Camille Russo <camille@veloris.io>
+
+---
+
+Dear Camille,
+
+Thank you for the detailed feedback and scope approval. I've noted your changes and will ensure Phase 1 includes push notifications for task assignments, even if editing is locked.
+
+Regarding the risks:
+1. **Soft-Launch to Beta**: Agreed. I'll handle customer communications as needed.
+2. **No Backend Changes Until Q2**: Understood. I'll design Phase 1 to be fully read-only to avoid backend modifications.
+
+Additional risk noted: Expo limitations with certain native modules (Bluetooth or advanced camera features). This is a good point and worth documenting for future reference.
+
+Looking forward to working together on this phase of the project.
+
+Best regards,
+
+Suki
+
+---
+
+### Response to Darnell Okafor
+
+**Subject:** Conduit Rewrite - Stack Proposal
+
+**To:** Darnell Okafor <darnell@veloris.io>
+
+---
+
+Dear Darnell,
+
+Thank you for completing milestone 1 and providing such detailed results. I've noted the following:
+
+- **Kafka Cluster**: Running in dev.
+- **Consumer Workers**: Processing test events correctly.
+- **TimescaleDB**: Ingesting data as expected.
+
+Numbers look great:
+- Sustained throughput: 220k events/hour (target was 200k).
+- p99 latency: 87ms (target was sub-100ms).
+
+Tobias deserves a performance note for his work. I'll ensure he gets the recognition.
+
+Next milestone is backfill system, estimated at 2 weeks. Let's keep the backfill feature in to meet Camille’s requirements.
+
+Looking forward to the next phase!
+
+Best regards,
+
+Suki
+
+---
+
+### Response to Hana (Internal Communication)
+
+**Subject:** Stripe Configuration and PCI Compliance
+
+**To:** Hana <hana@veloris.io>
+
+---
+
+Dear Hana,
+
+I wanted to follow up on the Stripe configuration we set up last week. Here are a few points:
+
+1. **Stripe Sandbox Credentials**: Credentials are stored in 1Password under "stripe-test-veloris".
+2. **Test Webhook Endpoint**: The endpoint is at `dev-api.veloris.io/webhooks/stripe-test`.
+3. **PCI Compliance Issue**: We're logging the full Stripe payload, including card last-four digits, which might be a PCI compliance issue. I've flagged this to Marcus directly.
+
+Please ensure we address any potential compliance issues promptly.
+
+Best regards,
+
+Suki
+
+---
+
+### Response to Priya Nair
+
+**Subject:** Atlas Mobile - Expo Biometric Module Issue
+
+**To:** Priya Nair <priya@veloris.io>
+
+---
+
+Dear Priya,
+
+Thank you for confirming the recommendation to use `react-native-biometrics` as a workaround. I'll proceed with this approach and document any necessary steps in our internal runbook.
+
+Looking forward to a smooth integration!
+
+Best regards,
+
+Suki
+
+---
+
+These responses address the concerns, risks, and next steps based on the provided context.
+
+Q: How much was Veloris paying for Datadog per month?
+A: Leo,
+
+We need your help with a critical PCI compliance issue that was discovered in our payment logging. The current setup is logging card data we shouldn't be storing, and this must be addressed immediately.
+
+**Action Items:**
+1. **Fix the Logging Issue:** Ensure all card data is no longer being logged.
+2. **Implement Proper Data Handling:** Update your logging practices to comply with PCI standards.
+3. **Verify Compliance:** Once fixed, verify that the issue has been resolved by running a thorough test.
+
+This needs to be done by the end of this week as per Marcus's directive. Please prioritize this task and let me know if you need any additional resources or support.
+
+Thanks for your quick action on this!
+
+Best,
+Priya
+
+---
+
+**Additional Notes:**
+- **Deadline:** End of this week.
+- **Priority:** High.
+- **Impact:** Immediate compliance issue that could lead to serious security breaches if not addressed promptly.
+
+Q: What security firm did Marcus choose for the audit?
+A: **Email Response to Camille Russo**
+
+Camille,
+
+Thank you for the scope approval and the additional requirements. I'll make sure to include push notifications in Phase 1 of the Atlas mobile app.
+
+Regarding your risk list, here are my thoughts:
+
+1. **Soft-Launch Beta**: Confirmed. We will proceed with a beta launch on March 7th and handle customer communications accordingly.
+2. **No Backend Changes Until Q2**: Understood. I'll design Phase 1 to be fully read-only to avoid any backend modifications.
+
+On the Expo limitations:
+- I've documented the known issues with biometric authentication in our internal runbook, as you suggested.
+- For now, we're proceeding with option 3 (using react-native-biometrics) for Meridian Group. This should keep us on track without significant delays.
+
+For future reference, I'll keep an eye out for any other native module limitations that might impact our development process.
+
+Looking forward to the beta launch and working together to meet these requirements.
+
+Best,
+Suki
+
+---
+
+**Attachments:**
+- Internal runbook on Expo biometric issues
+- Documentation of workaround for Sentry initialization crashes
+
+---
+
+This response addresses Camille's concerns while ensuring we stay aligned with the project timelines and requirements.
+
+Q: What build toolchain is Suki using for the React Native app?
+A: Darnell,
+
+Got it. Here's a quick update on the current status and next steps:
+
+### Conduit Rewrite Stack Proposal Update:
+- **Stack Approved**: TimescaleDB is approved.
+- **Milestone 1 Complete**:
+  - Kafka cluster running in dev.
+  - Tobias has consumer workers processing test events.
+  - TimescaleDB ingestion working correctly.
+
+- **Next Milestone (Backfill System)**: Estimated 2 weeks.
+
+### Nightwatch Migration Update:
+- **Migration Complete**: Datadog decommissioned as of this morning.
+- **Final Numbers**:
+  - Grafana: 47 dashboards migrated, 3 new ones built.
+  - Prometheus: All 23 services instrumented.
+  - Loki: Log ingestion running at 2.3GB/day.
+  - Alertmanager: 89 alert rules configured and tested by Hana.
+
+- **Future Reference**: Loki's query language (LogQL) has a steeper learning curve than Datadog’s, but documentation is in place.
+
+### PCI Compliance Issue:
+- **Card Data Logging**: We're logging card last-four digits in application logs. This needs to be fixed before the end of this week.
+- **Security Audit**: Marcus is hiring a fractional security consultant for an audit by Redpoint Security or Halcyon Advisory, with a decision by Friday.
+
+### Training and Compliance:
+- **OWASP Top 10 Training**: All engineers need to complete this training by the end of February. Please enforce this.
+
+### Other Updates:
+- **Expo Mobile Framework**: Soft-launch to beta for Atlas mobile is approved.
+- **Risk Management**:
+  - Beta phase will be fully read-only, no backend changes required.
+  - Expo limitations with certain native modules noted (e.g., Bluetooth or advanced camera features).
+
+Let me know if you need any more details or have additional questions.
+
+Darnell
+
+---
+
+### Additional Notes:
+1. **PCI Compliance Issue**: Marcus has been notified and will address this issue immediately.
+2. **Security Audit**: We'll ensure the audit is completed by the end of the week to avoid any delays.
+3. **Training Completion**: Hana can help enforce the OWASP training deadline.
+
+Feel free to reach out if you need further assistance or more details on any of these points.
+
+Q: Which cloud provider does Veloris use?
+A: Based on the context provided, here are some key points and responses to address the concerns and tasks:
+
+### Risk Management for Atlas Mobile (Suki Tanaka)
+1. **Soft-Launch Beta**: 
+   - **Response**: Agreed. Soft-launching to beta is a good approach to manage expectations and gather feedback without impacting the main backend.
+   
+2. **Expo Limitations**:
+   - **Response**: Noted. We will design Phase 1 to be fully read-only, ensuring no backend changes are required.
+
+### PCI Compliance Issue (Hana Bergström)
+- **Action Required**: 
+   - Fix the logging issue before end of week.
+   - Ensure all engineers complete OWASP Top 10 training by end of February.
+
+### Conduit Rewrite Proposal (Darnell Okafor)
+- **Stack Choice**:
+   - Kafka for message queue approved.
+   - TimescaleDB for analytics store approved.
+   
+- **Milestone Timeline**:
+   - Milestone 1: Complete. 
+   - Next milestone: Backfill system, estimated 2 weeks.
+
+### Nightwatch Migration (Leo Reyes)
+- **Status Update**: 
+   - Migration plan approved.
+   - Weekly status updates required until completion.
+
+### Conduit Rewrite Milestone 1 Completion (Darnell Okafor)
+- **Feedback**:
+   - Tobias' performance noted and recommended for a performance review.
+   - Backfill feature must remain in the scope of the next milestone.
+
+### Security Audit (Marcus Webb)
+- **Action Required**: 
+   - Hire fractional security consultant by Friday. Two firms considered: Redpoint Security and Halcyon Advisory.
+
+### Stripe Configuration Issue (Darnell Okafor)
+- **Action Required**:
+   - Set up proper Stripe sandbox environment for testing.
+   - Fix any race conditions found in the refund processing logic.
+
+### Summary of Actions
+1. **Suki Tanaka**: 
+   - Soft-launch to beta for Phase 1.
+   - Design read-only Phase 1 to avoid backend changes.
+   
+2. **Hana Bergström**:
+   - Fix PCI compliance issue by end of week.
+   - Ensure all engineers complete OWASP Top 10 training.
+
+3. **Darnell Okafor**:
+   - Complete Kafka and TimescaleDB setup for Conduit rewrite.
+   - Recommend Tobias for performance review.
+   
+4. **Leo Reyes**:
+   - Provide weekly status updates on Nightwatch migration.
+   
+5. **Marcus Webb**:
+   - Hire fractional security consultant by Friday.
+
+6. **Darnell Okafor (again)**:
+   - Set up Stripe sandbox environment.
+   - Fix race conditions in refund processing logic.
+
+These actions will help address the immediate concerns and ensure that all projects are on track for their respective milestones.
+
+Recall p50 : 27056ms
+Recall p99 : 33377ms
+
+--- SHOW COMMAND ---
+Note: pocket-mem show requires local SQLite.
+Re-run with: POCKET_MEM_BACKEND=local pytest C:\devroot\pocket-mem\tests\simulation\docker_supabase_show_test\test_docker_supabase.py -v -s

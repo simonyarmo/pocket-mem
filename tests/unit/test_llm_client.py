@@ -139,3 +139,38 @@ def test_complete_sends_authorization_header():
         client.complete([{"role": "user", "content": "hi"}])
     _, kwargs = mock_post.call_args
     assert kwargs["headers"]["Authorization"] == "Bearer my-secret-key"
+
+
+def test_complete_prepends_system_message():
+    cfg = LLMConfig()
+    client = LLMClient(cfg)
+    with patch("memory_agent.llm.client.requests.post") as mock_post:
+        mock_post.return_value = _mock_response("ok")
+        client.complete(
+            [{"role": "user", "content": "hi"}],
+            system="You are helpful.",
+        )
+    _, kwargs = mock_post.call_args
+    messages = kwargs["json"]["messages"]
+    assert messages[0] == {"role": "system", "content": "You are helpful."}
+    assert messages[1] == {"role": "user", "content": "hi"}
+
+
+def test_complete_model_override():
+    cfg = LLMConfig(model="qwen2.5:7b")
+    client = LLMClient(cfg)
+    with patch("memory_agent.llm.client.requests.post") as mock_post:
+        mock_post.return_value = _mock_response("ok")
+        client.complete([{"role": "user", "content": "hi"}], model="llama3.2:3b")
+    _, kwargs = mock_post.call_args
+    assert kwargs["json"]["model"] == "llama3.2:3b"
+
+
+def test_complete_model_falls_back_to_config():
+    cfg = LLMConfig(model="qwen2.5:7b")
+    client = LLMClient(cfg)
+    with patch("memory_agent.llm.client.requests.post") as mock_post:
+        mock_post.return_value = _mock_response("ok")
+        client.complete([{"role": "user", "content": "hi"}])
+    _, kwargs = mock_post.call_args
+    assert kwargs["json"]["model"] == "qwen2.5:7b"

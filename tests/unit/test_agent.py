@@ -102,18 +102,12 @@ def test_recall_raw_returns_list(agent):
     assert isinstance(result, list)
 
 
-def test_recall_answer_uses_llm(agent):
-    from memory_agent.models import Entity
-    entity = Entity(id="n1", label="David", entity_type="person",
-                    attributes={"role": "boss"})
-    node = entity.to_node()
-    node.created_at = node.updated_at = "2026-04-06T00:00:00"
-    agent._store.write_node(node)
 
+def test_recall_answer_uses_llm(agent):
     agent._llm = MagicMock()
-    agent._llm.complete.return_value = "David is your boss."
-    result = agent.recall("Who is my boss?", mode="answer")
-    assert result == "David is your boss."
+    agent._llm.complete.return_value = "The answer."
+    result = agent.recall("something", mode="answer")
+    assert result == "The answer."
 
 
 # ── forget() ─────────────────────────────────────────────────────────────────
