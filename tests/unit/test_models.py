@@ -44,7 +44,7 @@ def test_node_has_correct_field_count():
 
 
 def test_edge_has_correct_field_count():
-    assert len(dc_fields(Edge)) == 9
+    assert len(dc_fields(Edge)) == 10
 
 
 def test_node_with_all_fields():

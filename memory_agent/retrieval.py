@@ -82,7 +82,10 @@ def format_context(nodes: list[Node], edges: list[Edge] | None = None) -> str:
                 continue
             from_label = node_labels.get(edge.from_id, edge.from_id)
             to_label = node_labels.get(edge.to_id, edge.to_id)
-            rel_lines.append(f"  {from_label} -[{edge.relation}]-> {to_label}")
+            rel = f"  {from_label} -[{edge.relation}]-> {to_label}"
+            if edge.context:
+                rel += f" ({edge.context})"
+            rel_lines.append(rel)
         if rel_lines:
             lines.append("Relations:")
             lines.extend(rel_lines)
@@ -121,7 +124,23 @@ def recall(
     if mode == "raw":
         return nodes
 
-    context = format_context(nodes)
+    # Collect entity-to-entity edges between retrieved nodes for context rendering
+    node_ids = {n.id for n in nodes}
+    relation_edges: list[Edge] = []
+    seen_edge_ids: set[str] = set()
+    for node in nodes:
+        if node.node_type == "entity":
+            for edge in store.get_edges(node.id):
+                if (
+                    edge.id not in seen_edge_ids
+                    and edge.from_id in node_ids
+                    and edge.to_id in node_ids
+                    and edge.relation not in ("derived_from", "belongs_to", "expresses")
+                ):
+                    relation_edges.append(edge)
+                    seen_edge_ids.add(edge.id)
+
+    context = format_context(nodes, edges=relation_edges if relation_edges else None)
 
     if mode == "context":
         return context

@@ -38,14 +38,27 @@ class MemoryAgent:
 
     def observe(self, user_input: str, agent_response: str) -> None:
         """Queue a conversation turn for background ingestion. Never blocks."""
+        def _done_final(future):
+            exc = future.exception()
+            if exc:
+                _log.error("observe() retry also failed, dropping turn: %s", exc, exc_info=exc)
+            else:
+                self._maybe_compact()
+
         def _done(future):
             exc = future.exception()
             if exc:
-                _log.error("observe() ingestion failed: %s", exc, exc_info=exc)
+                _log.warning("observe() ingestion failed, retrying once: %s", exc)
+                retry = self._executor.submit(
+                    ingest,
+                    user_input,
+                    agent_response,
+                    self._store,
+                    self._llm,
+                    self._session_id,
+                )
+                retry.add_done_callback(_done_final)
             else:
-                # Run compaction check on the background thread so that cloud
-                # stores (Supabase) don't block the HTTP request with a stats()
-                # round-trip on every observe() call.
                 self._maybe_compact()
 
         future = self._executor.submit(

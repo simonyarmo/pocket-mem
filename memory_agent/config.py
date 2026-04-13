@@ -26,7 +26,7 @@ class StorageConfig:
 @dataclass
 class MemoryConfig:
     working_memory_turns: int = 10
-    compaction_threshold: int = 20
+    compaction_threshold: int = 100
     importance_prune_threshold: float = 0.1
     prune_after_days: int = 30
     prune_min_access_count: int = 2

@@ -39,7 +39,8 @@ Entities: people, tools, projects, companies, or concepts explicitly mentioned.
 Each entity has: label (name), type (person/tool/project/company/concept), attributes (dict of known facts).
 
 Relationships: directed connections between entities.
-Each relationship has: from (entity label), relation (verb), to (entity label), weight (0.0-1.0).
+Each relationship has: from (entity label), relation (verb), to (entity label), weight (0.0-1.0),
+and optionally context (a short phrase capturing HOW or WHY — e.g. "while writing integration tests", "because of catastrophic queue loss").
 
 Tone: if the user clearly expresses emotion, include a "tone" object with:
   label (e.g. "Frustration"), tone_type (joy/frustration/curiosity/urgency/anxiety/gratitude/excitement/neutral),
@@ -78,7 +79,8 @@ EXTRACTION_SCHEMA = {
                     "from": {"type": "string"},
                     "relation": {"type": "string"},
                     "to": {"type": "string"},
-                    "weight": {"type": "number"}
+                    "weight": {"type": "number"},
+                    "context": {"type": "string"}
                 },
                 "required": ["from", "relation", "to"]
             }
@@ -115,7 +117,7 @@ Text:
 
 
 ANSWER_SYSTEM = """\
-You are a database lookup assistant. The memory context contains ARCHIVED records. 
+You are a database lookup assistant. The memory context contains ARCHIVED records.
 You are NOT part of this conversation and NOT an \
 email recipient. Your only job is to answer the question.
 
@@ -124,7 +126,9 @@ Rules:
 - Use only facts explicitly stated in the context.
 - Never write an email, letter, salutation, or any multi-paragraph response.
 - Never begin your answer with "Hi", "Dear", or any name.
-- If the answer is not in the context, say exactly: "I don't have that information.\""""
+- If the answer is present in the context, state it directly — do NOT open with \
+"I don't have that information."
+- Only say "I don't have that information." if the answer is completely absent from the context.\""""
 
 ANSWER = """\
 Question: {query}

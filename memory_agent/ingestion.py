@@ -1,6 +1,9 @@
 from __future__ import annotations
+import logging
 import uuid
 from datetime import datetime
+
+_log = logging.getLogger(__name__)
 
 from memory_agent.llm.client import LLMClient
 from memory_agent.llm.prompts import (
@@ -89,6 +92,8 @@ def ingest(
 
     # Step 2: Extract
     extraction = _extract(turn, context, llm)
+    if not extraction["entities"]:
+        _log.warning("Entity extraction returned 0 entities for turn: %.80s...", turn)
 
     now = _now()
 
@@ -125,6 +130,8 @@ def ingest(
     # Step 5: Resolve + store entities, link chunk → entity
     entity_id_map: dict[str, str] = {}
     for ent_data in extraction["entities"]:
+        if not isinstance(ent_data, dict):
+            continue  # skip if model returned a string instead of an object
         label = ent_data["label"]
         etype = ent_data.get("type", "concept")
         attrs = ent_data.get("attributes", {})
@@ -172,6 +179,7 @@ def ingest(
                 to_id=to_id,
                 relation=rel["relation"],
                 weight=float(rel.get("weight", 1.0)),
+                context=rel.get("context", ""),
                 source_chunk_id=chunk_id,
                 created_at=now,
             ))

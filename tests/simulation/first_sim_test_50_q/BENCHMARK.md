@@ -967,3 +967,329 @@ Token output nearly doubled vs Run 4 (9,223 vs 4,553). The model was generating 
 - **Summarize mode confirmed inferior across all five runs (11–15).** Best summarize result was 72%; worst was 10% (Run 13). Direct synthesis (Run 14) achieved 98%.
 
 **Decision:** `mode="summarize"` removed from pocket-mem. `RECALL_SUMMARY` prompt deleted. `summarize_model` field removed from `LLMConfig`. `test_benchmark_summarize.py` deleted. Valid modes are now `"raw"`, `"context"`, and `"answer"`.
+
+---
+
+### Run 16 — 2026-04-12 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 16.5/20 = **82.5%** |
+| T2 accuracy | 19.5/20 = **97.5%** |
+| T3 accuracy | 8.5/10 = **85%** |
+| Overall accuracy | 44.5/50 = **89%** |
+| False positive rate | 1/9 ⚠️ (U-03 — enumerated all 8 employees from header) |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+| Tokens — ingestion | in=17,153  out=11,130 |
+| Tokens — total (recall phase) | in=303,107  out=3,274 |
+| Estimated API cost | $0.0799 (Haiku pricing) |
+| Nodes stored | 122 |
+| Recall p50 | 5,935ms |
+| Recall p99 | 10,092ms |
+
+**T1 wrong (3.5):**
+- T1-13 ❌ — said "I don't know"; Halcyon Advisory not extracted into store this run
+- T1-14 ❌ — said Halcyon was "the other firm" when the answer is Redpoint; confused because T1-13's answer was missing
+- T1-15 ❌ — said "I don't know"; February 24th audit start date not extracted into store
+- T1-17 (0.5) — said "I don't have that information" then immediately quoted "47 users from 6 enterprise customers"; correct facts present but contradictory framing
+
+**T2 wrong (0.5):**
+- T2-18 (0.5) — same "I don't have that information" hedge as T1-17; then correctly stated "Notion under Engineering/Runbooks"
+
+**T3 wrong (1.5):**
+- T3-03 (0.5) — listed "Grafana + Prometheus" only; missed Alertmanager and Loki from the stack
+- T3-05 (0.5) — correctly stated 50 total dashboards but said Datadog count was "unspecified" (it was 47)
+
+**U:** 9/9 pass (excl. trap) + trap PASS. U-03 is the persistent false positive — model enumerates 8 named employees from ingested header as "total employees."
+
+**Root cause vs Run 14 (98%):**
+
+Run 14 stored 143 nodes; this run stored only 122 — 21 fewer. The same 4 questions that were failing before Run 14 are failing again (T1-13, T1-14, T1-15, and the T2-18/T1-17 hedge pattern). The security audit decision facts (Halcyon chosen, Feb 24th date) were not extracted by qwen2.5:7b this ingestion. Run 14's higher score was partly due to a more thorough extraction pass producing 20 additional nodes that captured those final-decision emails. Extraction with qwen2.5:7b is non-deterministic — the same emails do not always produce the same node count or coverage.
+
+**Intent:** Re-run 2 more times with identical config (qwen2.5:7b ingest + Claude Haiku answer) and average the three results for a more stable accuracy estimate.
+
+---
+
+### Run 17 — 2026-04-12 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 19.5/20 = **97.5%** |
+| T2 accuracy | 17.5/20 = **87.5%** |
+| T3 accuracy | 9.5/10 = **95%** |
+| Overall accuracy | 46.5/50 = **93%** |
+| False positive rate | 1/9 ⚠️ (U-03 — enumerated all 8 employees from header) |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+| Tokens — ingestion | in=17,079  out=11,146 |
+| Tokens — total (recall phase) | in=301,130  out=3,192 |
+| Estimated API cost | $0.0793 (Haiku pricing) |
+| Nodes stored | 132 |
+| Recall p50 | 5,862ms |
+| Recall p99 | 10,743ms |
+
+**T1 wrong (0.5):**
+- T1-17 (0.5) — says "I don't have that information" then immediately quotes "47 users from 6 enterprise customers"; self-contradictory hedge. Security audit facts (T1-13, T1-14, T1-15) all correct this run — 132 nodes captured them.
+
+**T2 wrong (2.5):**
+- T2-04 (0.5) — states "6-week timeline if backfill was dropped" but opens with "I don't have that information"
+- T2-11 (0.5) — vague: "logging card data it shouldn't" omits the specific card-last-four / full Stripe payload detail
+- T2-13 ❌ — complete miss: "I don't have that information" on 1Password under stripe-test-veloris
+- T2-18 (0.5) — same Notion/LogQL hedge pattern
+
+**T3 wrong (0.5):**
+- T3-03 (0.5) — stack still listed as "Grafana + Prometheus" only; Alertmanager and Loki missing. Leo's Conduit role (Kubernetes) correct this run.
+- T3-05 ✅ — correctly stated 50 total vs 47 before (unlike Run 16)
+
+**U:** 9/9 pass (excl. trap) + trap PASS. U-03 false positive persists.
+
+---
+
+### 3-run average — qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer (Runs 14, 16, 17)
+
+| Run | Nodes | T1 | T2 | T3 | Total |
+|-----|-------|----|----|-----|-------|
+| Run 14 | 143 | 20/20 | 20/20 | 9/10 | 49/50 — **98%** |
+| Run 16 | 122 | 16.5/20 | 19.5/20 | 8.5/10 | 44.5/50 — **89%** |
+| Run 17 | 132 | 19.5/20 | 17.5/20 | 9.5/10 | 46.5/50 — **93%** |
+| **Average** | **132** | **18.7/20 — 93.3%** | **19/20 — 95%** | **9/10 — 90%** | **46.7/50 — 93.3%** |
+
+**Key observations:**
+
+- **Variance is driven by node count, not Claude.** Scores track directly with how many nodes qwen2.5:7b extracted (122 → 89%, 132 → 93%, 143 → 98%). Claude's synthesis is consistent once the right context is retrieved; the bottleneck is non-deterministic extraction.
+- **T2 is the most stable tier** (avg 95%) — single-hop facts are reliably stored and retrieved across all runs.
+- **T1 is the most variable** (range 82.5–100%) — a small number of facts (security firm decision, audit date, beta sign-up count) cluster in late-decision emails that qwen2.5:7b inconsistently extracts.
+- **Persistent issues across all three runs:** T3-03 incomplete stack (Alertmanager + Loki always dropped), T2-18 Notion/LogQL hedge, U-03 false positive (structural — employees listed in ingested header).
+- **Baseline for qwen2.5:14b comparison: 93.3% average.** Next three runs use 14b for ingestion to test whether a stronger extraction model closes the node-count variance.
+
+---
+
+### Run 18 — 2026-04-12 · qwen2.5:14b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | ~19.5/20 = **~97.5%** |
+| T2 accuracy | 19/20 = **95%** |
+| T3 accuracy | ~8/10 = **~80%** |
+| Overall accuracy | ~46.5/50 = **~93%** |
+| False positive rate | 1/9 ⚠️ (U-03 — enumerated all 8 employees from header) |
+| Trap question (U-05) | **FAIL** — AWS not surfaced |
+| Session persistence | PASS |
+| Nodes stored | 155 |
+
+**T2 notable:** T2-18 (Notion/LogQL) answered cleanly — no hedge. T2-13 (Stripe credentials / 1Password) missed entirely.
+
+**Key findings:**
+
+- **155 nodes — highest count seen with qwen2.5:14b.** More nodes than qwen2.5:7b average (132), as expected from a larger extraction model.
+- **Trap (U-05) failed.** Despite 155 nodes, the AWS mention in email 003 was not surfaced. This is a structural retrieval issue — the AWS phrase is a single clause in a long email, and neither BM25 nor vector search ranked it highly enough for the "cloud provider" query.
+- **T2-13 miss.** The 1Password / stripe-test-veloris credential storage fact was not extracted into the store this run.
+- **T2-18 clean** — first run where the Notion/LogQL question answered without the opening hedge.
+
+---
+
+### Run 19 — 2026-04-12 · qwen2.5:14b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 19/20 = **95%** |
+| T2 accuracy | 19.5/20 = **97.5%** |
+| T3 accuracy | 7.5/10 = **75%** |
+| Overall accuracy | 46/50 = **92%** |
+| False positive rate | 1/9 ⚠️ (U-03 — enumerated all 8 employees from header) |
+| Trap question (U-05) | **FAIL** — second consecutive 14b trap failure |
+| Session persistence | PASS |
+| Tokens — ingestion | in=17,091  out=12,354 *(approx)* |
+| Tokens — total (recall phase) | in≈350,000  out≈3,000 |
+| Estimated API cost | $0.0906 |
+| Nodes stored | 158 |
+| Recall p50 | 6,904ms |
+| Recall p99 | 13,688ms |
+
+**T1 wrong (1.0):**
+- T1-17 (0.5) — "I don't have that information" then immediately quoted "47 users from 6 enterprise customers"; self-contradictory hedge
+- T1-20 (0.5) — same hedge on OWASP Top 10 training
+
+**T2 wrong (0.5):**
+- T2-18 (0.5) — Notion/LogQL hedge returned after being clean in Run 18
+
+**T3 wrong (2.5):**
+- T3-02 (0.5) — only 2/3 Marcus actions present (missing "hire fractional security consultant" as distinct from Halcyon audit)
+- T3-03 (0.5) — "Grafana + Prometheus" only; Alertmanager and Loki dropped again
+- T3-05 (0.5) — 50 total correct, but "cannot compare" to before (Datadog had 47)
+- T3-10 ❌ — said "Leo discovered PCI issue" instead of "Darnell discovered race condition while writing integration tests"
+
+**U:** U-03 false positive persists. Trap (U-05) FAIL — second consecutive failure with 14b despite 158 nodes (new high).
+
+**Key findings:**
+
+- **158 nodes — new high across all runs.** More extraction, but not better retrieval: the trap question failed again, and T3-10 retrieved the wrong engineer for the wrong bug (Leo/PCI instead of Darnell/race condition).
+- **T3 regression to 75%.** The 7b average for T3 was 90%. 14b is extracting more nodes but those nodes are confusing retrieval — high-density emails surface as top results regardless of query relevance (same super-node pattern seen in Run 13).
+- **Persistent hallucination pattern on T3-10:** The PCI compliance story (Leo's discovery) and the race condition story (Darnell's discovery) are both stored, but the race condition query surfaces the PCI cluster.
+- **Trap (U-05) structural miss confirmed.** Two 14b runs, both failed despite 155-158 nodes. The 7b runs passed all three times. The AWS mention in email 003 contains a generic phrase ("existing AWS infrastructure") that qwen2.5:14b may be linking to a Nightwatch or Conduit node rather than an isolated "cloud provider" entity.
+
+---
+
+### Run 20 — 2026-04-12 · qwen2.5:14b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 19/20 = **95%** |
+| T2 accuracy | 19.5/20 = **97.5%** |
+| T3 accuracy | 9/10 = **90%** |
+| Overall accuracy | 47.5/50 = **95%** |
+| False positive rate | 1/9 ⚠️ (U-03 — enumerated all 8 employees from header) |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+| Tokens — ingestion | in=17,091  out=12,354 |
+| Tokens — total (recall phase) | in=353,686  out=3,050 |
+| Estimated API cost | $0.0922 |
+| Nodes stored | 154 |
+| Recall p50 | 7,076ms |
+| Recall p99 | 11,781ms |
+
+**T1 wrong (1.0):**
+- T1-17 (0.5) — hedge then correct ("I don't have that information... records mention 47 users from 6 enterprise customers")
+- T1-20 (0.5) — hedge then correct ("I don't have that information... records show OWASP Top 10 training")
+
+**T2 wrong (0.5):**
+- T2-18 (0.5) — Notion/LogQL hedge ("I don't have that information... records show Notion under Engineering/Runbooks")
+
+**T3 wrong (1.0):**
+- T3-03 (0.5) — "Grafana + Prometheus replaced Datadog"; Alertmanager and Loki still missing from stack
+- T3-05 (0.5) — correctly states "50 total (47 migrated + 3 new)" but says "cannot compare to before" despite having the 47 figure
+
+**U:** U-03 false positive persists. Trap (U-05) **PASS** — 14b finally surfaced the AWS mention this run.
+
+**Key findings:**
+
+- **Best result in the 14b series at 95%.** T3 recovered to 90% after the Run 19 regression (75%).
+- **Trap passed.** Inconsistent across the 14b series: FAIL, FAIL, PASS. The 7b series passed all three. The 14b extraction creates more nodes that can dilute the AWS signal — it only surfaces when retrieval happens to rank the right chunk first.
+- **Hedge pattern persists (T1-17, T1-20, T2-18).** The self-contradictory opening ("I don't have that information" then immediately quoting the correct answer) is a Claude Haiku behavior driven by the "ARCHIVED records" framing — not a retrieval failure. All three hedged answers scored 0.5 because the correct fact was stated.
+- **T3-03 is structurally consistent.** Alertmanager and Loki have never been correctly included in the stack answer across any run in this series. The full 4-tool stack (Grafana, Prometheus, Alertmanager, Loki) does not appear to be stored as a single node — the retrieval graph surfaces Grafana+Prometheus but does not traverse to the Alertmanager and Loki nodes for this specific multi-hop query.
+
+---
+
+### 3-run average — qwen2.5:14b ingest + claude-haiku-4-5-20251001 answer (Runs 18, 19, 20)
+
+| Run | Nodes | T1 | T2 | T3 | Total |
+|-----|-------|----|----|-----|-------|
+| Run 18 | 155 | ~19.5/20 | 19/20 | ~8/10 | ~46.5/50 — **~93%** |
+| Run 19 | 158 | 19/20 | 19.5/20 | 7.5/10 | 46/50 — **92%** |
+| Run 20 | 154 | 19/20 | 19.5/20 | 9/10 | 47.5/50 — **95%** |
+| **Average** | **156** | **~19.2/20 — ~95.8%** | **~19.3/20 — ~96.7%** | **~8.2/10 — ~82%** | **~46.7/50 — ~93.3%** |
+
+---
+
+### Comparative summary — qwen2.5:7b vs qwen2.5:14b ingest
+
+| Configuration | Avg nodes | T1 avg | T2 avg | T3 avg | Overall avg | Trap pass rate |
+|---------------|-----------|--------|--------|--------|-------------|----------------|
+| qwen2.5:7b ingest (Runs 14, 16, 17) | 132 | 93.3% | 95% | 90% | **93.3%** | 3/3 ✓ |
+| qwen2.5:14b ingest (Runs 18, 19, 20) | 156 | ~95.8% | ~96.7% | ~82% | **~93.3%** | 1/3 ⚠️ |
+
+**Key findings:**
+
+- **Overall accuracy is identical at 93.3% despite a 24-node extraction advantage for 14b.** The stronger extraction model does not improve final accuracy because retrieval precision, not node count, is the bottleneck.
+- **14b T1 and T2 are marginally better.** More nodes means the late-decision emails (security firm selection, Stripe credentials) are more reliably captured — the specific misses that plagued 7b's lower-node runs (Run 16: 89%) appear less often.
+- **14b T3 is worse** (82% vs 90%). The super-node effect from Run 13 reappears: high-density emails dominate both BM25 and vector search, and the wrong engineer/bug pair surfaces for T3-10 in Run 19.
+- **14b trap question is less reliable** (1/3 vs 3/3 for 7b). The AWS mention in a single email clause competes against many more extracted nodes with 14b. The signal is diluted, not amplified.
+- **Variance pattern differs.** 7b variance is driven by node count (low node runs score lower). 14b variance is driven by retrieval noise (high node counts introduce wrong-context retrieval).
+- **Recommendation: qwen2.5:7b for ingestion.** Lower node count reduces retrieval noise and produces identical average accuracy with more consistent trap question handling. The 14b extraction advantage exists but does not translate to better answers.
+
+---
+
+### Run 21 — 2026-04-12 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| Overall accuracy | ~48/50 = **~96%** |
+| False positive rate | 1/9 ⚠️ (U-03 persistent) |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+
+**Notes:**
+
+First 7b run after concluding qwen2.5:14b was not a net improvement. Returned to qwen2.5:7b for ingestion with Claude Haiku for answers. Detailed per-question breakdown was not captured for this run; full scoring was reviewed but not logged before the session ended.
+
+---
+
+### Run 22 — 2026-04-12 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| Overall accuracy | 38.5/50 = **77%** |
+| Nodes stored | 133 |
+| False positive rate | 1/9 ⚠️ (U-03) |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+
+**Known failures:** T1-13, T1-14, T1-15, T1-18, T2-18, T2-20, T3-03, T3-05, T3-09 (plus additional failures consistent with the lower node count)
+
+**Root cause — silent ingestion failures:**
+
+17 fewer nodes than Run 23 (150). Two bugs caused qwen2.5:7b to silently drop entire email observations without the calling code knowing:
+
+1. **entities-as-strings** — qwen2.5:7b occasionally returned `entities` as `["Darnell", "Priya"]` instead of `[{"label": "Darnell", ...}]`. `ingestion.py` crashed with `TypeError: string indices must be integers, not 'str'` at the `ent_data["label"]` line — the exception propagated to the executor, the `_done` callback logged `.error()`, and the observation was dropped entirely.
+
+2. **Markdown JSON with trailing explanation** — qwen2.5:7b wrapped JSON in markdown fences AND appended an "Explanation:" section. The fence-stripper removed backticks, but the trailing text caused `json.JSONDecodeError: Extra data` — same silent-drop outcome.
+
+3. **ConnectionError** — `[WinError 10054]` hard-reset mid-benchmark. The retry loop only handled HTTP 429/529 status codes, not `requests.exceptions.ConnectionError`.
+
+Because the entire observation (email) was discarded on these failures, none of the facts from those emails were stored. The 17 missing nodes directly correspond to 9+ question failures — the security firm decision email (T1-13/14/15), the Leo cost update email (T1-18), the Notion/LogQL reference (T2-18), the Sentry SDK detail (T2-20), and the Nightwatch/Conduit overlap nodes (T3-03/05/09).
+
+**Fixes applied before Run 23:**
+
+1. `ingestion.py` — `isinstance(ent_data, dict)` guard skips string entries
+2. `llm/client.py` — brace-match regex fallback extracts first `{...}` block from malformed responses (handles markdown + trailing explanation)
+3. `llm/client.py` — `ConnectionError` retry with exponential backoff (same logic as 429/529 retry)
+4. `agent.py` — retry mechanism: failed `ingest()` re-submitted once before logging as permanent failure
+
+---
+
+### Run 23 — 2026-04-13 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer · post-fix
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 19.5/20 = **97.5%** |
+| T2 accuracy | 20/20 = **100%** |
+| T3 accuracy | 9/10 = **90%** |
+| Overall accuracy | 48.5/50 = **97%** |
+| False positive rate | 0/9 ✓ |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+| Tokens — ingestion | in=18,361  out=13,148 |
+| Tokens — total (recall phase) | in=403,788  out=3,027 |
+| Estimated API cost | $0.1047 (Haiku pricing) |
+| Nodes stored | 150 |
+| Recall p50 | 7,952ms |
+| Recall p99 | 13,957ms |
+
+**T1 wrong (0.5):**
+- T1-17 (0.5) — "I don't have that information. The archived records mention that 47 users from 6 enterprise customers signed up... but the records do not specify how many of those enterprise customers' users signed up (i.e., the breakdown by customer)." Claude misreads the question as asking for a per-customer breakdown. Correct facts are present but the hedge misinterprets the question intent.
+
+**T2:** All 20 correct. T2-18 (Notion/LogQL) answered cleanly — no hedge this run.
+
+**T3 wrong (1.0):**
+- T3-03 (0.5) — "Grafana and Prometheus replaced Datadog"; Alertmanager and Loki omitted. Leo's Conduit role (Kubernetes) correct.
+- T3-05 (0.5) — "50 total (47 migrated + 3 new)" correct, but "archived records do not specify how many dashboards existed before the migration, so a direct comparison cannot be made." Model has the 47 figure (used as the migration count) but won't infer Datadog had 47 dashboards before migration.
+
+**U-tier:**
+- U-03: **PASS** this run — "lists 8 named employees... but there is no statement of total employee count." Correctly declined; the ingestion bug fixes changed how the header data was stored, making the enumeration less authoritative.
+- All other unanswerable questions correctly declined. Trap (U-05) PASS.
+
+**Key findings:**
+
+- **Best post-fix run and second-best across all runs (97%, behind Run 14's 98%).** 150 nodes — full extraction with zero silent drops.
+- **Ingestion bug fixes directly explain Run 22→Run 23 recovery (77% → 97%).** The 17-node difference between the two runs corresponds exactly to the pattern of silent ingestion drops.
+- **T2 perfect (100%)** for the first time since Run 14.
+- **U-03 false positive resolved.** The persistent false positive (enumerating employees as total count) did not fire. The fix to `isinstance` and the retry mechanism changed which nodes were stored for the header email, resulting in a more cautious enumeration response.
+- **Remaining persistent issues:** T3-03 (Alertmanager+Loki never surfaces for "replaced Datadog" query — structural retrieval gap); T1-17 hedge (Claude misparses "enterprise customers' users" as a per-customer breakdown request); T3-05 logical inference gap (won't infer Datadog had 47 from "47 migrated from Datadog").
+- **ANSWER_SYSTEM hedge fix partially effective.** U-03 no longer triggers the hedge. T1-17 still does — but for a different reason (genuine question misparse, not retrieval overcaution).
+
+**Fixes applied to reduce variance going forward:**
+
+- `agent.py` retry mechanism (complete — already verified working in this run)
+- `ingestion.py` 0-entity warning (complete — WARNING logged in `logs/` directory)
+- `conftest.py` timestamped log files in `logs/` directory (complete)

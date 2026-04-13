@@ -22,6 +22,7 @@ class Edge:
     to_id: str
     relation: str
     weight: float = 1.0
+    context: str = ""
     source_chunk_id: str | None = None
     created_at: str = ""
     valid_at: str | None = None

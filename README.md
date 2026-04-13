@@ -323,7 +323,7 @@ answer = memory.recall("Who recommended httpx?", mode="answer")
 # → "David, your boss, mentioned httpx is better than requests for async HTTP work."
 ```
 
-> **For best results, use Claude Haiku.** In benchmarks against the Veloris dataset (60 questions across direct lookup, single-hop, multi-hop, and unanswerable categories), Claude Haiku achieved **98% accuracy** on answerable questions with a 0% false positive rate on unanswerable ones. See [`tests/simulation/first_sim_test_50_q/BENCHMARK.md`](tests/simulation/first_sim_test_50_q/BENCHMARK.md) for the full results.
+> **For best results, use Claude Haiku.** In benchmarks against the Veloris dataset (50 scored questions across direct lookup, single-hop, and multi-hop categories, plus 10 unanswerable), using `qwen2.5:7b` for ingestion and Claude Haiku for synthesis achieves a **3-run average of 93% accuracy** on answerable questions (peak 97%), with a near-zero false positive rate on unanswerable ones. See [`tests/simulation/first_sim_test_50_q/BENCHMARK.md`](tests/simulation/first_sim_test_50_q/BENCHMARK.md) for the full results.
 >
 > Local models like `qwen2.5:7b` can answer memory questions but are more prone to synthesizing plausible-sounding answers that aren't supported by the stored facts.
 

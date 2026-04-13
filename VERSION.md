@@ -27,10 +27,16 @@
 ### Visualizer
 - **`pocket-mem show`** — browser-based graph explorer with filtering by topic, node type, date range, and keyword search
 
+### Ingestion reliability
+- **Retry mechanism** — failed `observe()` ingestion jobs are automatically re-submitted once before being dropped; ensures transient LLM or network errors don't silently discard conversation turns
+- **Robust JSON parsing** — brace-matching fallback handles LLM responses that wrap JSON in markdown fences or append explanation text after the closing brace
+- **Connection resilience** — `ConnectionError` (e.g. network reset mid-request) retried with exponential backoff alongside existing HTTP 429/529 retry logic
+
 ### Testing
 - 218 unit tests covering every layer of the stack (storage, retrieval, ingestion, compaction, LLM client, config, packaging)
-- Veloris benchmark: 60-question simulation across direct lookup, single-hop, multi-hop, and unanswerable categories
-- 98% accuracy on answerable questions using Claude Haiku as the answer model
+- Veloris benchmark: 60-question simulation (50 scored + 10 unanswerable) across direct lookup, single-hop, multi-hop, and unanswerable categories
+- 93% average accuracy on answerable questions across benchmark runs (peak 97%), using `qwen2.5:7b` for ingestion and Claude Haiku as the answer model
+- Timestamped WARNING-level log files in `logs/` for every test run — captures ingestion retries, zero-entity warnings, and JSON parse fallbacks
 
 ---
 

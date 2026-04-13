@@ -82,6 +82,7 @@ class SQLiteStore(StoreInterface):
                 to_id           TEXT,
                 relation        TEXT,
                 weight          REAL DEFAULT 1.0,
+                context         TEXT DEFAULT '',
                 source_chunk_id TEXT,
                 created_at      TEXT,
                 valid_at        TEXT,
@@ -130,12 +131,12 @@ class SQLiteStore(StoreInterface):
     def write_edge(self, edge: Edge) -> str:
         self._conn.execute(
             "INSERT OR REPLACE INTO edges "
-            "(id, from_id, to_id, relation, weight, source_chunk_id, "
+            "(id, from_id, to_id, relation, weight, context, source_chunk_id, "
             "created_at, valid_at, invalid_at) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (
                 edge.id, edge.from_id, edge.to_id, edge.relation,
-                edge.weight, edge.source_chunk_id,
+                edge.weight, edge.context, edge.source_chunk_id,
                 edge.created_at, edge.valid_at, edge.invalid_at,
             ),
         )
@@ -269,6 +270,7 @@ class SQLiteStore(StoreInterface):
                 to_id=r["to_id"],
                 relation=r["relation"],
                 weight=r["weight"],
+                context=r["context"] or "",
                 source_chunk_id=r["source_chunk_id"],
                 created_at=r["created_at"] or "",
                 valid_at=r["valid_at"],

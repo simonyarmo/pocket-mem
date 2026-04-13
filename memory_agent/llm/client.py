@@ -56,12 +56,19 @@ class LLMClient:
 
         delay = self.config.retry_delay
         for attempt in range(self.config.max_retries + 1):
-            resp = requests.post(
-                url,
-                json=body,
-                headers={"Authorization": f"Bearer {api_key}"},
-                timeout=timeout,
-            )
+            try:
+                resp = requests.post(
+                    url,
+                    json=body,
+                    headers={"Authorization": f"Bearer {api_key}"},
+                    timeout=timeout,
+                )
+            except requests.exceptions.ConnectionError:
+                if attempt < self.config.max_retries:
+                    time.sleep(delay)
+                    delay *= 2
+                    continue
+                raise
             if resp.status_code in _RETRY_STATUSES and attempt < self.config.max_retries:
                 retry_after = float(resp.headers.get("retry-after", delay))
                 time.sleep(retry_after)
@@ -96,10 +103,20 @@ class LLMClient:
         try:
             return json.loads(raw)
         except json.JSONDecodeError:
+            # Strip markdown fences, then extract the first complete JSON object/array.
+            # This handles models that append explanations after the closing brace.
             cleaned = re.sub(r"```json|```", "", raw).strip()
             try:
                 return json.loads(cleaned)
-            except json.JSONDecodeError as exc:
-                raise ValueError(
-                    f"LLM response could not be parsed as JSON: {raw!r}"
-                ) from exc
+            except json.JSONDecodeError:
+                pass
+            # Last resort: pull out the first {...} or [...] block by brace matching
+            match = re.search(r"(\{[\s\S]*\}|\[[\s\S]*\])", cleaned)
+            if match:
+                try:
+                    return json.loads(match.group(1))
+                except json.JSONDecodeError:
+                    pass
+            raise ValueError(
+                f"LLM response could not be parsed as JSON: {raw!r}"
+            )

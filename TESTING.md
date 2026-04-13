@@ -76,6 +76,8 @@ pytest tests/simulation/ -v -s
 
 Results are written to `tests/simulation/first_sim_test_50_q/last_run_results.txt`.
 
+**Test run logs:** Every `pytest` run creates a timestamped WARNING-level log file in `logs/` at the repo root (e.g. `logs/2026-04-13_09-19-34.log`). These capture ingestion pipeline warnings — retry attempts, zero-entity extractions, and JSON parse fallbacks — without cluttering the terminal output. The `logs/` directory is created automatically on first run.
+
 ---
 
 ## Benchmark run history

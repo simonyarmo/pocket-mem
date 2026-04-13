@@ -31,7 +31,7 @@ def test_storage_config_override():
 def test_memory_config_defaults():
     cfg = MemoryConfig()
     assert cfg.working_memory_turns == 10
-    assert cfg.compaction_threshold == 20
+    assert cfg.compaction_threshold == 100
     assert cfg.importance_prune_threshold == 0.1
     assert cfg.prune_after_days == 30
     assert cfg.prune_min_access_count == 2

@@ -29,6 +29,7 @@ _DATA_DIR = SIM_DIR.parent / "test_data"
 EMAILS_FILE = _DATA_DIR / "test_emails.txt"
 ANSWER_KEY_FILE = _DATA_DIR / "answer_key.txt"
 RESULTS_FILE = SIM_DIR / "last_run_results.txt"
+MEMORY_DIR = SIM_DIR / "memory"   # persistent SQLite store — inspect after the run
 
 MODEL = "qwen2.5:7b"
 OLLAMA_BASE = "http://localhost:11434/v1"
@@ -38,7 +39,7 @@ CLAUDE_MODEL = "claude-haiku-4-5-20251001"
 
 def _load_claude_key() -> str | None:
     """Read CLAUDE_API_KEY from .env at repo root, falling back to environment."""
-    env_file = Path(__file__).parent.parent.parent / ".env"
+    env_file = Path(__file__).parent.parent.parent.parent / ".env"
     if env_file.exists():
         for line in env_file.read_text(encoding="utf-8").splitlines():
             if line.startswith("CLAUDE_API_KEY="):
@@ -198,7 +199,7 @@ def percentile(values: list[float], p: int) -> float:
 # ---------------------------------------------------------------------------
 
 @pytest.mark.skipif(not _ollama_reachable(), reason="Ollama not running")
-def test_veloris_benchmark(tmp_path):
+def test_veloris_benchmark():
     claude_key = _load_claude_key()
     llm_cfg = LLMConfig(
         base_url=OLLAMA_BASE,
@@ -217,8 +218,10 @@ def test_veloris_benchmark(tmp_path):
     # ------------------------------------------------------------------
     # Phase 1: Ingestion
     # ------------------------------------------------------------------
+    MEMORY_DIR.mkdir(exist_ok=True)
     print(f"\n[benchmark] Ingesting header + {len(emails)} emails...")
-    agent = MemoryAgent(project, path=str(tmp_path), llm=llm_cfg)
+    print(f"[benchmark] Memory store: {MEMORY_DIR / (project + '.db')}")
+    agent = MemoryAgent(project, path=str(MEMORY_DIR), llm=llm_cfg)
     observe_times: list[float] = []
 
     # Ingest the company/people/projects header first — it contains facts
@@ -248,7 +251,7 @@ def test_veloris_benchmark(tmp_path):
     # Phase 2: Restart (session persistence)
     # ------------------------------------------------------------------
     print("[benchmark] Restarting agent (session persistence test)...")
-    agent = MemoryAgent(project, path=str(tmp_path), llm=llm_cfg)
+    agent = MemoryAgent(project, path=str(MEMORY_DIR), llm=llm_cfg)
     stats_after_restart = agent.stats()
     session_persistence = stats_after_restart["node_count"] > 0
     print(f"[benchmark] Post-restart nodes={stats_after_restart['node_count']}  persistence={'PASS' if session_persistence else 'FAIL'}")
@@ -260,14 +263,19 @@ def test_veloris_benchmark(tmp_path):
     results: dict[str, str] = {}
     recall_times: list[float] = []
 
+    recall_tokens_out: dict[str, int] = {}
+
     for q in QUESTIONS:
+        pre = agent.token_stats()
         t0 = perf_counter()
         answer = agent.recall(q["q"], mode="answer")
         elapsed = perf_counter() - t0
+        post = agent.token_stats()
         recall_times.append(elapsed)
         results[q["id"]] = answer
+        recall_tokens_out[q["id"]] = post["tokens_out"] - pre["tokens_out"]
         score = auto_score(q["id"], answer)
-        print(f"  {q['id']} [{elapsed*1000:.0f}ms] {score}")
+        print(f"  {q['id']} [{elapsed*1000:.0f}ms] [out={recall_tokens_out[q['id']]}tok] {score}")
 
     total_tokens = agent.token_stats()
     agent.close()
@@ -321,6 +329,7 @@ def test_veloris_benchmark(tmp_path):
         w(f"  EXPECTED : {expected}")
         w(f"  ANSWER   : {answer.strip()}")
         w(f"  SCORE    : {score}")
+        w(f"  TOKENS   : {recall_tokens_out.get(q['id'], 0)} output tokens")
         w()
 
     # Latency summary
