@@ -49,20 +49,15 @@ class MemoryAgent:
             exc = future.exception()
             if exc:
                 _log.warning("observe() ingestion failed, retrying once: %s", exc)
-                try:
-                    retry = self._executor.submit(
-                        ingest,
-                        user_input,
-                        agent_response,
-                        self._store,
-                        self._llm,
-                        self._session_id,
-                    )
-                    retry.add_done_callback(_done_final)
-                except RuntimeError:
-                    _log.error(
-                        "observe() ingestion failed and executor is shut down, dropping turn: %s", exc
-                    )
+                retry = self._executor.submit(
+                    ingest,
+                    user_input,
+                    agent_response,
+                    self._store,
+                    self._llm,
+                    self._session_id,
+                )
+                retry.add_done_callback(_done_final)
             else:
                 self._maybe_compact()
 

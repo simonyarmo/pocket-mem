@@ -13,7 +13,7 @@ class LLMConfig:
     api_key: str = "ollama"
     timeout: int = 45
     temperature: float = 0.1
-    max_tokens: int = 4096
+    max_tokens: int = 1024
     max_retries: int = 3                 # retries on 429/529 rate-limit responses
     retry_delay: float = 5.0            # initial backoff in seconds (doubles each retry)
 

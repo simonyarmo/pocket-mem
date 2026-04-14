@@ -8,7 +8,7 @@ def test_llm_config_defaults():
     assert cfg.api_key == "ollama"
     assert cfg.timeout == 45
     assert cfg.temperature == 0.1
-    assert cfg.max_tokens == 4096
+    assert cfg.max_tokens == 1024
 
 
 def test_llm_config_override():

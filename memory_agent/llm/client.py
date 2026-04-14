@@ -113,16 +113,8 @@ class LLMClient:
             # Last resort: pull out the first {...} or [...] block by brace matching
             match = re.search(r"(\{[\s\S]*\}|\[[\s\S]*\])", cleaned)
             if match:
-                extracted = match.group(1)
                 try:
-                    return json.loads(extracted)
-                except json.JSONDecodeError:
-                    pass
-                # Some models emit bare (unquoted) keys e.g. `to: "value"`.
-                # Quote any word-token that appears in key position.
-                fixed = re.sub(r'(?<!["\'\w])([A-Za-z_]\w*)(?=\s*:)', r'"\1"', extracted)
-                try:
-                    return json.loads(fixed)
+                    return json.loads(match.group(1))
                 except json.JSONDecodeError:
                     pass
             raise ValueError(
