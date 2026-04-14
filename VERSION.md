@@ -35,7 +35,7 @@
 ### Testing
 - 218 unit tests covering every layer of the stack (storage, retrieval, ingestion, compaction, LLM client, config, packaging)
 - Veloris benchmark: 60-question simulation (50 scored + 10 unanswerable) across direct lookup, single-hop, multi-hop, and unanswerable categories
-- 93% average accuracy on answerable questions across benchmark runs (peak 97%), using `qwen2.5:7b` for ingestion and Claude Haiku as the answer model
+- 95% average accuracy on answerable questions across benchmark runs (peak 97%), using `qwen2.5:7b` for ingestion and Claude Haiku as the answer model
 - Timestamped WARNING-level log files in `logs/` for every test run — captures ingestion retries, zero-entity warnings, and JSON parse fallbacks
 
 ---
