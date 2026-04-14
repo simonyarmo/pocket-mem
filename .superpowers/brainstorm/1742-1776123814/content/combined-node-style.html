@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #06060e;
+  color: #e5e7eb;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  min-height: 100vh;
+}
+h2 { font-size: 15px; color: #a5b4fc; margin-bottom: 4px; }
+.subtitle { font-size: 11px; color: #6b7280; margin-bottom: 20px; text-align: center; }
+
+.scene {
+  width: 820px;
+  height: 460px;
+  border: 1px solid #1e1e30;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  background: #06060e;
+}
+
+/* ── Parallax star layers ── */
+@keyframes drift-far  { 0%{transform:translate(0,0)}  100%{transform:translate(-10px,-5px)} }
+@keyframes drift-mid  { 0%{transform:translate(0,0)}  100%{transform:translate(-18px,-9px)} }
+@keyframes drift-near { 0%{transform:translate(0,0)}  100%{transform:translate(-30px,-15px)} }
+
+.star-layer { position: absolute; inset: -40px; pointer-events: none; }
+.star-layer.far  { animation: drift-far  18s ease-in-out infinite alternate; }
+.star-layer.mid  { animation: drift-mid  12s ease-in-out infinite alternate; }
+.star-layer.near { animation: drift-near  7s ease-in-out infinite alternate; }
+
+/* ── Stellar flicker — rare, brief ── */
+@keyframes stellar-flicker {
+  0%,84%,86%,88%,100% { opacity: 1; }
+  85%  { opacity: 0.12; }
+  87%  { opacity: 0.75; }
+  89%  { opacity: 0.08; }
+}
+@keyframes stellar-flicker-b {
+  0%,77%,79%,81%,100% { opacity: 1; }
+  78%  { opacity: 0.1; }
+  80%  { opacity: 0.8; }
+  82%  { opacity: 0.05; }
+}
+@keyframes stellar-flicker-c {
+  0%,91%,93%,100% { opacity: 1; }
+  92%  { opacity: 0.15; }
+  94%  { opacity: 0.7; }
+}
+
+.flicker-a { animation: stellar-flicker   9s  2.1s ease-in-out infinite; }
+.flicker-b { animation: stellar-flicker-b 11s 0.4s ease-in-out infinite; }
+.flicker-c { animation: stellar-flicker   14s 5.3s ease-in-out infinite; }
+.flicker-d { animation: stellar-flicker-b 8s  3.7s ease-in-out infinite; }
+
+/* Labels */
+.node-label {
+  position: absolute;
+  font-size: 10px;
+  color: #9ca3af;
+  text-align: center;
+  pointer-events: none;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Legend */
+.legend {
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+  font-size: 11px;
+  color: #6b7280;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.note {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #4b5563;
+  text-align: center;
+  max-width: 600px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<h2>Combined node style — B + C + F with star-corona glow &amp; flicker</h2>
+<p class="subtitle">Watch the glows — they flicker rarely, like real stars. Topic node has a Saturn ring. All nodes have 3D gradient surface + inner ring detail.</p>
+
+<div class="scene" id="scene">
+
+  <!-- Parallax star layers -->
+  <canvas class="star-layer far"  id="cl-far"  width="900" height="540"></canvas>
+  <canvas class="star-layer mid"  id="cl-mid"  width="900" height="540"></canvas>
+  <canvas class="star-layer near" id="cl-near" width="900" height="540"></canvas>
+
+  <svg width="820" height="460" style="position:absolute;inset:0" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Blur filters for glows -->
+      <filter id="glow-wide-v"  x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="14"/></filter>
+      <filter id="glow-tight-v" x="-60%"  y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>
+      <filter id="glow-wide-g"  x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="11"/></filter>
+      <filter id="glow-tight-g" x="-60%"  y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="4"/></filter>
+      <filter id="glow-wide-gold" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="glow-tight-gold" x="-60%" y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="3.5"/></filter>
+      <filter id="glow-wide-mem"  x="-80%"  y="-80%"  width="260%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
+      <filter id="glow-tight-mem" x="-50%"  y="-50%"  width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="glow-wide-pk"  x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="10"/></filter>
+      <filter id="glow-tight-pk" x="-60%"  y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="3.5"/></filter>
+
+      <!-- Planet surface gradients (B - lit from upper-left) -->
+      <radialGradient id="rg-violet" cx="32%" cy="28%" r="68%">
+        <stop offset="0%"   stop-color="#f5f3ff"/>
+        <stop offset="35%"  stop-color="#a78bfa"/>
+        <stop offset="75%"  stop-color="#5b21b6"/>
+        <stop offset="100%" stop-color="#2e1065"/>
+      </radialGradient>
+      <radialGradient id="rg-green" cx="32%" cy="28%" r="68%">
+        <stop offset="0%"   stop-color="#ecfdf5"/>
+        <stop offset="35%"  stop-color="#34d399"/>
+        <stop offset="75%"  stop-color="#065f46"/>
+        <stop offset="100%" stop-color="#022c22"/>
+      </radialGradient>
+      <radialGradient id="rg-gold" cx="32%" cy="28%" r="68%">
+        <stop offset="0%"   stop-color="#fffbeb"/>
+        <stop offset="35%"  stop-color="#fbbf24"/>
+        <stop offset="75%"  stop-color="#92400e"/>
+        <stop offset="100%" stop-color="#451a03"/>
+      </radialGradient>
+      <radialGradient id="rg-mem" cx="32%" cy="28%" r="68%">
+        <stop offset="0%"   stop-color="#f9fafb"/>
+        <stop offset="40%"  stop-color="#9ca3af"/>
+        <stop offset="80%"  stop-color="#374151"/>
+        <stop offset="100%" stop-color="#111827"/>
+      </radialGradient>
+      <radialGradient id="rg-pink" cx="32%" cy="28%" r="68%">
+        <stop offset="0%"   stop-color="#fdf2f8"/>
+        <stop offset="35%"  stop-color="#f472b6"/>
+        <stop offset="75%"  stop-color="#9d174d"/>
+        <stop offset="100%" stop-color="#500724"/>
+      </radialGradient>
+
+      <!-- Edge gradient -->
+      <linearGradient id="edge-vg" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#a78bfa" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#34d399" stop-opacity="0.3"/>
+      </linearGradient>
+      <linearGradient id="edge-gf" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#34d399" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.3"/>
+      </linearGradient>
+      <linearGradient id="edge-gp" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#34d399" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#f472b6" stop-opacity="0.3"/>
+      </linearGradient>
+      <linearGradient id="edge-gm" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#a78bfa" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#6b7280" stop-opacity="0.2"/>
+      </linearGradient>
+    </defs>
+
+    <!-- ── Edges ── -->
+    <line x1="220" y1="200" x2="410" y2="175" stroke="url(#edge-vg)" stroke-width="1.2"/>
+    <line x1="410" y1="175" x2="570" y2="220" stroke="url(#edge-gf)" stroke-width="1"/>
+    <line x1="410" y1="175" x2="560" y2="310" stroke="url(#edge-gp)" stroke-width="0.9"/>
+    <line x1="220" y1="200" x2="130" y2="320" stroke="url(#edge-gm)" stroke-width="0.8" stroke-dasharray="4 4"/>
+    <line x1="570" y1="220" x2="680" y2="340" stroke="url(#edge-gm)" stroke-width="0.8" stroke-dasharray="4 4"/>
+
+
+    <!-- ════════════════════════════════════════════════
+         NODE 1 — Topic (violet) — large — at 220,200
+         3D planet + Saturn ring + inner F-ring + corona glow + flicker
+    ═══════════════════════════════════════════════════ -->
+
+    <!-- Wide outer corona (flickering) -->
+    <circle class="flicker-a" cx="220" cy="200" r="42" fill="#a78bfa" filter="url(#glow-wide-v)"  opacity="0.32"/>
+    <!-- Tight inner corona (flickering, different timing) -->
+    <circle class="flicker-b" cx="220" cy="200" r="26" fill="#a78bfa" filter="url(#glow-tight-v)" opacity="0.58"/>
+
+    <!-- Saturn ring — back half (behind planet) -->
+    <ellipse cx="220" cy="213" rx="30" ry="8"
+             fill="none" stroke="#c4b5fd" stroke-width="5" opacity="0.12"/>
+    <ellipse cx="220" cy="213" rx="30" ry="8"
+             fill="none" stroke="#c4b5fd" stroke-width="1.5" opacity="0.35"/>
+
+    <!-- Planet body (B - 3D gradient) -->
+    <circle cx="220" cy="200" r="20" fill="url(#rg-violet)"/>
+
+    <!-- Inner structural ring (F) -->
+    <circle cx="220" cy="200" r="13" fill="none" stroke="#c4b5fd" stroke-width="0.9" opacity="0.55"/>
+    <!-- Inner ring glow -->
+    <circle cx="220" cy="200" r="13" fill="none" stroke="#c4b5fd" stroke-width="3" opacity="0.15" filter="url(#glow-tight-v)"/>
+
+    <!-- Center star point (F) -->
+    <circle cx="220" cy="200" r="3.5" fill="#e9d5ff" filter="url(#glow-tight-v)" opacity="0.8"/>
+    <circle cx="220" cy="200" r="2"   fill="white"/>
+
+    <!-- Saturn ring — front half (in front of planet) -->
+    <path d="M190,213 A30,8 0 0,0 250,213"
+          fill="none" stroke="#c4b5fd" stroke-width="5" opacity="0.12"/>
+    <path d="M190,213 A30,8 0 0,0 250,213"
+          fill="none" stroke="#c4b5fd" stroke-width="1.5" opacity="0.38"/>
+
+    <!-- Specular highlight -->
+    <ellipse cx="211" cy="191" rx="5" ry="3.5" fill="white" opacity="0.45"/>
+
+
+    <!-- ════════════════════════════════════════════════
+         NODE 2 — Entity: Person (green) — medium — at 410,175
+    ═══════════════════════════════════════════════════ -->
+    <circle class="flicker-c" cx="410" cy="175" r="28" fill="#34d399" filter="url(#glow-wide-g)"  opacity="0.28"/>
+    <circle class="flicker-d" cx="410" cy="175" r="18" fill="#34d399" filter="url(#glow-tight-g)" opacity="0.52"/>
+
+    <circle cx="410" cy="175" r="14" fill="url(#rg-green)"/>
+
+    <!-- Inner ring (F) -->
+    <circle cx="410" cy="175" r="9"  fill="none" stroke="#6ee7b7" stroke-width="0.8" opacity="0.55"/>
+    <circle cx="410" cy="175" r="9"  fill="none" stroke="#6ee7b7" stroke-width="2.5" opacity="0.12" filter="url(#glow-tight-g)"/>
+    <!-- Center point -->
+    <circle cx="410" cy="175" r="2.5" fill="#a7f3d0" filter="url(#glow-tight-g)" opacity="0.8"/>
+    <circle cx="410" cy="175" r="1.5" fill="white"/>
+
+    <ellipse cx="403" cy="168" rx="3.5" ry="2.5" fill="white" opacity="0.42"/>
+
+
+    <!-- ════════════════════════════════════════════════
+         NODE 3 — Entity: Project (gold) — medium — at 570,220
+    ═══════════════════════════════════════════════════ -->
+    <circle class="flicker-b" cx="570" cy="220" r="22" fill="#fbbf24" filter="url(#glow-wide-gold)"  opacity="0.28"/>
+    <circle class="flicker-a" cx="570" cy="220" r="14" fill="#fbbf24" filter="url(#glow-tight-gold)" opacity="0.5"/>
+
+    <circle cx="570" cy="220" r="11" fill="url(#rg-gold)"/>
+
+    <circle cx="570" cy="220" r="7"  fill="none" stroke="#fde68a" stroke-width="0.8" opacity="0.55"/>
+    <circle cx="570" cy="220" r="7"  fill="none" stroke="#fde68a" stroke-width="2"   opacity="0.12" filter="url(#glow-tight-gold)"/>
+    <circle cx="570" cy="220" r="2"  fill="#fef9c3" filter="url(#glow-tight-gold)" opacity="0.8"/>
+    <circle cx="570" cy="220" r="1.2" fill="white"/>
+
+    <ellipse cx="564" cy="214" rx="2.8" ry="2" fill="white" opacity="0.42"/>
+
+
+    <!-- ════════════════════════════════════════════════
+         NODE 4 — Entity: Concept (pink) — small-medium — at 560,310
+    ═══════════════════════════════════════════════════ -->
+    <circle class="flicker-d" cx="560" cy="310" r="18" fill="#f472b6" filter="url(#glow-wide-pk)"  opacity="0.26"/>
+    <circle class="flicker-c" cx="560" cy="310" r="11" fill="#f472b6" filter="url(#glow-tight-pk)" opacity="0.48"/>
+
+    <circle cx="560" cy="310" r="9"  fill="url(#rg-pink)"/>
+
+    <circle cx="560" cy="310" r="5.5" fill="none" stroke="#f9a8d4" stroke-width="0.7" opacity="0.55"/>
+    <circle cx="560" cy="310" r="5.5" fill="none" stroke="#f9a8d4" stroke-width="2"   opacity="0.12" filter="url(#glow-tight-pk)"/>
+    <circle cx="560" cy="310" r="1.8" fill="#fce7f3" filter="url(#glow-tight-pk)" opacity="0.8"/>
+    <circle cx="560" cy="310" r="1"   fill="white"/>
+
+    <ellipse cx="555" cy="305" rx="2.2" ry="1.6" fill="white" opacity="0.38"/>
+
+
+    <!-- ════════════════════════════════════════════════
+         NODE 5 — Memory chunk (gray) — small — at 130,320
+    ═══════════════════════════════════════════════════ -->
+    <circle class="flicker-a" cx="130" cy="320" r="14" fill="#6b7280" filter="url(#glow-wide-mem)"  opacity="0.2"/>
+    <circle class="flicker-b" cx="130" cy="320" r="9"  fill="#6b7280" filter="url(#glow-tight-mem)" opacity="0.38"/>
+
+    <circle cx="130" cy="320" r="6.5" fill="url(#rg-mem)"/>
+
+    <circle cx="130" cy="320" r="4"  fill="none" stroke="#9ca3af" stroke-width="0.6" opacity="0.5"/>
+    <circle cx="130" cy="320" r="1.4" fill="#e5e7eb" opacity="0.7"/>
+
+    <ellipse cx="127" cy="317" rx="1.5" ry="1.1" fill="white" opacity="0.35"/>
+
+
+    <!-- ════════════════════════════════════════════════
+         NODE 6 — Memory chunk (gray) — tiny — at 680,340
+    ═══════════════════════════════════════════════════ -->
+    <circle class="flicker-c" cx="680" cy="340" r="11" fill="#6b7280" filter="url(#glow-wide-mem)"  opacity="0.18"/>
+    <circle class="flicker-d" cx="680" cy="340" r="7"  fill="#6b7280" filter="url(#glow-tight-mem)" opacity="0.32"/>
+
+    <circle cx="680" cy="340" r="5" fill="url(#rg-mem)"/>
+    <circle cx="680" cy="340" r="3" fill="none" stroke="#9ca3af" stroke-width="0.6" opacity="0.45"/>
+    <circle cx="680" cy="340" r="1.1" fill="#e5e7eb" opacity="0.6"/>
+
+  </svg>
+
+  <!-- Labels -->
+  <div class="node-label" style="left:220px;top:228px">engineering</div>
+  <div class="node-label" style="left:410px;top:197px">Marcus Webb</div>
+  <div class="node-label" style="left:570px;top:239px">Conduit Rewrite</div>
+  <div class="node-label" style="left:560px;top:327px">microservices</div>
+  <div class="node-label" style="left:130px;top:334px">memory record</div>
+  <div class="node-label" style="left:680px;top:353px">memory record</div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div>Topic (with ring)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div>Person</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>Project</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f472b6"></div>Concept</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Memory</div>
+</div>
+
+<p class="note">
+  Glow flickers rarely — each node has its own timing so they never all flicker at once.<br>
+  3D surface from B · Saturn ring on topics from C · inner structural ring + center point from F.
+</p>
+
+<script>
+// Draw procedural stars on canvas layers
+function seedRng(s) {
+  return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+}
+function drawStars(id, n, seed, szRange, opRange) {
+  const c = document.getElementById(id);
+  const ctx = c.getContext('2d');
+  const rng = seedRng(seed);
+  for (let i = 0; i < n; i++) {
+    const x = rng() * c.width;
+    const y = rng() * c.height;
+    const r = szRange[0] + rng() * (szRange[1] - szRange[0]);
+    const op = opRange[0] + rng() * (opRange[1] - opRange[0]);
+    // occasional blue-white or warm tint
+    const tint = rng();
+    const color = tint > 0.92 ? `rgba(180,210,255,${op})` :
+                  tint > 0.85 ? `rgba(255,220,180,${op})` :
+                  `rgba(255,255,255,${op})`;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+}
+drawStars('cl-far',  120, 1001, [0.4, 1.0], [0.15, 0.45]);
+drawStars('cl-mid',   55, 2002, [0.7, 1.5], [0.30, 0.65]);
+drawStars('cl-near',  18, 3003, [1.2, 2.2], [0.50, 0.90]);
+</script>
+</body>
+</html>

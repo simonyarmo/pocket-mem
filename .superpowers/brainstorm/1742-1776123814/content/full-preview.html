@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #06060e;
+  color: #e5e7eb;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+h2 { font-size: 14px; color: #a5b4fc; margin-bottom: 4px; }
+.subtitle { font-size: 11px; color: #6b7280; margin-bottom: 16px; text-align:center; }
+
+/* ── Full scene ── */
+.scene {
+  width: 860px;
+  height: 520px;
+  border: 1px solid #1a1a2e;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  background: #04040b;
+}
+
+/* Parallax layers */
+@keyframes drift-far  { 0%{transform:translate(0,0)}   100%{transform:translate(-12px,-6px)} }
+@keyframes drift-mid  { 0%{transform:translate(0,0)}   100%{transform:translate(-22px,-11px)} }
+@keyframes drift-near { 0%{transform:translate(0,0)}   100%{transform:translate(-38px,-19px)} }
+.sl { position:absolute; inset:-50px; pointer-events:none; }
+.sl.far  { animation: drift-far  24s ease-in-out infinite alternate; }
+.sl.mid  { animation: drift-mid  15s ease-in-out infinite alternate; }
+.sl.near { animation: drift-near  9s ease-in-out infinite alternate; }
+
+/* ── UI chrome ── */
+.chrome-tl {
+  position: absolute; top:14px; left:14px; z-index:10;
+  display:flex; align-items:center; gap:6px;
+}
+.ctrl-btn {
+  background:#0f0f1c; border:1px solid #2a2a3e; color:#6b7280;
+  padding:4px 9px; border-radius:5px; font-family:inherit; font-size:11px; cursor:pointer;
+  transition: border-color .15s, color .15s;
+}
+.ctrl-btn:hover { border-color:#5b5bab; color:#c4b5fd; }
+.count-badge {
+  padding:4px 9px; background:#080813; border:1px solid #1a1a2e;
+  border-radius:5px; color:#4b5563; font-size:11px;
+}
+
+.chrome-tc {
+  position:absolute; top:14px; left:50%; transform:translateX(-50%); z-index:10;
+}
+.search-pill {
+  background:#080813; border:1px solid #2a2a3e; color:#9ca3af;
+  padding:6px 16px; border-radius:20px; font-family:inherit; font-size:12px;
+  width:220px; outline:none;
+}
+.search-pill::placeholder { color:#2d2d44; }
+
+.chrome-tr {
+  position:absolute; top:14px; right:14px; z-index:10;
+  background:#080813; border:1px solid #1a1a2e; border-radius:7px;
+  padding:9px 12px; font-size:10px;
+}
+.legend-title { color:#2d2d44; font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:5px; }
+.leg-row { display:flex; align-items:center; gap:7px; color:#4b5563; padding:2px 0; }
+.leg-star { display:inline-block; width:10px; height:10px; }
+
+/* Node labels */
+.nlabel {
+  position:absolute; font-size:9px; color:#374151;
+  pointer-events:none; transform:translateX(-50%); white-space:nowrap;
+}
+
+.note { margin-top:12px; font-size:10px; color:#374151; text-align:center; max-width:620px; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<h2>Full design preview — everything combined</h2>
+<p class="subtitle">Parallax stars · 4-point sparkle ✧ · orbit rings · Saturn ring on topics · corona glow · left→right wave · constellation edges</p>
+
+<div class="scene" id="scene">
+  <!-- Star layers -->
+  <canvas class="sl far"  id="sf" width="960" height="620"></canvas>
+  <canvas class="sl mid"  id="sm" width="960" height="620"></canvas>
+  <canvas class="sl near" id="sn" width="960" height="620"></canvas>
+
+  <!-- UI Chrome -->
+  <div class="chrome-tl">
+    <button class="ctrl-btn">+</button>
+    <button class="ctrl-btn">−</button>
+    <button class="ctrl-btn">⟳</button>
+    <span class="count-badge">6 nodes · 8 edges</span>
+  </div>
+  <div class="chrome-tc">
+    <input class="search-pill" placeholder="search nodes…" readonly>
+  </div>
+  <div class="chrome-tr">
+    <div class="legend-title">Node Types</div>
+    <div class="leg-row"><svg class="leg-star" viewBox="-5 -5 10 10"><path d="M0,-4L0.9,-1.2L3.8,-1.2L1.5,0.5L2.4,3.3L0,1.6L-2.4,3.3L-1.5,0.5L-3.8,-1.2L-0.9,-1.2Z" fill="#a78bfa"/></svg>Topic</div>
+    <div class="leg-row"><svg class="leg-star" viewBox="-5 -5 10 10"><path d="M0,-4L0.9,-1.2L3.8,-1.2L1.5,0.5L2.4,3.3L0,1.6L-2.4,3.3L-1.5,0.5L-3.8,-1.2L-0.9,-1.2Z" fill="#34d399"/></svg>Person</div>
+    <div class="leg-row"><svg class="leg-star" viewBox="-5 -5 10 10"><path d="M0,-4L0.9,-1.2L3.8,-1.2L1.5,0.5L2.4,3.3L0,1.6L-2.4,3.3L-1.5,0.5L-3.8,-1.2L-0.9,-1.2Z" fill="#fbbf24"/></svg>Project</div>
+    <div class="leg-row"><svg class="leg-star" viewBox="-5 -5 10 10"><path d="M0,-4L0.9,-1.2L3.8,-1.2L1.5,0.5L2.4,3.3L0,1.6L-2.4,3.3L-1.5,0.5L-3.8,-1.2L-0.9,-1.2Z" fill="#f472b6"/></svg>Concept</div>
+    <div class="leg-row"><svg class="leg-star" viewBox="-5 -5 10 10"><path d="M0,-4L0.9,-1.2L3.8,-1.2L1.5,0.5L2.4,3.3L0,1.6L-2.4,3.3L-1.5,0.5L-3.8,-1.2L-0.9,-1.2Z" fill="#6b7280"/></svg>Memory</div>
+  </div>
+
+  <!-- Main SVG -->
+  <svg id="gsvg" width="860" height="520" style="position:absolute;inset:0" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- glow filters -->
+      <filter id="fw1" x="-160%" y="-160%" width="420%" height="420%"><feGaussianBlur stdDeviation="16"/></filter>
+      <filter id="ft1" x="-90%"  y="-90%"  width="280%" height="280%"><feGaussianBlur stdDeviation="5.5"/></filter>
+      <filter id="fw2" x="-140%" y="-140%" width="380%" height="380%"><feGaussianBlur stdDeviation="12"/></filter>
+      <filter id="ft2" x="-80%"  y="-80%"  width="260%" height="260%"><feGaussianBlur stdDeviation="4"/></filter>
+      <filter id="fw3" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="ft3" x="-70%"  y="-70%"  width="240%" height="240%"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="fw4" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
+      <filter id="ft4" x="-60%"  y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="2"/></filter>
+
+      <!-- constellation edge endpoint glow -->
+      <filter id="fep"><feGaussianBlur stdDeviation="2.5"/></filter>
+    </defs>
+
+    <!-- ── Constellation edges ── -->
+    <!-- endpoint glows where lines meet nodes -->
+    <!-- engineering ↔ Marcus Webb -->
+    <circle cx="210" cy="215" r="5" fill="#a78bfa" filter="url(#fep)" opacity=".25"/>
+    <circle cx="390" cy="175" r="3.5" fill="#34d399" filter="url(#fep)" opacity=".2"/>
+    <line x1="210" y1="215" x2="390" y2="175" stroke="#8b9ab8" stroke-width="0.7" stroke-opacity=".35"/>
+
+    <!-- engineering ↔ Conduit -->
+    <circle cx="210" cy="215" r="5" fill="#a78bfa" filter="url(#fep)" opacity=".2"/>
+    <circle cx="560" cy="200" r="3" fill="#fbbf24" filter="url(#fep)" opacity=".18"/>
+    <line x1="210" y1="215" x2="560" y2="200" stroke="#8b9ab8" stroke-width="0.6" stroke-opacity=".28"/>
+
+    <!-- engineering ↔ memory1 -->
+    <line x1="210" y1="215" x2="125" y2="370" stroke="#8b9ab8" stroke-width="0.5" stroke-opacity=".2" stroke-dasharray="5 5"/>
+
+    <!-- Marcus Webb ↔ Conduit -->
+    <circle cx="390" cy="175" r="3.5" fill="#34d399" filter="url(#fep)" opacity=".18"/>
+    <circle cx="560" cy="200" r="3" fill="#fbbf24" filter="url(#fep)" opacity=".15"/>
+    <line x1="390" y1="175" x2="560" y2="200" stroke="#8b9ab8" stroke-width="0.65" stroke-opacity=".3"/>
+
+    <!-- Marcus Webb ↔ microservices -->
+    <circle cx="390" cy="175" r="3.5" fill="#34d399" filter="url(#fep)" opacity=".15"/>
+    <circle cx="390" cy="320" r="3" fill="#f472b6" filter="url(#fep)" opacity=".15"/>
+    <line x1="390" y1="175" x2="390" y2="320" stroke="#8b9ab8" stroke-width="0.6" stroke-opacity=".26"/>
+
+    <!-- Conduit ↔ microservices -->
+    <line x1="560" y1="200" x2="390" y2="320" stroke="#8b9ab8" stroke-width="0.55" stroke-opacity=".22"/>
+
+    <!-- Conduit ↔ memory2 -->
+    <line x1="560" y1="200" x2="665" y2="360" stroke="#8b9ab8" stroke-width="0.5" stroke-opacity=".18" stroke-dasharray="5 5"/>
+
+    <!-- microservices ↔ memory2 -->
+    <line x1="390" y1="320" x2="665" y2="360" stroke="#8b9ab8" stroke-width="0.45" stroke-opacity=".15" stroke-dasharray="5 5"/>
+
+
+    <!-- ════════ NODE 1 — Topic: "engineering" (violet, largest) ════════ -->
+    <!-- corona glow -->
+    <circle id="n1o" cx="210" cy="215" r="22" fill="#a78bfa" filter="url(#fw1)" opacity=".40"/>
+    <circle id="n1i" cx="210" cy="215" r="14" fill="#a78bfa" filter="url(#ft1)" opacity=".65"/>
+    <!-- Saturn ring back -->
+    <ellipse cx="210" cy="228" rx="30" ry="8" fill="none" stroke="#c4b5fd" stroke-width="4.5" opacity=".09"/>
+    <ellipse cx="210" cy="228" rx="30" ry="8" fill="none" stroke="#c4b5fd" stroke-width="1.2" opacity=".30"/>
+    <!-- star body -->
+    <path id="sp1" fill="#c4b5fd"/>
+    <!-- orbit ring -->
+    <circle cx="210" cy="215" r="8" fill="none" stroke="#c4b5fd" stroke-width="0.8" opacity=".38"/>
+    <!-- Saturn ring front -->
+    <path d="M180,228 A30,8 0 0,0 240,228" fill="none" stroke="#c4b5fd" stroke-width="4.5" opacity=".09"/>
+    <path d="M180,228 A30,8 0 0,0 240,228" fill="none" stroke="#c4b5fd" stroke-width="1.2" opacity=".34"/>
+    <!-- bright core -->
+    <circle cx="210" cy="215" r="2.8" fill="white"/>
+
+
+    <!-- ════════ NODE 2 — Person: "Marcus Webb" (green, large) ════════ -->
+    <circle id="n2o" cx="390" cy="175" r="16" fill="#34d399" filter="url(#fw2)" opacity=".36"/>
+    <circle id="n2i" cx="390" cy="175" r="10" fill="#34d399" filter="url(#ft2)" opacity=".60"/>
+    <path id="sp2" fill="#6ee7b7"/>
+    <circle cx="390" cy="175" r="5.5" fill="none" stroke="#6ee7b7" stroke-width="0.7" opacity=".38"/>
+    <circle cx="390" cy="175" r="2" fill="white"/>
+
+
+    <!-- ════════ NODE 3 — Project: "Conduit" (gold, medium) ════════ -->
+    <circle id="n3o" cx="560" cy="200" r="13" fill="#fbbf24" filter="url(#fw3)" opacity=".32"/>
+    <circle id="n3i" cx="560" cy="200" r="8"  fill="#fbbf24" filter="url(#ft3)" opacity=".55"/>
+    <path id="sp3" fill="#fde68a"/>
+    <circle cx="560" cy="200" r="4.5" fill="none" stroke="#fde68a" stroke-width="0.6" opacity=".36"/>
+    <circle cx="560" cy="200" r="1.6" fill="white"/>
+
+
+    <!-- ════════ NODE 4 — Concept: "microservices" (pink, medium) ════════ -->
+    <circle id="n4o" cx="390" cy="320" r="12" fill="#f472b6" filter="url(#fw3)" opacity=".30"/>
+    <circle id="n4i" cx="390" cy="320" r="7.5" fill="#f472b6" filter="url(#ft3)" opacity=".52"/>
+    <path id="sp4" fill="#f9a8d4"/>
+    <circle cx="390" cy="320" r="4"  fill="none" stroke="#f9a8d4" stroke-width="0.6" opacity=".34"/>
+    <circle cx="390" cy="320" r="1.4" fill="white"/>
+
+
+    <!-- ════════ NODE 5 — Memory (gray, small) ════════ -->
+    <circle id="n5o" cx="125" cy="370" r="9"  fill="#6b7280" filter="url(#fw4)" opacity=".22"/>
+    <circle id="n5i" cx="125" cy="370" r="5.5" fill="#6b7280" filter="url(#ft4)" opacity=".38"/>
+    <path id="sp5" fill="#9ca3af"/>
+    <circle cx="125" cy="370" r="2.8" fill="none" stroke="#9ca3af" stroke-width="0.5" opacity=".30"/>
+    <circle cx="125" cy="370" r="0.9" fill="white"/>
+
+
+    <!-- ════════ NODE 6 — Memory (gray, tiny) ════════ -->
+    <circle id="n6o" cx="665" cy="360" r="7"  fill="#6b7280" filter="url(#fw4)" opacity=".18"/>
+    <circle id="n6i" cx="665" cy="360" r="4"  fill="#6b7280" filter="url(#ft4)" opacity=".30"/>
+    <path id="sp6" fill="#6b7280"/>
+    <circle cx="665" cy="360" r="2.1" fill="none" stroke="#9ca3af" stroke-width="0.45" opacity=".25"/>
+    <circle cx="665" cy="360" r="0.7" fill="#d1d5db"/>
+
+  </svg>
+
+  <!-- Labels -->
+  <div class="nlabel" style="left:210px;top:248px">engineering</div>
+  <div class="nlabel" style="left:390px;top:193px">Marcus Webb</div>
+  <div class="nlabel" style="left:560px;top:216px">Conduit Rewrite</div>
+  <div class="nlabel" style="left:390px;top:337px">microservices</div>
+  <div class="nlabel" style="left:125px;top:382px">memory</div>
+  <div class="nlabel" style="left:665px;top:372px">memory</div>
+</div>
+
+<p class="note">This is the full combined design. Does anything need adjusting — glow intensity, wave speed, star proportions, ring style, colors, or anything else?</p>
+
+<script>
+// ── Stars ───────────────────────────────────────────────────────────────────
+function rng(s){ return ()=>{ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; }
+function drawStars(id,n,seed,szR,opR){
+  const c=document.getElementById(id), ctx=c.getContext('2d'), r=rng(seed);
+  for(let i=0;i<n;i++){
+    const x=r()*c.width, y=r()*c.height, sz=szR[0]+r()*(szR[1]-szR[0]), op=opR[0]+r()*(opR[1]-opR[0]);
+    const t=r(); const col=t>.92?`rgba(180,210,255,${op})`:t>.85?`rgba(255,220,190,${op})`:`rgba(255,255,255,${op})`;
+    ctx.beginPath(); ctx.arc(x,y,sz,0,Math.PI*2); ctx.fillStyle=col; ctx.fill();
+  }
+}
+drawStars('sf', 160, 1001, [0.3,0.9], [0.10,0.38]);
+drawStars('sm',  70, 2002, [0.6,1.4], [0.26,0.58]);
+drawStars('sn',  22, 3003, [1.1,2.2], [0.48,0.86]);
+
+// ── Star shape paths ─────────────────────────────────────────────────────────
+function sparkle4(cx,cy,longR,shortR,innerR){
+  const pts=[];
+  const oR=[longR,shortR,longR,shortR];
+  const aOuter=[-90,0,90,180];
+  for(let i=0;i<4;i++){
+    const ao=aOuter[i]*Math.PI/180;
+    pts.push(`${(cx+oR[i]*Math.cos(ao)).toFixed(2)},${(cy+oR[i]*Math.sin(ao)).toFixed(2)}`);
+    const ai=(aOuter[i]+45)*Math.PI/180;
+    pts.push(`${(cx+innerR*Math.cos(ai)).toFixed(2)},${(cy+innerR*Math.sin(ai)).toFixed(2)}`);
+  }
+  return 'M'+pts.join('L')+'Z';
+}
+
+const nodes=[
+  {id:'sp1', cx:210, cy:215, long:18, short:10, inner:4.2},
+  {id:'sp2', cx:390, cy:175, long:13, short:7.5, inner:3},
+  {id:'sp3', cx:560, cy:200, long:10, short:5.8, inner:2.4},
+  {id:'sp4', cx:390, cy:320, long:9,  short:5.2, inner:2.1},
+  {id:'sp5', cx:125, cy:370, long:6,  short:3.5, inner:1.4},
+  {id:'sp6', cx:665, cy:360, long:4.5,short:2.6, inner:1.1},
+];
+nodes.forEach(n=>{
+  document.getElementById(n.id).setAttribute('d', sparkle4(n.cx,n.cy,n.long,n.short,n.inner));
+});
+
+// ── Glow wave ────────────────────────────────────────────────────────────────
+const glowNodes=[
+  {o:'n1o',i:'n1i',cx:210,bo:.40,bi:.65},
+  {o:'n2o',i:'n2i',cx:390,bo:.36,bi:.60},
+  {o:'n3o',i:'n3i',cx:560,bo:.32,bi:.55},
+  {o:'n4o',i:'n4i',cx:390,bo:.30,bi:.52},
+  {o:'n5o',i:'n5i',cx:125,bo:.22,bi:.38},
+  {o:'n6o',i:'n6i',cx:665,bo:.18,bi:.30},
+];
+
+const W=860, PERIOD=9000, BAND=200, DIM=0.22;
+
+function wf(cx,wpx){
+  const d=Math.abs(cx-wpx)/(BAND/2);
+  if(d>=1) return 1;
+  return DIM+(1-DIM)*d*d;
+}
+
+function tick(ts){
+  const px=((ts%PERIOD)/PERIOD)*(W+BAND)-BAND;
+  glowNodes.forEach(n=>{
+    const f=wf(n.cx,px);
+    document.getElementById(n.o).setAttribute('opacity',(n.bo*f).toFixed(3));
+    document.getElementById(n.i).setAttribute('opacity',(n.bi*f).toFixed(3));
+  });
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

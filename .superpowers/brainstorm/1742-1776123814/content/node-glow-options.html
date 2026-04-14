@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #080810;
+  color: #e5e7eb;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  padding: 24px;
+}
+
+h2 { font-size: 16px; color: #a5b4fc; margin-bottom: 6px; }
+.subtitle { font-size: 12px; color: #6b7280; margin-bottom: 24px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.option-card {
+  border: 2px solid #2d2d44;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+  position: relative;
+}
+.option-card:hover { border-color: #6366f1; transform: translateY(-2px); }
+.option-card.selected { border-color: #a5b4fc; }
+.option-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px; right: 12px;
+  color: #a5b4fc; font-size: 16px; font-weight: bold;
+}
+
+.preview {
+  height: 200px;
+  background: #06060e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shared star bg */
+.preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(0.8px 0.8px at 8% 12%, #ffffff30, transparent),
+    radial-gradient(0.8px 0.8px at 22% 65%, #ffffff28, transparent),
+    radial-gradient(0.8px 0.8px at 38% 28%, #ffffff22, transparent),
+    radial-gradient(0.8px 0.8px at 55% 78%, #ffffff25, transparent),
+    radial-gradient(0.8px 0.8px at 72% 18%, #ffffff20, transparent),
+    radial-gradient(0.8px 0.8px at 88% 52%, #ffffff28, transparent),
+    radial-gradient(0.8px 0.8px at 15% 90%, #ffffff22, transparent),
+    radial-gradient(0.8px 0.8px at 65% 45%, #ffffff18, transparent),
+    radial-gradient(0.8px 0.8px at 45% 8%,  #ffffff25, transparent),
+    radial-gradient(0.8px 0.8px at 92% 82%, #ffffff20, transparent),
+    radial-gradient(0.8px 0.8px at 30% 50%, #ffffff15, transparent),
+    radial-gradient(0.8px 0.8px at 78% 70%, #ffffff22, transparent);
+  pointer-events: none;
+}
+
+.node-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+
+/* ── A: Soft single-layer glow ── */
+.glow-a {
+  border-radius: 50%;
+  position: relative;
+}
+.glow-a::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  filter: blur(6px);
+  opacity: 0.55;
+}
+
+/* ── B: Multi-ring halo ── */
+.glow-b {
+  border-radius: 50%;
+  position: relative;
+}
+.glow-b::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  filter: blur(10px);
+  opacity: 0.4;
+}
+.glow-b::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  filter: blur(3px);
+  opacity: 0.7;
+}
+
+/* ── C: Sharp core + wide nebula bloom ── */
+.glow-c {
+  border-radius: 50%;
+  position: relative;
+}
+.glow-c-outer {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: 0.3;
+}
+.glow-c-mid {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(6px);
+  opacity: 0.5;
+}
+
+/* ── D: Pulsing glow ── */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%       { opacity: 0.65; transform: scale(1.25); }
+}
+.glow-d {
+  border-radius: 50%;
+  position: relative;
+}
+.glow-d::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0.45;
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Label bar */
+.label-bar {
+  background: #0d0d1a;
+  border-top: 1px solid #2d2d44;
+  padding: 10px 14px;
+}
+.label-bar strong { display: block; font-size: 13px; color: #e5e7eb; margin-bottom: 3px; }
+.label-bar span { font-size: 11px; color: #6b7280; }
+
+#selection-bar {
+  max-width: 860px;
+  margin: 18px auto 0;
+  padding: 10px 14px;
+  background: #0d0d1a;
+  border: 1px solid #2d2d44;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #6b7280;
+}
+</style>
+</head>
+<body>
+
+<h2 style="max-width:860px;margin:0 auto 6px">Node glow style</h2>
+<p class="subtitle" style="max-width:860px;margin:0 auto 18px">Each preview shows small/medium/large nodes of 3 different types. Click to select.</p>
+
+<div class="grid">
+
+  <!-- A: Soft single glow -->
+  <div class="option-card" onclick="select('a',this)">
+    <div class="preview">
+      <svg width="420" height="200" style="position:absolute;inset:0" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="gA-v"><feGaussianBlur stdDeviation="5"/></filter>
+          <filter id="gA-g"><feGaussianBlur stdDeviation="4"/></filter>
+          <filter id="gA-p"><feGaussianBlur stdDeviation="3.5"/></filter>
+        </defs>
+        <!-- violet topic node -->
+        <circle cx="90" cy="100" r="22" fill="#a78bfa" filter="url(#gA-v)" opacity="0.45"/>
+        <circle cx="90" cy="100" r="14" fill="#a78bfa"/>
+        <!-- green person node -->
+        <circle cx="210" cy="100" r="16" fill="#34d399" filter="url(#gA-g)" opacity="0.45"/>
+        <circle cx="210" cy="100" r="10" fill="#34d399"/>
+        <!-- gold project node -->
+        <circle cx="310" cy="100" r="12" fill="#fbbf24" filter="url(#gA-p)" opacity="0.45"/>
+        <circle cx="310" cy="100" r="7" fill="#fbbf24"/>
+        <!-- gray memory -->
+        <circle cx="370" cy="110" r="7" fill="#6b7280" filter="url(#gA-p)" opacity="0.35"/>
+        <circle cx="370" cy="110" r="4" fill="#9ca3af"/>
+      </svg>
+    </div>
+    <div class="label-bar">
+      <strong>A — Soft haze</strong>
+      <span>Single-layer blur halo, subtle. Clean, minimal, works at any density.</span>
+    </div>
+  </div>
+
+  <!-- B: Multi-ring halo -->
+  <div class="option-card" onclick="select('b',this)">
+    <div class="preview">
+      <svg width="420" height="200" style="position:absolute;inset:0" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="gB-v1"><feGaussianBlur stdDeviation="9"/></filter>
+          <filter id="gB-v2"><feGaussianBlur stdDeviation="3"/></filter>
+          <filter id="gB-g1"><feGaussianBlur stdDeviation="7"/></filter>
+          <filter id="gB-g2"><feGaussianBlur stdDeviation="2.5"/></filter>
+        </defs>
+        <!-- violet topic: outer + inner ring -->
+        <circle cx="90" cy="100" r="26" fill="#a78bfa" filter="url(#gB-v1)" opacity="0.35"/>
+        <circle cx="90" cy="100" r="17" fill="#a78bfa" filter="url(#gB-v2)" opacity="0.6"/>
+        <circle cx="90" cy="100" r="14" fill="#c4b5fd"/>
+        <!-- green person -->
+        <circle cx="210" cy="100" r="19" fill="#34d399" filter="url(#gB-g1)" opacity="0.35"/>
+        <circle cx="210" cy="100" r="13" fill="#34d399" filter="url(#gB-g2)" opacity="0.6"/>
+        <circle cx="210" cy="100" r="10" fill="#6ee7b7"/>
+        <!-- gold project -->
+        <circle cx="315" cy="100" r="14" fill="#fbbf24" filter="url(#gB-g1)" opacity="0.3"/>
+        <circle cx="315" cy="100" r="9"  fill="#fbbf24" filter="url(#gB-g2)" opacity="0.6"/>
+        <circle cx="315" cy="100" r="7"  fill="#fde68a"/>
+        <!-- memory -->
+        <circle cx="372" cy="110" r="9"  fill="#6b7280" filter="url(#gB-g1)" opacity="0.25"/>
+        <circle cx="372" cy="110" r="4.5" fill="#9ca3af"/>
+      </svg>
+    </div>
+    <div class="label-bar">
+      <strong>B — Star corona</strong>
+      <span>Wide outer bloom + tight inner ring. Nodes look like real stars with corona.</span>
+    </div>
+  </div>
+
+  <!-- C: Sharp core + nebula bloom -->
+  <div class="option-card" onclick="select('c',this)">
+    <div class="preview">
+      <svg width="420" height="200" style="position:absolute;inset:0" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="gC-far"><feGaussianBlur stdDeviation="18"/></filter>
+          <filter id="gC-mid"><feGaussianBlur stdDeviation="6"/></filter>
+        </defs>
+        <!-- violet: far nebula + mid glow + sharp core -->
+        <circle cx="90" cy="100" r="36" fill="#a78bfa" filter="url(#gC-far)" opacity="0.25"/>
+        <circle cx="90" cy="100" r="20" fill="#a78bfa" filter="url(#gC-mid)" opacity="0.45"/>
+        <circle cx="90" cy="100" r="14" fill="#ddd6fe"/>
+        <!-- green -->
+        <circle cx="215" cy="100" r="26" fill="#34d399" filter="url(#gC-far)" opacity="0.22"/>
+        <circle cx="215" cy="100" r="15" fill="#34d399" filter="url(#gC-mid)" opacity="0.45"/>
+        <circle cx="215" cy="100" r="10" fill="#a7f3d0"/>
+        <!-- gold -->
+        <circle cx="318" cy="100" r="20" fill="#fbbf24" filter="url(#gC-far)" opacity="0.2"/>
+        <circle cx="318" cy="100" r="11" fill="#fbbf24" filter="url(#gC-mid)" opacity="0.4"/>
+        <circle cx="318" cy="100" r="7"  fill="#fef08a"/>
+        <!-- memory -->
+        <circle cx="374" cy="110" r="14" fill="#6b7280" filter="url(#gC-far)" opacity="0.15"/>
+        <circle cx="374" cy="110" r="4.5" fill="#d1d5db"/>
+      </svg>
+    </div>
+    <div class="label-bar">
+      <strong>C — Nebula bloom</strong>
+      <span>Bright core, wide diffuse cloud. Dense graphs look like star-forming regions.</span>
+    </div>
+  </div>
+
+  <!-- D: Pulsing -->
+  <div class="option-card" onclick="select('d',this)">
+    <div class="preview" id="prev-pulse">
+      <svg width="420" height="200" style="position:absolute;inset:0" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="gD-v"><feGaussianBlur stdDeviation="8"/></filter>
+          <filter id="gD-g"><feGaussianBlur stdDeviation="6"/></filter>
+        </defs>
+        <!-- Pulse rings animated -->
+        <circle class="pulse-ring" cx="90" cy="100" r="22" fill="#a78bfa" filter="url(#gD-v)" opacity="0.5"/>
+        <circle cx="90"  cy="100" r="14" fill="#c4b5fd"/>
+        <circle class="pulse-ring" cx="210" cy="100" r="16" fill="#34d399" filter="url(#gD-g)" opacity="0.5"/>
+        <circle cx="210" cy="100" r="10" fill="#6ee7b7"/>
+        <circle class="pulse-ring" cx="315" cy="100" r="11" fill="#fbbf24" filter="url(#gD-g)" opacity="0.45"/>
+        <circle cx="315" cy="100" r="7"  fill="#fde68a"/>
+        <circle cx="372" cy="110" r="4.5" fill="#9ca3af"/>
+      </svg>
+    </div>
+    <div class="label-bar">
+      <strong>D — Breathing pulse</strong>
+      <span>Glow animates in/out slowly like a heartbeat. Living, organic feel.</span>
+    </div>
+  </div>
+
+</div>
+
+<div id="selection-bar">No selection yet — click a card above</div>
+
+<style>
+@keyframes breathe {
+  0%, 100% { opacity: 0.25; r: 20; }
+  50%       { opacity: 0.65; r: 30; }
+}
+.pulse-ring { animation: breathe 2.8s ease-in-out infinite; }
+.pulse-ring:nth-child(3) { animation-delay: 0.6s; }
+.pulse-ring:nth-child(5) { animation-delay: 1.2s; }
+</style>
+
+<script>
+function select(id, card) {
+  document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  const names = {
+    a: 'A — Soft haze',
+    b: 'B — Star corona',
+    c: 'C — Nebula bloom',
+    d: 'D — Breathing pulse'
+  };
+  document.getElementById('selection-bar').innerHTML =
+    `<span style="color:#a5b4fc">Selected: ${names[id]}</span> — type your answer in the terminal too`;
+  if (window.__spRecord) window.__spRecord(id, names[id]);
+}
+</script>
+</body>
+</html>

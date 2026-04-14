@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #06060e;
+  color: #e5e7eb;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+h2 { font-size: 15px; color: #a5b4fc; margin-bottom: 4px; }
+.subtitle { font-size: 11px; color: #6b7280; margin-bottom: 22px; text-align: center; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 820px;
+  width: 100%;
+}
+
+.option-card {
+  border: 2px solid #2d2d44;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+  position: relative;
+}
+.option-card:hover { border-color: #6366f1; transform: translateY(-2px); }
+.option-card.selected { border-color: #a5b4fc; }
+.option-card.selected::after {
+  content:'✓'; position:absolute; top:8px; right:10px;
+  color:#a5b4fc; font-size:14px; font-weight:bold;
+}
+
+.preview {
+  height: 190px;
+  background: #05050d;
+  position: relative;
+  overflow: hidden;
+}
+/* star bg */
+.preview::before {
+  content:''; position:absolute; inset:0;
+  background-image:
+    radial-gradient(.7px .7px at 8% 18%,  #fff3, transparent),
+    radial-gradient(.7px .7px at 25% 72%, #fff2, transparent),
+    radial-gradient(.7px .7px at 50% 12%, #fff2, transparent),
+    radial-gradient(.7px .7px at 70% 55%, #fff3, transparent),
+    radial-gradient(.7px .7px at 88% 30%, #fff2, transparent),
+    radial-gradient(.7px .7px at 15% 88%, #fff2, transparent),
+    radial-gradient(.7px .7px at 60% 85%, #fff2, transparent),
+    radial-gradient(.7px .7px at 38% 45%, #fff1, transparent);
+  pointer-events:none;
+}
+
+.label-bar {
+  background: #0d0d1a;
+  border-top: 1px solid #2d2d44;
+  padding: 10px 13px;
+}
+.label-bar strong { display:block; font-size:12px; color:#e5e7eb; margin-bottom:3px; }
+.label-bar span { font-size:10px; color:#6b7280; line-height:1.5; }
+
+#sel-bar {
+  max-width:820px; width:100%; margin-top:14px;
+  padding:10px 14px; background:#0d0d1a;
+  border:1px solid #2d2d44; border-radius:8px;
+  font-size:12px; color:#6b7280;
+}
+</style>
+</head>
+<body>
+
+<h2>Star shape options</h2>
+<p class="subtitle">Each preview shows large/medium/small nodes with corona glow + wave animation. Topic node keeps its Saturn ring.</p>
+
+<div class="grid">
+
+  <!-- A: 4-point sparkle (elongated cross) -->
+  <div class="option-card" onclick="sel('a',this)">
+    <div class="preview"><svg id="svgA" width="100%" height="190" viewBox="0 0 400 190" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="Afw"><feGaussianBlur stdDeviation="14"/></filter>
+        <filter id="Aft"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="Amw"><feGaussianBlur stdDeviation="10"/></filter>
+        <filter id="Amt"><feGaussianBlur stdDeviation="3.5"/></filter>
+        <filter id="Asw"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="Ast"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <!-- edges -->
+      <line x1="105" y1="95" x2="210" y2="80" stroke="#a78bfa" stroke-width=".9" stroke-opacity=".28"/>
+      <line x1="210" y1="80" x2="300" y2="100" stroke="#34d399" stroke-width=".8" stroke-opacity=".24"/>
+      <line x1="210" y1="80" x2="310" y2="145" stroke="#fbbf24" stroke-width=".7" stroke-opacity=".2"/>
+      <line x1="105" y1="95" x2="60"  y2="155" stroke="#a78bfa" stroke-width=".6" stroke-opacity=".18" stroke-dasharray="3 3"/>
+
+      <!-- topic violet large — 4-point sparkle -->
+      <circle cx="105" cy="95" r="26" fill="#a78bfa" filter="url(#Afw)" opacity=".36" class="gA-outer"/>
+      <circle cx="105" cy="95" r="16" fill="#a78bfa" filter="url(#Aft)" opacity=".60" class="gA-inner"/>
+      <!-- ring back -->
+      <ellipse cx="105" cy="106" rx="26" ry="7" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".30"/>
+      <!-- sparkle star body -->
+      <path id="starA1" fill="#c4b5fd"/>
+      <!-- ring front -->
+      <path d="M79,106 A26,7 0 0,0 131,106" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".35"/>
+      <circle cx="105" cy="95" r="2.8" fill="white"/>
+
+      <!-- person green medium -->
+      <circle cx="210" cy="80" r="18" fill="#34d399" filter="url(#Amw)" opacity=".32" class="gA-outer"/>
+      <circle cx="210" cy="80" r="11" fill="#34d399" filter="url(#Amt)" opacity=".55" class="gA-inner"/>
+      <path id="starA2" fill="#6ee7b7"/>
+      <circle cx="210" cy="80" r="1.9" fill="white"/>
+
+      <!-- project gold small -->
+      <circle cx="300" cy="100" r="13" fill="#fbbf24" filter="url(#Asw)" opacity=".28" class="gA-outer"/>
+      <circle cx="300" cy="100" r="8"  fill="#fbbf24" filter="url(#Ast)" opacity=".50" class="gA-inner"/>
+      <path id="starA3" fill="#fde68a"/>
+      <circle cx="300" cy="100" r="1.4" fill="white"/>
+
+      <!-- memory xs -->
+      <circle cx="60" cy="155" r="8"  fill="#6b7280" filter="url(#Asw)" opacity=".20" class="gA-outer"/>
+      <circle cx="60" cy="155" r="5"  fill="#6b7280" filter="url(#Ast)" opacity=".34" class="gA-inner"/>
+      <path id="starA4" fill="#9ca3af"/>
+      <circle cx="60" cy="155" r="0.9" fill="white"/>
+
+      <!-- concept pink small -->
+      <circle cx="310" cy="145" r="12" fill="#f472b6" filter="url(#Asw)" opacity=".26" class="gA-outer"/>
+      <circle cx="310" cy="145" r="7"  fill="#f472b6" filter="url(#Ast)" opacity=".48" class="gA-inner"/>
+      <path id="starA5" fill="#f9a8d4"/>
+      <circle cx="310" cy="145" r="1.3" fill="white"/>
+    </svg></div>
+    <div class="label-bar">
+      <strong>A — 4-point sparkle ✦</strong>
+      <span>Elongated cross (tall + wide spike). Classic "twinkling star" icon. Very readable at small sizes.</span>
+    </div>
+  </div>
+
+  <!-- B: 5-point classic star -->
+  <div class="option-card" onclick="sel('b',this)">
+    <div class="preview"><svg id="svgB" width="100%" height="190" viewBox="0 0 400 190" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="Bfw"><feGaussianBlur stdDeviation="14"/></filter>
+        <filter id="Bft"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="Bmw"><feGaussianBlur stdDeviation="10"/></filter>
+        <filter id="Bmt"><feGaussianBlur stdDeviation="3.5"/></filter>
+        <filter id="Bsw"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="Bst"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <line x1="105" y1="95" x2="210" y2="80" stroke="#a78bfa" stroke-width=".9" stroke-opacity=".28"/>
+      <line x1="210" y1="80" x2="300" y2="100" stroke="#34d399" stroke-width=".8" stroke-opacity=".24"/>
+      <line x1="210" y1="80" x2="310" y2="145" stroke="#fbbf24" stroke-width=".7" stroke-opacity=".2"/>
+      <line x1="105" y1="95" x2="60"  y2="155" stroke="#a78bfa" stroke-width=".6" stroke-opacity=".18" stroke-dasharray="3 3"/>
+
+      <circle cx="105" cy="95" r="26" fill="#a78bfa" filter="url(#Bfw)" opacity=".36" class="gB-outer"/>
+      <circle cx="105" cy="95" r="16" fill="#a78bfa" filter="url(#Bft)" opacity=".60" class="gB-inner"/>
+      <ellipse cx="105" cy="106" rx="26" ry="7" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".30"/>
+      <path id="starB1" fill="#c4b5fd"/>
+      <path d="M79,106 A26,7 0 0,0 131,106" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".35"/>
+      <circle cx="105" cy="95" r="2.8" fill="white"/>
+
+      <circle cx="210" cy="80" r="18" fill="#34d399" filter="url(#Bmw)" opacity=".32" class="gB-outer"/>
+      <circle cx="210" cy="80" r="11" fill="#34d399" filter="url(#Bmt)" opacity=".55" class="gB-inner"/>
+      <path id="starB2" fill="#6ee7b7"/>
+      <circle cx="210" cy="80" r="1.9" fill="white"/>
+
+      <circle cx="300" cy="100" r="13" fill="#fbbf24" filter="url(#Bsw)" opacity=".28" class="gB-outer"/>
+      <circle cx="300" cy="100" r="8"  fill="#fbbf24" filter="url(#Bst)" opacity=".50" class="gB-inner"/>
+      <path id="starB3" fill="#fde68a"/>
+      <circle cx="300" cy="100" r="1.4" fill="white"/>
+
+      <circle cx="60" cy="155" r="8"  fill="#6b7280" filter="url(#Bsw)" opacity=".20" class="gB-outer"/>
+      <circle cx="60" cy="155" r="5"  fill="#6b7280" filter="url(#Bst)" opacity=".34" class="gB-inner"/>
+      <path id="starB4" fill="#9ca3af"/>
+      <circle cx="60" cy="155" r="0.9" fill="white"/>
+
+      <circle cx="310" cy="145" r="12" fill="#f472b6" filter="url(#Bsw)" opacity=".26" class="gB-outer"/>
+      <circle cx="310" cy="145" r="7"  fill="#f472b6" filter="url(#Bst)" opacity=".48" class="gB-inner"/>
+      <path id="starB5" fill="#f9a8d4"/>
+      <circle cx="310" cy="145" r="1.3" fill="white"/>
+    </svg></div>
+    <div class="label-bar">
+      <strong>B — 5-point classic ★</strong>
+      <span>Familiar star polygon. Good for recognition. Slightly harder to read at very small sizes.</span>
+    </div>
+  </div>
+
+  <!-- C: 6-point asterisk (Hubble diffraction style) -->
+  <div class="option-card" onclick="sel('c',this)">
+    <div class="preview"><svg id="svgC" width="100%" height="190" viewBox="0 0 400 190" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="Cfw"><feGaussianBlur stdDeviation="14"/></filter>
+        <filter id="Cft"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="Cmw"><feGaussianBlur stdDeviation="10"/></filter>
+        <filter id="Cmt"><feGaussianBlur stdDeviation="3.5"/></filter>
+        <filter id="Csw"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="Cst"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <line x1="105" y1="95" x2="210" y2="80" stroke="#a78bfa" stroke-width=".9" stroke-opacity=".28"/>
+      <line x1="210" y1="80" x2="300" y2="100" stroke="#34d399" stroke-width=".8" stroke-opacity=".24"/>
+      <line x1="210" y1="80" x2="310" y2="145" stroke="#fbbf24" stroke-width=".7" stroke-opacity=".2"/>
+      <line x1="105" y1="95" x2="60"  y2="155" stroke="#a78bfa" stroke-width=".6" stroke-opacity=".18" stroke-dasharray="3 3"/>
+
+      <circle cx="105" cy="95" r="26" fill="#a78bfa" filter="url(#Cfw)" opacity=".36" class="gC-outer"/>
+      <circle cx="105" cy="95" r="16" fill="#a78bfa" filter="url(#Cft)" opacity=".60" class="gC-inner"/>
+      <ellipse cx="105" cy="106" rx="26" ry="7" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".30"/>
+      <path id="starC1" fill="#c4b5fd"/>
+      <path d="M79,106 A26,7 0 0,0 131,106" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".35"/>
+      <circle cx="105" cy="95" r="2.8" fill="white"/>
+
+      <circle cx="210" cy="80" r="18" fill="#34d399" filter="url(#Cmw)" opacity=".32" class="gC-outer"/>
+      <circle cx="210" cy="80" r="11" fill="#34d399" filter="url(#Cmt)" opacity=".55" class="gC-inner"/>
+      <path id="starC2" fill="#6ee7b7"/>
+      <circle cx="210" cy="80" r="1.9" fill="white"/>
+
+      <circle cx="300" cy="100" r="13" fill="#fbbf24" filter="url(#Csw)" opacity=".28" class="gC-outer"/>
+      <circle cx="300" cy="100" r="8"  fill="#fbbf24" filter="url(#Cst)" opacity=".50" class="gC-inner"/>
+      <path id="starC3" fill="#fde68a"/>
+      <circle cx="300" cy="100" r="1.4" fill="white"/>
+
+      <circle cx="60" cy="155" r="8"  fill="#6b7280" filter="url(#Csw)" opacity=".20" class="gC-outer"/>
+      <circle cx="60" cy="155" r="5"  fill="#6b7280" filter="url(#Cst)" opacity=".34" class="gC-inner"/>
+      <path id="starC4" fill="#9ca3af"/>
+      <circle cx="60" cy="155" r="0.9" fill="white"/>
+
+      <circle cx="310" cy="145" r="12" fill="#f472b6" filter="url(#Csw)" opacity=".26" class="gC-outer"/>
+      <circle cx="310" cy="145" r="7"  fill="#f472b6" filter="url(#Cst)" opacity=".48" class="gC-inner"/>
+      <path id="starC5" fill="#f9a8d4"/>
+      <circle cx="310" cy="145" r="1.3" fill="white"/>
+    </svg></div>
+    <div class="label-bar">
+      <strong>C — 6-point asterisk ✶</strong>
+      <span>Three crossed lines — mimics telescope diffraction spikes. Very "real star" feel. Symmetric from any angle.</span>
+    </div>
+  </div>
+
+  <!-- D: 4-point with inner circle (north star / compass rose) -->
+  <div class="option-card" onclick="sel('d',this)">
+    <div class="preview"><svg id="svgD" width="100%" height="190" viewBox="0 0 400 190" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="Dfw"><feGaussianBlur stdDeviation="14"/></filter>
+        <filter id="Dft"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="Dmw"><feGaussianBlur stdDeviation="10"/></filter>
+        <filter id="Dmt"><feGaussianBlur stdDeviation="3.5"/></filter>
+        <filter id="Dsw"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="Dst"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <line x1="105" y1="95" x2="210" y2="80" stroke="#a78bfa" stroke-width=".9" stroke-opacity=".28"/>
+      <line x1="210" y1="80" x2="300" y2="100" stroke="#34d399" stroke-width=".8" stroke-opacity=".24"/>
+      <line x1="210" y1="80" x2="310" y2="145" stroke="#fbbf24" stroke-width=".7" stroke-opacity=".2"/>
+      <line x1="105" y1="95" x2="60"  y2="155" stroke="#a78bfa" stroke-width=".6" stroke-opacity=".18" stroke-dasharray="3 3"/>
+
+      <circle cx="105" cy="95" r="26" fill="#a78bfa" filter="url(#Dfw)" opacity=".36" class="gD-outer"/>
+      <circle cx="105" cy="95" r="16" fill="#a78bfa" filter="url(#Dft)" opacity=".60" class="gD-inner"/>
+      <ellipse cx="105" cy="106" rx="26" ry="7" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".30"/>
+      <path id="starD1" fill="#c4b5fd"/>
+      <!-- inner orbit circle -->
+      <circle id="orb1" cx="105" cy="95" r="7" fill="none" stroke="#c4b5fd" stroke-width="0.8" opacity=".45"/>
+      <path d="M79,106 A26,7 0 0,0 131,106" fill="none" stroke="#c4b5fd" stroke-width="1.1" opacity=".35"/>
+      <circle cx="105" cy="95" r="2.8" fill="white"/>
+
+      <circle cx="210" cy="80" r="18" fill="#34d399" filter="url(#Dmw)" opacity=".32" class="gD-outer"/>
+      <circle cx="210" cy="80" r="11" fill="#34d399" filter="url(#Dmt)" opacity=".55" class="gD-inner"/>
+      <path id="starD2" fill="#6ee7b7"/>
+      <circle id="orb2" cx="210" cy="80" r="4.5" fill="none" stroke="#6ee7b7" stroke-width="0.7" opacity=".4"/>
+      <circle cx="210" cy="80" r="1.9" fill="white"/>
+
+      <circle cx="300" cy="100" r="13" fill="#fbbf24" filter="url(#Dsw)" opacity=".28" class="gD-outer"/>
+      <circle cx="300" cy="100" r="8"  fill="#fbbf24" filter="url(#Dst)" opacity=".50" class="gD-inner"/>
+      <path id="starD3" fill="#fde68a"/>
+      <circle id="orb3" cx="300" cy="100" r="3.2" fill="none" stroke="#fde68a" stroke-width="0.6" opacity=".38"/>
+      <circle cx="300" cy="100" r="1.4" fill="white"/>
+
+      <circle cx="60" cy="155" r="8"  fill="#6b7280" filter="url(#Dsw)" opacity=".20" class="gD-outer"/>
+      <circle cx="60" cy="155" r="5"  fill="#6b7280" filter="url(#Dst)" opacity=".34" class="gD-inner"/>
+      <path id="starD4" fill="#9ca3af"/>
+      <circle cx="60" cy="155" r="0.9" fill="white"/>
+
+      <circle cx="310" cy="145" r="12" fill="#f472b6" filter="url(#Dsw)" opacity=".26" class="gD-outer"/>
+      <circle cx="310" cy="145" r="7"  fill="#f472b6" filter="url(#Dst)" opacity=".48" class="gD-inner"/>
+      <path id="starD5" fill="#f9a8d4"/>
+      <circle id="orb5" cx="310" cy="145" r="3" fill="none" stroke="#f9a8d4" stroke-width="0.6" opacity=".35"/>
+      <circle cx="310" cy="145" r="1.3" fill="white"/>
+    </svg></div>
+    <div class="label-bar">
+      <strong>D — 4-point + orbit ring ✧</strong>
+      <span>Slim 4-point star with a faint inner orbit circle. Compass-rose elegance. Ring distinguishes it from pure sparkle.</span>
+    </div>
+  </div>
+
+</div>
+
+<div id="sel-bar">No selection yet — click a card above</div>
+
+<script>
+// ── Star path generators ────────────────────────────────────────────────────
+
+// n-point star polygon
+function starPoly(cx, cy, outerR, innerR, n, rotDeg=0) {
+  const pts = [];
+  const rot = rotDeg * Math.PI / 180;
+  for (let i = 0; i < n*2; i++) {
+    const r = i%2===0 ? outerR : innerR;
+    const a = rot + i * Math.PI/n - Math.PI/2;
+    pts.push(`${(cx+r*Math.cos(a)).toFixed(2)},${(cy+r*Math.sin(a)).toFixed(2)}`);
+  }
+  return 'M'+pts.join('L')+'Z';
+}
+
+// 4-point elongated sparkle: tall spikes on y, short on x
+function sparkle4(cx, cy, outerR, outerRx, innerR) {
+  const pts = [];
+  const angles = [270, 0, 90, 180]; // top, right, bottom, left
+  const outers = [outerR, outerRx, outerR, outerRx];
+  for (let i = 0; i < 4; i++) {
+    const oa = angles[i] * Math.PI/180;
+    pts.push(`${(cx+outers[i]*Math.cos(oa)).toFixed(2)},${(cy+outers[i]*Math.sin(oa)).toFixed(2)}`);
+    const ia = (angles[i]+45) * Math.PI/180;
+    pts.push(`${(cx+innerR*Math.cos(ia)).toFixed(2)},${(cy+innerR*Math.sin(ia)).toFixed(2)}`);
+  }
+  return 'M'+pts.join('L')+'Z';
+}
+
+// 6-point asterisk: 3 lines as thin diamond polygons overlaid — use 6-point star instead
+function star6(cx, cy, outerR, innerR) { return starPoly(cx,cy,outerR,innerR,6,0); }
+
+// ── Draw all shapes ──────────────────────────────────────────────────────────
+
+// Card A — 4-point sparkle
+const A_nodes = [
+  {id:'starA1', cx:105, cy:95,  outerR:16, outerRx:9,  innerR:3.5},
+  {id:'starA2', cx:210, cy:80,  outerR:11, outerRx:6.5,innerR:2.5},
+  {id:'starA3', cx:300, cy:100, outerR:8,  outerRx:5,  innerR:2},
+  {id:'starA4', cx:60,  cy:155, outerR:5,  outerRx:3,  innerR:1.2},
+  {id:'starA5', cx:310, cy:145, outerR:7,  outerRx:4.5,innerR:1.8},
+];
+A_nodes.forEach(n => {
+  document.getElementById(n.id).setAttribute('d', sparkle4(n.cx,n.cy,n.outerR,n.outerRx,n.innerR));
+});
+
+// Card B — 5-point
+const B_nodes = [
+  {id:'starB1', cx:105, cy:95,  outerR:16, innerR:6.5},
+  {id:'starB2', cx:210, cy:80,  outerR:11, innerR:4.5},
+  {id:'starB3', cx:300, cy:100, outerR:8,  innerR:3.2},
+  {id:'starB4', cx:60,  cy:155, outerR:5,  innerR:2},
+  {id:'starB5', cx:310, cy:145, outerR:7,  innerR:2.8},
+];
+B_nodes.forEach(n => {
+  document.getElementById(n.id).setAttribute('d', starPoly(n.cx,n.cy,n.outerR,n.innerR,5));
+});
+
+// Card C — 6-point
+const C_nodes = [
+  {id:'starC1', cx:105, cy:95,  outerR:16, innerR:8},
+  {id:'starC2', cx:210, cy:80,  outerR:11, innerR:5.5},
+  {id:'starC3', cx:300, cy:100, outerR:8,  innerR:4},
+  {id:'starC4', cx:60,  cy:155, outerR:5,  innerR:2.5},
+  {id:'starC5', cx:310, cy:145, outerR:7,  innerR:3.5},
+];
+C_nodes.forEach(n => {
+  document.getElementById(n.id).setAttribute('d', star6(n.cx,n.cy,n.outerR,n.innerR));
+});
+
+// Card D — 4-point slim + orbit ring
+const D_nodes = [
+  {id:'starD1', cx:105, cy:95,  outerR:15, outerRx:7.5, innerR:3},
+  {id:'starD2', cx:210, cy:80,  outerR:10, outerRx:5,   innerR:2.2},
+  {id:'starD3', cx:300, cy:100, outerR:7.5,outerRx:3.8, innerR:1.8},
+  {id:'starD4', cx:60,  cy:155, outerR:4.5,outerRx:2.2, innerR:1.1},
+  {id:'starD5', cx:310, cy:145, outerR:6.5,outerRx:3.2, innerR:1.5},
+];
+D_nodes.forEach(n => {
+  document.getElementById(n.id).setAttribute('d', sparkle4(n.cx,n.cy,n.outerR,n.outerRx,n.innerR));
+});
+
+// ── Wave animation ───────────────────────────────────────────────────────────
+const WAVE_PERIOD = 8000;
+const WAVE_W = 180;
+const DIM = 0.25;
+const W = 400;
+
+const glowSets = {
+  A: [
+    {outerCls:'gA-outer',innerCls:'gA-inner',cx:105,bo:.36,bi:.60},
+    {outerCls:'gA-outer',innerCls:'gA-inner',cx:210,bo:.32,bi:.55},
+    {outerCls:'gA-outer',innerCls:'gA-inner',cx:300,bo:.28,bi:.50},
+    {outerCls:'gA-outer',innerCls:'gA-inner',cx:60, bo:.20,bi:.34},
+    {outerCls:'gA-outer',innerCls:'gA-inner',cx:310,bo:.26,bi:.48},
+  ],
+  B: [
+    {outerCls:'gB-outer',innerCls:'gB-inner',cx:105,bo:.36,bi:.60},
+    {outerCls:'gB-outer',innerCls:'gB-inner',cx:210,bo:.32,bi:.55},
+    {outerCls:'gB-outer',innerCls:'gB-inner',cx:300,bo:.28,bi:.50},
+    {outerCls:'gB-outer',innerCls:'gB-inner',cx:60, bo:.20,bi:.34},
+    {outerCls:'gB-outer',innerCls:'gB-inner',cx:310,bo:.26,bi:.48},
+  ],
+  C: [
+    {outerCls:'gC-outer',innerCls:'gC-inner',cx:105,bo:.36,bi:.60},
+    {outerCls:'gC-outer',innerCls:'gC-inner',cx:210,bo:.32,bi:.55},
+    {outerCls:'gC-outer',innerCls:'gC-inner',cx:300,bo:.28,bi:.50},
+    {outerCls:'gC-outer',innerCls:'gC-inner',cx:60, bo:.20,bi:.34},
+    {outerCls:'gC-outer',innerCls:'gC-inner',cx:310,bo:.26,bi:.48},
+  ],
+  D: [
+    {outerCls:'gD-outer',innerCls:'gD-inner',cx:105,bo:.36,bi:.60},
+    {outerCls:'gD-outer',innerCls:'gD-inner',cx:210,bo:.32,bi:.55},
+    {outerCls:'gD-outer',innerCls:'gD-inner',cx:300,bo:.28,bi:.50},
+    {outerCls:'gD-outer',innerCls:'gD-inner',cx:60, bo:.20,bi:.34},
+    {outerCls:'gD-outer',innerCls:'gD-inner',cx:310,bo:.26,bi:.48},
+  ],
+};
+
+function waveFactor(cx, wavePx) {
+  const d = Math.abs(cx - wavePx) / (WAVE_W/2);
+  if (d >= 1) return 1;
+  const t = d; // 0 at center
+  return DIM + (1-DIM)*t*t;
+}
+
+function tickWave(ts) {
+  const phase = (ts % WAVE_PERIOD) / WAVE_PERIOD;
+  const wavePx = phase * (W + WAVE_W) - WAVE_W;
+
+  ['A','B','C','D'].forEach(key => {
+    const outers = document.querySelectorAll('.g'+key+'-outer');
+    const inners = document.querySelectorAll('.g'+key+'-inner');
+    glowSets[key].forEach((n,i) => {
+      const f = waveFactor(n.cx, wavePx);
+      if (outers[i]) outers[i].setAttribute('opacity', (n.bo*f).toFixed(3));
+      if (inners[i]) inners[i].setAttribute('opacity', (n.bi*f).toFixed(3));
+    });
+  });
+  requestAnimationFrame(tickWave);
+}
+requestAnimationFrame(tickWave);
+
+// ── Selection ────────────────────────────────────────────────────────────────
+function sel(id, card) {
+  document.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected');
+  const names={a:'A — 4-point sparkle ✦',b:'B — 5-point classic ★',c:'C — 6-point asterisk ✶',d:'D — 4-point + orbit ring ✧'};
+  document.getElementById('sel-bar').innerHTML=`<span style="color:#a5b4fc">Selected: ${names[id]}</span> — type your answer in the terminal too`;
+  if(window.__spRecord) window.__spRecord(id,names[id]);
+}
+</script>
+</body>
+</html>

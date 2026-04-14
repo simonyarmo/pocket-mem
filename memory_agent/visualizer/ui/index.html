@@ -9,32 +9,29 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: #0a0a0f;
+  background: #04040b;
   color: #e5e7eb;
   font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
   overflow: hidden;
   user-select: none;
 }
 
-/* Star field */
-body::before {
-  content: '';
+/* ── Parallax star field canvases ── */
+.star-canvas {
   position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 10% 15%, #ffffff22, transparent),
-    radial-gradient(1px 1px at 25% 55%, #ffffff18, transparent),
-    radial-gradient(1px 1px at 40% 30%, #ffffff15, transparent),
-    radial-gradient(1px 1px at 55% 80%, #ffffff20, transparent),
-    radial-gradient(1px 1px at 70% 10%, #ffffff18, transparent),
-    radial-gradient(1px 1px at 85% 45%, #ffffff22, transparent),
-    radial-gradient(1px 1px at 92% 70%, #ffffff15, transparent),
-    radial-gradient(1px 1px at 15% 85%, #ffffff18, transparent),
-    radial-gradient(1px 1px at 60% 50%, #ffffff12, transparent),
-    radial-gradient(1px 1px at 35% 95%, #ffffff20, transparent);
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   pointer-events: none;
   z-index: 0;
 }
+
+@keyframes drift-far  { 0%{transform:translate(0,0)} 100%{transform:translate(-12px,-6px)} }
+@keyframes drift-mid  { 0%{transform:translate(0,0)} 100%{transform:translate(-22px,-11px)} }
+@keyframes drift-near { 0%{transform:translate(0,0)} 100%{transform:translate(-38px,-19px)} }
+
+#star-far  { animation: drift-far  24s ease-in-out infinite alternate; }
+#star-mid  { animation: drift-mid  15s ease-in-out infinite alternate; }
+#star-near { animation: drift-near  9s ease-in-out infinite alternate; }
 
 svg#graph {
   position: fixed;
@@ -58,7 +55,7 @@ svg#graph {
 }
 
 .ctrl-btn {
-  background: #1a1a2e;
+  background: #0d0d1c;
   border: 1px solid #2d2d44;
   color: #9ca3af;
   padding: 4px 8px;
@@ -72,8 +69,8 @@ svg#graph {
 
 .count-badge {
   padding: 4px 8px;
-  background: #111118;
-  border: 1px solid #1e1e30;
+  background: #080812;
+  border: 1px solid #1a1a2e;
   border-radius: 4px;
   color: #6b7280;
   font-size: 11px;
@@ -89,7 +86,7 @@ svg#graph {
 }
 
 #search {
-  background: #111118;
+  background: #080812;
   border: 1px solid #2d2d44;
   color: #e5e7eb;
   padding: 6px 14px;
@@ -101,10 +98,7 @@ svg#graph {
   transition: border-color 0.2s, width 0.2s;
 }
 #search::placeholder { color: #4b5563; }
-#search:focus {
-  border-color: #6366f1;
-  width: 300px;
-}
+#search:focus { border-color: #6366f1; width: 300px; }
 
 /* Filters badge — bottom-left */
 #filters-bar {
@@ -120,7 +114,7 @@ svg#graph {
 }
 
 .filter-tag {
-  background: #1a1a2e;
+  background: #0d0d1c;
   border: 1px solid #2d2d44;
   padding: 3px 8px;
   border-radius: 4px;
@@ -135,7 +129,7 @@ svg#graph {
   transform: translateX(-50%);
   z-index: 20;
   display: none;
-  background: #1a1a2e;
+  background: #0d0d1c;
   border: 1px solid #6366f1;
   color: #a5b4fc;
   padding: 6px 16px;
@@ -144,14 +138,14 @@ svg#graph {
   font-family: inherit;
   font-size: 12px;
 }
-#back-btn:hover { background: #23233a; }
+#back-btn:hover { background: #1a1a30; }
 
-/* Node card */
+/* Node hover card */
 #node-card {
   position: fixed;
   z-index: 20;
   display: none;
-  background: #0f0f1a;
+  background: #0a0a18;
   border: 1px solid #2d2d44;
   border-radius: 8px;
   padding: 12px 14px;
@@ -163,12 +157,7 @@ svg#graph {
   box-shadow: 0 4px 24px #00000080;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 6px;
-}
+.card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
 .card-label { font-size: 14px; font-weight: 600; color: #f9fafb; min-width: 0; flex: 1; word-break: break-word; overflow-wrap: anywhere; }
 .card-type { font-size: 10px; color: #6b7280; }
 .card-divider { border: none; border-top: 1px solid #1e1e30; margin: 6px 0; }
@@ -176,19 +165,13 @@ svg#graph {
 .card-key { color: #6b7280; }
 .card-val { color: #d1d5db; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .card-summary { color: #9ca3af; font-style: italic; margin-top: 4px; line-height: 1.5; }
-.card-importance-bar {
-  height: 3px;
-  background: #1e1e30;
-  border-radius: 2px;
-  margin-top: 6px;
-  overflow: hidden;
-}
-.card-importance-fill { height: 100%; background: #6366f1; border-radius: 2px; }
+.card-importance-bar { height: 3px; background: #1e1e30; border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.card-importance-fill { height: 100%; border-radius: 2px; }
 
 /* Pulse animation for search */
 @keyframes pulse-ring {
-  0%   { stroke-width: 2; stroke-opacity: 0.8; r: var(--r); }
-  100% { stroke-width: 0; stroke-opacity: 0; r: calc(var(--r) + 12px); }
+  0%   { stroke-width: 2; stroke-opacity: 0.8; }
+  100% { stroke-width: 0; stroke-opacity: 0; r: 30px; }
 }
 .pulse { animation: pulse-ring 1s ease-out infinite; }
 
@@ -198,42 +181,23 @@ svg#graph {
   top: 16px;
   right: 16px;
   z-index: 10;
-  background: #111118;
-  border: 1px solid #1e1e30;
+  background: #080812;
+  border: 1px solid #1a1a2e;
   border-radius: 6px;
   padding: 10px 12px;
   font-size: 11px;
 }
-.legend-title {
-  color: #4b5563;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: #9ca3af;
-  padding: 2px 0;
-}
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+.legend-title { color: #4b5563; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+.legend-item { display: flex; align-items: center; gap: 7px; color: #9ca3af; padding: 2px 0; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 /* Detail panel (click) */
 #detail-panel {
   position: fixed;
-  top: 0;
-  right: 0;
+  top: 0; right: 0;
   width: 300px;
   height: 100vh;
-  background: #0d0d1a;
+  background: #080815;
   border-left: 1px solid #2d2d44;
   z-index: 30;
   overflow-y: auto;
@@ -246,8 +210,7 @@ svg#graph {
   background: none;
   border: 1px solid #2d2d44;
   color: #6b7280;
-  width: 24px;
-  height: 24px;
+  width: 24px; height: 24px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
@@ -271,88 +234,27 @@ svg#graph {
   margin-bottom: 8px;
   border: 1px solid;
 }
-
-.detail-label {
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 14px;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  clear: both;
-}
-
+.detail-label { font-size: 17px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; word-break: break-word; overflow-wrap: anywhere; clear: both; }
 .detail-section { margin-top: 14px; }
-
-.detail-section-title {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #4b5563;
-  margin-bottom: 6px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid #1e1e30;
-}
-
-.detail-attr-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  padding: 3px 0;
-  font-size: 11px;
-}
+.detail-section-title { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #4b5563; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #1e1e30; }
+.detail-attr-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0; font-size: 11px; }
 .detail-attr-key { color: #6b7280; flex-shrink: 0; text-transform: capitalize; }
 .detail-attr-val { color: #d1d5db; text-align: right; word-break: break-word; }
-
-.detail-text {
-  font-size: 11px;
-  color: #9ca3af;
-  line-height: 1.65;
-  word-break: break-word;
-}
-
-.detail-conn-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 0;
-  border-bottom: 1px solid #111118;
-}
-
-.detail-conn-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.detail-conn-label {
-  font-size: 11px;
-  color: #e5e7eb;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.detail-conn-meta {
-  font-size: 10px;
-  color: #4b5563;
-  margin-top: 1px;
-}
-
-.detail-imp-bar {
-  height: 3px;
-  background: #1e1e30;
-  border-radius: 2px;
-  margin-top: 6px;
-  overflow: hidden;
-}
+.detail-text { font-size: 11px; color: #9ca3af; line-height: 1.65; word-break: break-word; }
+.detail-conn-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid #0d0d1a; }
+.detail-conn-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.detail-conn-label { font-size: 11px; color: #e5e7eb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.detail-conn-meta { font-size: 10px; color: #4b5563; margin-top: 1px; }
+.detail-imp-bar { height: 3px; background: #1e1e30; border-radius: 2px; margin-top: 6px; overflow: hidden; }
 .detail-imp-fill { height: 100%; border-radius: 2px; }
 </style>
 </head>
 <body>
+
+<!-- Parallax star field -->
+<canvas id="star-far"  class="star-canvas"></canvas>
+<canvas id="star-mid"  class="star-canvas"></canvas>
+<canvas id="star-near" class="star-canvas"></canvas>
 
 <div id="controls">
   <button class="ctrl-btn" id="btn-zoom-in">+</button>
@@ -370,11 +272,8 @@ svg#graph {
 <svg id="graph"></svg>
 
 <div id="node-card"></div>
-
 <div id="filters-bar"></div>
-
 <div id="legend"><div class="legend-title">Node Types</div></div>
-
 <div id="detail-panel"></div>
 
 <script>
@@ -390,8 +289,8 @@ const COLOR = {
   entity_project: '#fbbf24',
   entity_company: '#f87171',
   entity_concept: '#f472b6',
-  memory_chunk:   '#6b7280',   // gray
-  tone:           '#fb923c',   // orange — all tones share one color
+  memory_chunk:   '#6b7280',
+  tone:           '#fb923c',
   event:          '#e5e7eb',
   default:        '#6b7280',
 };
@@ -421,33 +320,77 @@ function nodeColor(d) {
   return COLOR.default;
 }
 
-function nodeRadius(d) {
-  return 4 + (d.importance || 0.5) * 12;
+// ── Performance mode (auto-enabled for large graphs) ─────────────────────────
+const PERF_MODE = GRAPH.nodes.length > 150;
+
+// ── Node sizing (degree-based) and brightness (importance-based) ──────────────
+// nodeOuterR is computed after edgesByNode is populated below
+function nodeOuterR(d) {
+  const degree = (edgesByNode.get(d.id) || []).length;
+  // Cap growth in perf mode so very-high-degree nodes don't create giant blur areas
+  const raw = 5 + degree * 2.5;
+  return PERF_MODE ? Math.min(raw, 28) : raw;
+}
+function nodeLongR(d)  { return nodeOuterR(d); }
+function nodeShortR(d) { return nodeOuterR(d) * 0.55; }
+function nodeInnerR(d) { return nodeOuterR(d) * 0.28; }
+function nodeOpacity(d) { return 0.35 + (d.importance || 0.5) * 0.65; }
+
+// ── 4-point sparkle path (centered at origin, used via group transform) ───────
+function sparklePath(longR, shortR, innerR) {
+  const angles  = [-90, 0, 90, 180];
+  const outerRs = [longR, shortR, longR, shortR];
+  const pts = [];
+  for (let i = 0; i < 4; i++) {
+    const ao = angles[i] * Math.PI / 180;
+    pts.push(`${(outerRs[i] * Math.cos(ao)).toFixed(2)},${(outerRs[i] * Math.sin(ao)).toFixed(2)}`);
+    const ai = (angles[i] + 45) * Math.PI / 180;
+    pts.push(`${(innerR * Math.cos(ai)).toFixed(2)},${(innerR * Math.sin(ai)).toFixed(2)}`);
+  }
+  return 'M' + pts.join('L') + 'Z';
 }
 
-function nodeBrightness(d) {
-  if (!d.updated_at) return 0.6;
-  const days = (Date.now() - new Date(d.updated_at)) / 86400000;
-  return Math.max(0.3, 1 - days / 30);
-}
+// ── Saturn ring geometry ──────────────────────────────────────────────────────
+function ringRx(d)   { return nodeLongR(d) * 1.55; }
+function ringRy(d)   { return nodeLongR(d) * 0.42; }
+function ringYOff(d) { return nodeLongR(d) * 0.65; }
 
-function brightenColor(hex, factor) {
-  const r = parseInt(hex.slice(1,3), 16);
-  const g = parseInt(hex.slice(3,5), 16);
-  const b = parseInt(hex.slice(5,7), 16);
-  const blend = (c) => Math.round(c * factor + 255 * (1 - factor));
-  return `rgb(${blend(r)},${blend(g)},${blend(b)})`;
+// ── Glow filter selection ─────────────────────────────────────────────────────
+function glowOuterFilt(d) {
+  if (PERF_MODE) return 'url(#fg-pm-o)';
+  const r = nodeOuterR(d);
+  return r < 8 ? 'url(#fg-sm-o)' : r < 14 ? 'url(#fg-md-o)' : 'url(#fg-lg-o)';
+}
+function glowInnerFilt(d) {
+  if (PERF_MODE) return 'url(#fg-pm-i)';
+  const r = nodeOuterR(d);
+  return r < 8 ? 'url(#fg-sm-i)' : r < 14 ? 'url(#fg-md-i)' : 'url(#fg-lg-i)';
 }
 
 // ── Setup ────────────────────────────────────────────────────────────────────
-const svg = d3.select('#graph');
-const width = window.innerWidth;
+const svg    = d3.select('#graph');
+const width  = window.innerWidth;
 const height = window.innerHeight;
+const g      = svg.append('g');  // zoomable container
 
-const g = svg.append('g');  // zoomable container
+// Glow filters + ship filters in <defs>
+svg.append('defs').html(`
+  <filter id="fg-sm-o" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>
+  <filter id="fg-sm-i" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="2"/></filter>
+  <filter id="fg-md-o" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="8"/></filter>
+  <filter id="fg-md-i" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="3.5"/></filter>
+  <filter id="fg-lg-o" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="14"/></filter>
+  <filter id="fg-lg-i" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="6"/></filter>
+  <!-- Perf-mode lighter filters (smaller blur radius = cheaper GPU pass) -->
+  <filter id="fg-pm-o" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="3"/></filter>
+  <filter id="fg-pm-i" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="1.5"/></filter>
+  <filter id="fg-ep"   x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.5"/></filter>
+  <filter id="fg-ship" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="4"/></filter>
+  <filter id="fg-trail"x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="3"/></filter>
+`);
 
-// Build lookup maps
-const nodeById = new Map(GRAPH.nodes.map(n => [n.id, n]));
+// ── Build lookup maps ─────────────────────────────────────────────────────────
+const nodeById    = new Map(GRAPH.nodes.map(n => [n.id, n]));
 const edgesByNode = new Map();
 GRAPH.nodes.forEach(n => edgesByNode.set(n.id, []));
 GRAPH.edges.forEach(e => {
@@ -475,15 +418,19 @@ GRAPH.nodes.forEach(n => {
 // D3 forceLink expects source/target; our data uses from/to
 GRAPH.edges.forEach(e => { e.source = e.from; e.target = e.to; });
 
-// ── D3 force simulation ───────────────────────────────────────────────────
+// ── D3 force simulation ───────────────────────────────────────────────────────
 const simulation = d3.forceSimulation(GRAPH.nodes)
   .force('link', d3.forceLink(GRAPH.edges)
     .id(d => d.id)
     .distance(e => 80 / Math.max(e.weight || 0.5, 0.1))
   )
-  .force('charge', d3.forceManyBody().strength(-220))
+  // Perf: higher theta = O(n log n) Barnes-Hut approximation is coarser but faster
+  .force('charge', d3.forceManyBody().strength(-220).theta(PERF_MODE ? 0.95 : 0.81))
   .force('center', d3.forceCenter(width / 2, height / 2))
-  .force('collision', d3.forceCollide().radius(d => nodeRadius(d) + 6));
+  .force('collision', d3.forceCollide().radius(d => nodeOuterR(d) + 6));
+
+// Perf: decay faster so the simulation settles sooner and stops consuming CPU
+if (PERF_MODE) simulation.alphaDecay(0.04).velocityDecay(0.55);
 
 // Topic gravity
 simulation.force('topic-gravity', () => {
@@ -505,8 +452,8 @@ const zoom = d3.zoom()
 
 svg.call(zoom);
 
-const zoomIn  = () => svg.transition().duration(300).call(zoom.scaleBy, 1.4);
-const zoomOut = () => svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+const zoomIn    = () => svg.transition().duration(300).call(zoom.scaleBy, 1.4);
+const zoomOut   = () => svg.transition().duration(300).call(zoom.scaleBy, 0.7);
 const resetView = () => svg.transition().duration(400).call(
   zoom.transform, d3.zoomIdentity.translate(width / 2, height / 2).scale(0.9).translate(-width / 2, -height / 2)
 );
@@ -515,31 +462,83 @@ d3.select('#btn-zoom-in').on('click', zoomIn);
 d3.select('#btn-zoom-out').on('click', zoomOut);
 d3.select('#btn-reset').on('click', resetView);
 
-// ── Render edges ──────────────────────────────────────────────────────────────
-const edgeGroup = g.append('g').attr('class', 'edges');
+// ── SVG groups (z-order: bottom → top) ───────────────────────────────────────
+const edgeGroup       = g.append('g').attr('class', 'edges');
+const glowOuterGroup  = g.append('g').attr('class', 'glow-outers');
+const glowInnerGroup  = g.append('g').attr('class', 'glow-inners');
+const ringsBackGroup  = g.append('g').attr('class', 'rings-back');
+const nodeGroup       = g.append('g').attr('class', 'nodes');
+const ringsFrontGroup = g.append('g').attr('class', 'rings-front');
+const labelGroup      = g.append('g').attr('class', 'labels');
 
+// ── Constellation edges ───────────────────────────────────────────────────────
 const edgeLine = edgeGroup.selectAll('line')
   .data(GRAPH.edges)
   .join('line')
-  .attr('stroke', e => {
-    const src = nodeById.get(e.from);
-    return src ? nodeColor(src) : '#444';
-  })
-  .attr('stroke-opacity', e => e.valid ? 0.35 : 0.12)
-  .attr('stroke-width', e => 0.5 + (e.weight || 0.5) * 2)
-  .attr('stroke-dasharray', e => e.valid ? null : '4 4');
+  .attr('stroke', '#8b9ab8')
+  .attr('stroke-opacity', e => e.valid ? 0.32 : 0.15)
+  .attr('stroke-width',   e => 0.6 + (e.weight || 0.5) * 0.4)
+  .attr('stroke-dasharray', e => e.valid ? null : '5 5');
 
-// ── Render nodes ──────────────────────────────────────────────────────────────
-const nodeGroup = g.append('g').attr('class', 'nodes');
+// Endpoint glows where lines meet nodes (skipped in perf mode — 2 blurred circles per edge is costly)
+const edgeEpSrc = !PERF_MODE
+  ? edgeGroup.selectAll('.ep-src')
+      .data(GRAPH.edges).join('circle').attr('class', 'ep-src')
+      .attr('r', 4)
+      .attr('fill', e => nodeColor(nodeById.get(e.from)))
+      .attr('filter', 'url(#fg-ep)')
+      .attr('opacity', 0.22)
+      .attr('pointer-events', 'none')
+  : d3.selectAll(null);   // empty selection
 
-const nodeCircle = nodeGroup.selectAll('circle')
-  .data(GRAPH.nodes)
-  .join('circle')
-  .attr('r', d => nodeRadius(d))
-  .attr('fill', d => brightenColor(nodeColor(d), nodeBrightness(d)))
+const edgeEpTgt = !PERF_MODE
+  ? edgeGroup.selectAll('.ep-tgt')
+      .data(GRAPH.edges).join('circle').attr('class', 'ep-tgt')
+      .attr('r', 3.5)
+      .attr('fill', e => nodeColor(nodeById.get(e.to)))
+      .attr('filter', 'url(#fg-ep)')
+      .attr('opacity', 0.18)
+      .attr('pointer-events', 'none')
+  : d3.selectAll(null);
+
+// ── Corona glow circles (behind nodes) ───────────────────────────────────────
+const nodeGlowOuter = glowOuterGroup.selectAll('circle')
+  .data(GRAPH.nodes).join('circle')
+  .attr('r',      d => nodeOuterR(d) * 1.4)
+  .attr('fill',   d => nodeColor(d))
+  .attr('filter', d => glowOuterFilt(d))
+  .attr('opacity',d => 0.35 * nodeOpacity(d))
+  .attr('pointer-events', 'none');
+
+const nodeGlowInner = glowInnerGroup.selectAll('circle')
+  .data(GRAPH.nodes).join('circle')
+  .attr('r',      d => nodeOuterR(d) * 0.9)
+  .attr('fill',   d => nodeColor(d))
+  .attr('filter', d => glowInnerFilt(d))
+  .attr('opacity',d => 0.60 * nodeOpacity(d))
+  .attr('pointer-events', 'none');
+
+// ── Saturn rings — back halves (topic nodes, behind node body) ────────────────
+const ringBackThick = ringsBackGroup.selectAll('.rb-thick')
+  .data(topicNodes).join('ellipse').attr('class', 'rb-thick')
+  .attr('fill', 'none')
   .attr('stroke', d => nodeColor(d))
-  .attr('stroke-width', 1.5)
-  .attr('stroke-opacity', 0.6)
+  .attr('stroke-width', 4.5)
+  .attr('opacity', 0.09)
+  .attr('pointer-events', 'none');
+
+const ringBackThin = ringsBackGroup.selectAll('.rb-thin')
+  .data(topicNodes).join('ellipse').attr('class', 'rb-thin')
+  .attr('fill', 'none')
+  .attr('stroke', d => nodeColor(d))
+  .attr('stroke-width', 1.2)
+  .attr('opacity', 0.30)
+  .attr('pointer-events', 'none');
+
+// ── Node groups: sparkle path + orbit ring + center dot, with drag ────────────
+const nodeGs = nodeGroup.selectAll('g')
+  .data(GRAPH.nodes).join('g')
+  .attr('class', 'node-g')
   .attr('cursor', 'pointer')
   .call(
     d3.drag()
@@ -554,28 +553,109 @@ const nodeCircle = nodeGroup.selectAll('circle')
       })
   );
 
-// ── Node labels (hidden by default) ──────────────────────────────────────────
-const labelGroup = g.append('g').attr('class', 'labels');
+const nodePath = nodeGs.append('path')
+  .attr('fill',    d => nodeColor(d))
+  .attr('opacity', d => nodeOpacity(d))
+  .attr('d',       d => sparklePath(nodeLongR(d), nodeShortR(d), nodeInnerR(d)));
 
+// Faint orbit ring (at the short-spike radius)
+nodeGs.append('circle')
+  .attr('class', 'orbit-ring')
+  .attr('cx', 0).attr('cy', 0)
+  .attr('r',            d => nodeShortR(d))
+  .attr('fill',         'none')
+  .attr('stroke',       d => nodeColor(d))
+  .attr('stroke-width', 0.8)
+  .attr('opacity',      0.38);
+
+// Bright white center point
+nodeGs.append('circle')
+  .attr('class', 'center-dot')
+  .attr('cx', 0).attr('cy', 0)
+  .attr('r',    d => Math.max(1.5, nodeOuterR(d) * 0.18))
+  .attr('fill', 'white');
+
+// ── Saturn rings — front arcs (topic nodes, in front of node body) ────────────
+const ringFrontThick = ringsFrontGroup.selectAll('.rf-thick')
+  .data(topicNodes).join('path').attr('class', 'rf-thick')
+  .attr('fill', 'none')
+  .attr('stroke', d => nodeColor(d))
+  .attr('stroke-width', 4.5)
+  .attr('opacity', 0.09)
+  .attr('pointer-events', 'none');
+
+const ringFrontThin = ringsFrontGroup.selectAll('.rf-thin')
+  .data(topicNodes).join('path').attr('class', 'rf-thin')
+  .attr('fill', 'none')
+  .attr('stroke', d => nodeColor(d))
+  .attr('stroke-width', 1.2)
+  .attr('opacity', 0.34)
+  .attr('pointer-events', 'none');
+
+// ── Node labels (hidden by default, shown on search match) ────────────────────
 const nodeLabel = labelGroup.selectAll('text')
-  .data(GRAPH.nodes)
-  .join('text')
-  .attr('font-size', 10)
+  .data(GRAPH.nodes).join('text')
+  .attr('font-size',   10)
   .attr('font-family', 'ui-monospace, monospace')
-  .attr('fill', '#9ca3af')
+  .attr('fill',        '#6b7280')
   .attr('text-anchor', 'middle')
   .attr('pointer-events', 'none')
-  .attr('dy', d => nodeRadius(d) + 13)
   .text(d => d.label)
   .attr('opacity', 0);
 
+// ── Spaceship ─────────────────────────────────────────────────────────────────
+const shipG      = g.append('g').attr('id', 'spaceship').attr('opacity', 0);
+const shipTrail  = shipG.append('circle').attr('r', 4).attr('fill', '#7dd3fc')
+                     .attr('filter', 'url(#fg-trail)').attr('cx', -9).attr('cy', 0);
+const shipEngine = shipG.append('circle').attr('r', 3.5).attr('fill', '#7dd3fc')
+                     .attr('filter', 'url(#fg-ship)').attr('cx', -5).attr('cy', 0);
+// Hull (nose faces +x at origin, rotated by group transform)
+shipG.append('polygon').attr('points', '9,0 -4,4 -2.5,0 -4,-4').attr('fill', '#e2e8f0');
+shipG.append('polygon').attr('points', '7,0 2,2.2 3,0 2,-2.2').attr('fill', '#7dd3fc').attr('opacity', 0.7);
+shipG.append('polygon').attr('points', '-1,2 -5,7 -5,3.5').attr('fill', '#cbd5e1');
+shipG.append('polygon').attr('points', '-1,-2 -5,-7 -5,-3.5').attr('fill', '#cbd5e1');
+shipG.append('rect').attr('x', -5).attr('y', -1.5).attr('width', 2.5).attr('height', 3).attr('rx', 0.5).attr('fill', '#94a3b8');
+
 // ── Simulation tick ───────────────────────────────────────────────────────────
 simulation.on('tick', () => {
+  // Constellation edges
   edgeLine
     .attr('x1', e => e.source.x).attr('y1', e => e.source.y)
     .attr('x2', e => e.target.x).attr('y2', e => e.target.y);
-  nodeCircle.attr('cx', d => d.x).attr('cy', d => d.y);
-  nodeLabel.attr('x', d => d.x).attr('y', d => d.y);
+  edgeEpSrc.attr('cx', e => e.source.x).attr('cy', e => e.source.y);
+  edgeEpTgt.attr('cx', e => e.target.x).attr('cy', e => e.target.y);
+
+  // Glow circles
+  nodeGlowOuter.attr('cx', d => d.x).attr('cy', d => d.y);
+  nodeGlowInner.attr('cx', d => d.x).attr('cy', d => d.y);
+
+  // Saturn ring back ellipses
+  function posRingBack(sel) {
+    sel.attr('cx', d => d.x)
+       .attr('cy', d => d.y + ringYOff(d))
+       .attr('rx', d => ringRx(d))
+       .attr('ry', d => ringRy(d));
+  }
+  posRingBack(ringBackThick);
+  posRingBack(ringBackThin);
+
+  // Node groups (transform positions all children relative to node center)
+  nodeGs.attr('transform', d => `translate(${d.x},${d.y})`);
+
+  // Saturn ring front arcs
+  function posRingFront(sel) {
+    sel.attr('d', d => {
+      const rx = ringRx(d), ry = ringRy(d), yo = ringYOff(d);
+      return `M${d.x - rx},${d.y + yo} A${rx},${ry} 0 0,0 ${d.x + rx},${d.y + yo}`;
+    });
+  }
+  posRingFront(ringFrontThick);
+  posRingFront(ringFrontThin);
+
+  // Labels (below the long spike)
+  nodeLabel
+    .attr('x', d => d.x)
+    .attr('y', d => d.y + nodeLongR(d) + 13);
 });
 
 // ── Count badge ───────────────────────────────────────────────────────────────
@@ -592,12 +672,17 @@ if (GRAPH.meta.filters_applied && GRAPH.meta.filters_applied.length > 0) {
   });
 }
 
-// ── Hover state ───────────────────────────────────────────────────────────────
+// ── Interaction state flags ───────────────────────────────────────────────────
+let isHovering  = false;
+let isSearching = false;
+let focusNode   = null;
+
+// ── Hover card ────────────────────────────────────────────────────────────────
 const card = d3.select('#node-card');
 
 function showCard(event, d) {
   const color = nodeColor(d);
-  const imp = (d.importance || 0.5);
+  const imp   = d.importance || 0.5;
   const attrs = Object.entries(d.attributes || {}).slice(0, 6);
 
   let html = `
@@ -621,7 +706,7 @@ function showCard(event, d) {
 
   html += `<hr class="card-divider">
     <div class="card-importance-bar">
-      <div class="card-importance-fill" style="width:${imp * 100}%; background:${color}"></div>
+      <div class="card-importance-fill" style="width:${imp * 100}%;background:${color}"></div>
     </div>
     <div class="card-row" style="margin-top:4px">
       <span class="card-key">importance</span>
@@ -641,10 +726,9 @@ function _positionCard(event) {
   card.style('left', x + 'px').style('top', y + 'px');
 }
 
-function hideCard() {
-  card.style('display', 'none');
-}
+function hideCard() { card.style('display', 'none'); }
 
+// ── Highlight neighbors ───────────────────────────────────────────────────────
 function highlightNeighbors(d, factor) {
   const connectedIds = new Set([d.id]);
   (edgesByNode.get(d.id) || []).forEach(e => {
@@ -652,39 +736,42 @@ function highlightNeighbors(d, factor) {
     connectedIds.add(e.to);
   });
 
-  nodeCircle.attr('opacity', n => connectedIds.has(n.id) ? 1 : factor);
+  // Dim unconnected node groups; scale focused + neighbors
+  nodeGs.attr('opacity', n => connectedIds.has(n.id) ? 1 : factor);
+  nodeGs.filter(n => n.id === d.id)
+    .attr('transform', n => `translate(${n.x},${n.y}) scale(1.3)`);
+  nodeGs.filter(n => connectedIds.has(n.id) && n.id !== d.id)
+    .attr('transform', n => `translate(${n.x},${n.y}) scale(1.1)`);
+
+  // Dim glow of unconnected nodes
+  nodeGlowOuter.attr('opacity', n =>
+    (connectedIds.has(n.id) ? 1 : factor * 0.4) * 0.35 * nodeOpacity(n));
+  nodeGlowInner.attr('opacity', n =>
+    (connectedIds.has(n.id) ? 1 : factor * 0.4) * 0.60 * nodeOpacity(n));
+
+  // Dim edges and endpoint glows
   edgeLine.attr('opacity', e =>
-    (e.source.id === d.id || e.target.id === d.id) ? 1 : factor * 0.5
-  );
-  // Scale hovered/clicked node and its neighbours
-  nodeCircle.filter(n => n.id === d.id).attr('r', nodeRadius(d) * 1.3);
-  nodeCircle.filter(n => connectedIds.has(n.id) && n.id !== d.id)
-    .attr('r', n => nodeRadius(n) * 1.1);
+    (e.source.id === d.id || e.target.id === d.id) ? 0.8 : factor * 0.3);
+  edgeEpSrc.attr('opacity', e =>
+    (e.source.id === d.id || e.target.id === d.id) ? 0.4 : 0.22 * factor);
+  edgeEpTgt.attr('opacity', e =>
+    (e.source.id === d.id || e.target.id === d.id) ? 0.4 : 0.18 * factor);
 }
 
 function resetOpacity() {
-  nodeCircle.attr('opacity', 1).attr('r', d => nodeRadius(d));
+  isHovering = false;
+  nodeGs
+    .attr('opacity', 1)
+    .attr('transform', d => `translate(${d.x},${d.y})`);
+  nodeGlowOuter.attr('opacity', d => 0.35 * nodeOpacity(d));
+  nodeGlowInner.attr('opacity', d => 0.60 * nodeOpacity(d));
   edgeLine.attr('opacity', 1);
+  edgeEpSrc.attr('opacity', 0.22);
+  edgeEpTgt.attr('opacity', 0.18);
   nodeLabel.attr('opacity', 0);
 }
 
-nodeCircle
-  .on('mouseover', (event, d) => {
-    if (focusNode) return;
-    showCard(event, d);
-    if (!searchInput.property('value').trim()) highlightNeighbors(d, 0.2);
-  })
-  .on('mousemove', (event) => {
-    if (focusNode) return;
-    _positionCard(event);
-  })
-  .on('mouseout', () => {
-    if (focusNode) return;
-    hideCard();
-    if (!searchInput.property('value').trim()) resetOpacity();
-  });
-
-// ── Detail panel (click) ──────────────────────────────────────────────────────
+// ── Detail panel ──────────────────────────────────────────────────────────────
 const detailPanel = document.getElementById('detail-panel');
 
 function friendlyType(d) {
@@ -702,20 +789,20 @@ function friendlyType(d) {
 }
 
 function showDetailPanel(d) {
-  const color = nodeColor(d);
-  const edges = edgesByNode.get(d.id) || [];
+  const color       = nodeColor(d);
+  const edges       = edgesByNode.get(d.id) || [];
   const connections = edges.map(e => {
     const otherId = e.from === d.id ? e.to : e.from;
-    const other = nodeById.get(otherId);
+    const other   = nodeById.get(otherId);
     return other ? { node: other, relation: e.relation } : null;
   }).filter(Boolean);
 
-  const isChunk = d.node_type === 'memory_chunk';
+  const isChunk    = d.node_type === 'memory_chunk';
   const displayLabel = isChunk ? 'Memory Record' : d.label;
-  const attrs = Object.entries(d.attributes || {})
+  const attrs      = Object.entries(d.attributes || {})
     .filter(([, v]) => v !== null && v !== '' && v !== undefined);
   const summary = d.summary || '';
-  const imp = d.importance || 0.5;
+  const imp     = d.importance || 0.5;
 
   let html = `
     <button id="detail-close" onclick="closeDetailPanel()">×</button>
@@ -723,8 +810,7 @@ function showDetailPanel(d) {
     <div class="detail-label" style="color:${color}">${displayLabel}</div>`;
 
   if (attrs.length > 0) {
-    html += `<div class="detail-section">
-      <div class="detail-section-title">Details</div>`;
+    html += `<div class="detail-section"><div class="detail-section-title">Details</div>`;
     attrs.forEach(([k, v]) => {
       html += `<div class="detail-attr-row">
         <span class="detail-attr-key">${k.replace(/_/g, ' ')}</span>
@@ -745,7 +831,7 @@ function showDetailPanel(d) {
     html += `<div class="detail-section">
       <div class="detail-section-title">Connections &nbsp;<span style="font-weight:400;letter-spacing:0">${connections.length}</span></div>`;
     connections.forEach(({ node, relation }) => {
-      const c = nodeColor(node);
+      const c   = nodeColor(node);
       const lbl = node.node_type === 'memory_chunk' ? 'Memory Record' : node.label;
       const rel = relation ? relation.replace(/_/g, ' ') : '—';
       html += `<div class="detail-conn-item">
@@ -765,7 +851,7 @@ function showDetailPanel(d) {
       <span class="detail-attr-val">${imp.toFixed(2)}</span>
     </div>
     <div class="detail-imp-bar">
-      <div class="detail-imp-fill" style="width:${imp*100}%;background:${color}"></div>
+      <div class="detail-imp-fill" style="width:${imp * 100}%;background:${color}"></div>
     </div>
   </div>`;
 
@@ -773,12 +859,9 @@ function showDetailPanel(d) {
   detailPanel.style.display = 'block';
 }
 
-function closeDetailPanel() {
-  detailPanel.style.display = 'none';
-}
+function closeDetailPanel() { detailPanel.style.display = 'none'; }
 
-// ── Focus mode (click) ────────────────────────────────────────────────────────
-let focusNode = null;
+// ── Focus mode ────────────────────────────────────────────────────────────────
 const backBtn = d3.select('#back-btn');
 
 function enterFocus(d) {
@@ -796,35 +879,46 @@ function exitFocus() {
   clearSearch();
 }
 
-nodeCircle.on('click', (event, d) => {
-  event.stopPropagation();
-  if (focusNode === d) {
-    exitFocus();
-  } else {
-    enterFocus(d);
-  }
-});
+// ── Node events ───────────────────────────────────────────────────────────────
+nodeGs
+  .on('mouseover', (event, d) => {
+    if (focusNode) return;
+    isHovering = true;
+    showCard(event, d);
+    if (!searchInput.property('value').trim()) highlightNeighbors(d, 0.2);
+  })
+  .on('mousemove', (event) => {
+    if (focusNode) return;
+    _positionCard(event);
+  })
+  .on('mouseout', () => {
+    if (focusNode) return;
+    isHovering = false;
+    hideCard();
+    if (!searchInput.property('value').trim()) resetOpacity();
+  })
+  .on('click', (event, d) => {
+    event.stopPropagation();
+    if (focusNode === d) exitFocus();
+    else enterFocus(d);
+  });
 
-svg.on('click', () => {
-  if (focusNode) exitFocus();
-});
-
+svg.on('click', () => { if (focusNode) exitFocus(); });
 backBtn.on('click', exitFocus);
 
 // ── Search ────────────────────────────────────────────────────────────────────
 const searchInput = d3.select('#search');
-let searchTimer = null;
+let searchTimer   = null;
 let pulseSelection = null;
 
 function applySearch(term) {
-  if (pulseSelection) {
-    pulseSelection.remove();
-    pulseSelection = null;
-  }
+  if (pulseSelection) { pulseSelection.remove(); pulseSelection = null; }
   if (!term) {
+    isSearching = false;
     resetOpacity();
     return;
   }
+  isSearching = true;
   const t = term.toLowerCase();
   const matchIds = new Set(
     GRAPH.nodes
@@ -836,21 +930,22 @@ function applySearch(term) {
       .map(n => n.id)
   );
 
-  nodeCircle.attr('opacity', n => matchIds.has(n.id) ? 1 : 0.1);
+  nodeGs.attr('opacity', n => matchIds.has(n.id) ? 1 : 0.1);
+  nodeGlowOuter.attr('opacity', n => matchIds.has(n.id) ? 0.35 * nodeOpacity(n) : 0);
+  nodeGlowInner.attr('opacity', n => matchIds.has(n.id) ? 0.60 * nodeOpacity(n) : 0);
   edgeLine.attr('opacity', 0.05);
   nodeLabel.attr('opacity', n => matchIds.has(n.id) ? 0.9 : 0);
 
-  // Pulse rings on matching nodes
   pulseSelection = g.append('g').attr('class', 'pulse-group');
   GRAPH.nodes.filter(n => matchIds.has(n.id)).forEach(n => {
     pulseSelection.append('circle')
       .attr('cx', n.x || 0).attr('cy', n.y || 0)
-      .attr('r', nodeRadius(n))
+      .attr('r', nodeOuterR(n))
       .attr('fill', 'none')
       .attr('stroke', nodeColor(n))
       .attr('stroke-width', 2)
       .attr('class', 'pulse')
-      .style('--r', nodeRadius(n) + 'px');
+      .style('--r', nodeOuterR(n) + 'px');
   });
 }
 
@@ -868,14 +963,11 @@ searchInput.on('keydown', function(event) {
   if (event.key === 'Escape') clearSearch();
 });
 
-// Pre-fill initial search if provided
 if (INITIAL_SEARCH) {
   searchInput.property('value', INITIAL_SEARCH);
-  // wait for simulation to settle before applying
   setTimeout(() => applySearch(INITIAL_SEARCH), 1500);
 }
 
-// Update pulse positions on tick
 simulation.on('tick.pulse', () => {
   if (!pulseSelection) return;
   const term = searchInput.property('value').trim().toLowerCase();
@@ -889,10 +981,172 @@ simulation.on('tick.pulse', () => {
     .attr('cy', n => n.y || 0);
 });
 
-// Window resize
+// ── Procedural star field canvases ────────────────────────────────────────────
+function seedRng(s) { return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+
+function fillStarCanvas(id, count, seed, szRange, opRange) {
+  const canvas = document.getElementById(id);
+  const dpr    = window.devicePixelRatio || 1;
+  canvas.width  = Math.ceil(window.innerWidth  * dpr);
+  canvas.height = Math.ceil(window.innerHeight * dpr);
+  canvas.style.width  = window.innerWidth  + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+
+  const ctx = canvas.getContext('2d');
+  const rng = seedRng(seed);
+
+  for (let i = 0; i < count; i++) {
+    const x  = rng() * canvas.width;
+    const y  = rng() * canvas.height;
+    const r  = (szRange[0] + rng() * (szRange[1] - szRange[0])) * dpr;
+    const op = opRange[0] + rng() * (opRange[1] - opRange[0]);
+    const t  = rng();
+    const col = t > 0.92 ? `rgba(180,210,255,${op})`
+              : t > 0.85 ? `rgba(255,220,180,${op})`
+              :              `rgba(255,255,255,${op})`;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = col;
+    ctx.fill();
+  }
+}
+
+fillStarCanvas('star-far',  220, 1001, [0.3, 0.9], [0.10, 0.38]);
+fillStarCanvas('star-mid',   90, 2002, [0.6, 1.4], [0.26, 0.58]);
+fillStarCanvas('star-near',  30, 3003, [1.1, 2.2], [0.48, 0.86]);
+
+// ── Glow wave + spaceship rAF loop ────────────────────────────────────────────
+const WAVE_PERIOD  = 9000;   // ms for one full left→right sweep
+const WAVE_BAND    = 250;    // px width of the dimming band (in simulation coords)
+const DIM_FLOOR    = 0.22;   // glow bottoms out at this fraction
+// In perf mode update the glow wave at ~15 fps instead of 60 fps (4× fewer DOM writes)
+const WAVE_INTERVAL = PERF_MODE ? 66 : 0;
+let   lastWaveUpdate = 0;
+
+function waveGlowFactor(nodeX, nowMs) {
+  const W     = window.innerWidth;
+  const phase = (nowMs % WAVE_PERIOD) / WAVE_PERIOD;
+  const wavePx = phase * (W + WAVE_BAND) - WAVE_BAND;
+  const dist  = Math.abs(nodeX - wavePx) / (WAVE_BAND / 2);
+  if (dist >= 1) return 1;
+  return DIM_FLOOR + (1 - DIM_FLOOR) * dist * dist;
+}
+
+// Spaceship state machine
+const SHIP_SPEED = 0.00025;   // fraction of edge length per ms
+const PAUSE_BASE = 1000;      // ms minimum pause at each node
+
+// Adjacency list using only valid edges
+const shipAdj = new Map();
+GRAPH.nodes.forEach(n => shipAdj.set(n.id, []));
+GRAPH.edges.forEach(e => {
+  if (e.valid !== false) {
+    (shipAdj.get(e.from) || []).push(e.to);
+    (shipAdj.get(e.to)   || []).push(e.from);
+  }
+});
+
+// Pick a starting node that has at least one valid neighbor (disabled in perf mode)
+const shipStart = !PERF_MODE && GRAPH.nodes.find(n => (shipAdj.get(n.id) || []).length > 0);
+
+let shipState    = 'WAITING';
+let shipPauseMs  = 0;
+let shipFromId   = shipStart ? shipStart.id : null;
+let shipToId     = null;
+let shipProgress = 0;
+let shipAngle    = 0;
+
+function pickNext(fromId) {
+  const opts = shipAdj.get(fromId) || [];
+  return opts.length ? opts[Math.floor(Math.random() * opts.length)] : null;
+}
+
+function easeInOut(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+let lastTs = null;
+
+function rafLoop(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = Math.min(ts - lastTs, 50);
+  lastTs = ts;
+
+  // ── Glow wave (skip when hover/focus/search override opacities) ──
+  if (!isHovering && !focusNode && !isSearching) {
+    if (ts - lastWaveUpdate >= WAVE_INTERVAL) {
+      lastWaveUpdate = ts;
+      nodeGlowOuter.attr('opacity', d => waveGlowFactor(d.x, ts) * 0.35 * nodeOpacity(d));
+      nodeGlowInner.attr('opacity', d => waveGlowFactor(d.x, ts) * 0.60 * nodeOpacity(d));
+    }
+  }
+
+  // ── Spaceship ──
+  if (!shipFromId) { requestAnimationFrame(rafLoop); return; }
+
+  if (shipState === 'WAITING') {
+    if (simulation.alpha() < 0.01) {
+      shipState   = 'PAUSING';
+      shipPauseMs = PAUSE_BASE + Math.random() * 800;
+      const n = nodeById.get(shipFromId);
+      if (n) shipG.attr('transform', `translate(${n.x},${n.y})`).attr('opacity', 0.9);
+    }
+  } else if (shipState === 'PAUSING') {
+    shipPauseMs -= dt;
+    if (shipPauseMs <= 0) {
+      shipToId = pickNext(shipFromId);
+      if (!shipToId) {
+        // No valid neighbor — jump to a random connected node
+        const cands = GRAPH.nodes.filter(n => (shipAdj.get(n.id) || []).length > 0);
+        if (cands.length) {
+          shipFromId = cands[Math.floor(Math.random() * cands.length)].id;
+          shipToId   = pickNext(shipFromId);
+        }
+      }
+      if (shipToId) {
+        const from = nodeById.get(shipFromId), to = nodeById.get(shipToId);
+        shipAngle    = Math.atan2(to.y - from.y, to.x - from.x) * 180 / Math.PI;
+        shipProgress = 0;
+        shipState    = 'FLYING';
+      }
+    }
+  } else if (shipState === 'FLYING') {
+    shipProgress += SHIP_SPEED * dt;
+    if (shipProgress >= 1) {
+      shipProgress = 1;
+      shipFromId   = shipToId;
+      shipState    = 'PAUSING';
+      shipPauseMs  = PAUSE_BASE + Math.random() * 800;
+    }
+
+    const from = nodeById.get(shipFromId);
+    const to   = nodeById.get(shipToId);
+    if (!from || !to) { shipState = 'PAUSING'; shipPauseMs = 500; requestAnimationFrame(rafLoop); return; }
+
+    const t  = easeInOut(Math.min(shipProgress, 1));
+    const sx = lerp(from.x, to.x, t);
+    const sy = lerp(from.y, to.y, t);
+    shipAngle = Math.atan2(to.y - from.y, to.x - from.x) * 180 / Math.PI;
+
+    // Fade in near start, fade out near end
+    const fade = shipProgress < 0.08 ? shipProgress / 0.08
+               : shipProgress > 0.92 ? (1 - shipProgress) / 0.08
+               : 1;
+
+    shipG.attr('transform', `translate(${sx},${sy}) rotate(${shipAngle})`).attr('opacity', fade);
+  }
+
+  requestAnimationFrame(rafLoop);
+}
+
+requestAnimationFrame(rafLoop);
+
+// ── Window resize ─────────────────────────────────────────────────────────────
 window.addEventListener('resize', () => {
   simulation.force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
   simulation.alpha(0.1).restart();
+  fillStarCanvas('star-far',  220, 1001, [0.3, 0.9], [0.10, 0.38]);
+  fillStarCanvas('star-mid',   90, 2002, [0.6, 1.4], [0.26, 0.58]);
+  fillStarCanvas('star-near',  30, 3003, [1.1, 2.2], [0.48, 0.86]);
 });
 </script>
 </body>

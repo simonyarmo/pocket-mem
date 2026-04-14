@@ -42,7 +42,7 @@ def launch(
 
     url = f"http://localhost:{port}"
     webbrowser.open(url)
-    print(f"  pocket-mem visualizer → {url}")
+    print(f"  pocket-mem visualizer -> {url}")
     print("  Press Ctrl+C to close")
 
     try:
