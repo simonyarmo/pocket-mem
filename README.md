@@ -147,7 +147,7 @@ ollama pull qwen2.5:3b
 > **Warning:** The 3B model will extract less detail from conversations and is more prone to hallucination during ingestion. Entity extraction and relationship mapping will be noticeably less accurate. Use it only if you cannot run the 7B model.
 
 ```python
-from memory_agent import MemoryAgent, LLMConfig
+from pocket_mem import MemoryAgent, LLMConfig
 
 agent = MemoryAgent(
     project="my-app",
@@ -163,7 +163,7 @@ Cloud models give you the highest extraction quality with no local GPU requireme
 
 ```python
 import os
-from memory_agent import MemoryAgent, LLMConfig
+from pocket_mem import MemoryAgent, LLMConfig
 
 # Anthropic Claude Haiku — excellent JSON extraction, low cost
 agent = MemoryAgent(
@@ -201,7 +201,7 @@ agent = MemoryAgent(
 ## Quick start
 
 ```python
-from memory_agent import MemoryAgent
+from pocket_mem import MemoryAgent
 
 # Creates a ./memory/ folder in your project directory automatically
 agent = MemoryAgent(project="my-app")
@@ -237,7 +237,7 @@ There are two patterns for connecting pocket-mem to your existing LLM or agent. 
 Call `recall()` before every LLM call and inject the results into your system prompt. Your agent always has relevant memory in context without needing to explicitly ask for it.
 
 ```python
-from memory_agent import MemoryAgent
+from pocket_mem import MemoryAgent
 
 memory = MemoryAgent(project="my-app")
 
@@ -270,7 +270,7 @@ This works with any LLM — OpenAI, Anthropic, local models, LangChain, anything
 Expose `recall` to your LLM as a callable tool. The model decides when memory is relevant and calls it on demand.
 
 ```python
-from memory_agent import MemoryAgent
+from pocket_mem import MemoryAgent
 
 memory = MemoryAgent(project="my-app")
 
@@ -331,7 +331,7 @@ If you want to keep `qwen2.5:7b` for ingestion (fast, free, local) but use Claud
 
 ```python
 import os
-from memory_agent import MemoryAgent, LLMConfig
+from pocket_mem import MemoryAgent, LLMConfig
 
 agent = MemoryAgent(
     project="my-app",

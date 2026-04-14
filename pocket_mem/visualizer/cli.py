@@ -11,12 +11,17 @@ from __future__ import annotations
 
 import argparse
 import sys
+from importlib.metadata import version, PackageNotFoundError
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="pocket-mem",
         description="pocket-mem memory tools",
+    )
+    parser.add_argument(
+        "-v", "--version", action="store_true",
+        help="Show version and exit",
     )
     sub = parser.add_subparsers(dest="cmd")
 
@@ -51,6 +56,13 @@ def main() -> None:
     )
 
     args = parser.parse_args()
+
+    if args.version:
+        try:
+            print(version("pocket-mem"))
+        except PackageNotFoundError:
+            print("unknown")
+        sys.exit(0)
 
     if args.cmd == "show":
         from pocket_mem.visualizer.query import build_graph
