@@ -477,3 +477,5 @@ The Voss matter and NorthBridge matter both have legal citations stored from the
 | Cross-dataset contamination | 0 confirmed | — | — |
 | Hallucination rate (U questions) | 5/30 (17%) | — | — |
 | Contradictory response rate | 3/180 (2%) | — | — |
+
+
