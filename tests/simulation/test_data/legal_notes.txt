@@ -1,0 +1,464 @@
+FICTIONAL LAW FIRM: Castellan & Briggs LLP — Chicago, Illinois
+NOTE: All names, cases, and details are entirely fictional.
+
+STAFF:
+- Margaret Castellan — Senior Partner
+- Derek Briggs — Senior Partner
+- Imani Foster — Associate Attorney
+- Leo Nakashima — Associate Attorney
+- Renata Osei — Paralegal
+- Duncan Farrow — Investigator
+- Priscilla Thorne — Legal Secretary
+
+CLIENTS / PARTIES:
+- NorthBridge Capital LLC — plaintiff (commercial litigation)
+- Harlan Voss — defendant (employment dispute)
+- Solenne Marchand — defendant (personal injury)
+- Brightfield Pharmaceuticals — defendant (product liability)
+
+---
+
+CASE NOTE 001
+Date: January 6, 2025
+Case: NorthBridge Capital LLC v. Terravast Holdings Inc.
+File No.: CB-2025-001
+Attorney: Margaret Castellan
+Note Type: New Matter Opening
+
+NorthBridge Capital LLC retained Castellan & Briggs to pursue breach of contract claim against Terravast Holdings Inc.
+
+Background: NorthBridge and Terravast entered a joint venture agreement in March 2023 for commercial real estate development in the River North district of Chicago. NorthBridge alleges Terravast failed to contribute the agreed $4.2 million capital injection by the contractual deadline of December 1, 2024, causing NorthBridge to incur $780,000 in bridge financing costs and forcing the sale of the Meridian Tower property at a $1.3 million discount.
+
+Client contact: Patricia Huang, CFO, NorthBridge Capital
+Claimed damages: $2,080,000 (bridge financing + discounted sale loss)
+Defendant counsel: Unknown at this time
+
+Action items:
+1. File complaint in Cook County Circuit Court within 30 days
+2. Serve Terravast — registered agent: CT Corporation, 208 S LaSalle St
+3. Obtain and review the March 2023 joint venture agreement
+4. Request financial records from NorthBridge re: bridge loan
+
+Assigned: Margaret Castellan (lead), Renata Osei (paralegal)
+
+---
+
+CASE NOTE 002
+Date: January 9, 2025
+Case: NorthBridge Capital v. Terravast Holdings
+File No.: CB-2025-001
+Attorney: Renata Osei (Paralegal)
+Note Type: Document Review
+
+Received from client: joint venture agreement (March 14, 2023, 42 pages), three amendment letters, and bridge loan documentation from First Midwest Bank ($780,000 at 9.2% interest, drawn December 3, 2024).
+
+Key contract terms identified:
+- Section 4.2: Terravast obligated to contribute $4.2M by December 1, 2024
+- Section 11: Default triggers right to seek consequential damages
+- Section 14.3: Dispute resolution — mandatory mediation before litigation (30-day process)
+- Section 17: Governing law — Illinois
+
+Issue flagged: Section 14.3 requires mandatory mediation before filing suit. Ms. Castellan notified. Must determine if mediation was attempted or if this clause can be waived by mutual agreement.
+
+Renata Osei, Paralegal
+
+---
+
+CASE NOTE 003
+Date: January 13, 2025
+Case: NorthBridge Capital v. Terravast Holdings
+File No.: CB-2025-001
+Attorney: Margaret Castellan
+Note Type: Strategy Note
+
+Mediation clause (Section 14.3) reviewed. Contacted opposing party's general counsel (Marcus Webb of Terravast). Terravast refuses to participate in mediation — claims NorthBridge breached the agreement first by failing to obtain required zoning approvals. This refusal to mediate is itself a breach of the dispute resolution clause and waives the mediation requirement under Illinois law (Rosenberg v. Feldman, 2019).
+
+Decision: Proceed directly to filing. Complaint to be filed by January 24th.
+
+Also: Duncan Farrow assigned to investigate Terravast's financial condition. Need to know if they have assets worth pursuing before we commit client to full litigation costs.
+
+Margaret Castellan
+
+---
+
+CASE NOTE 004
+Date: January 16, 2025
+Case: Voss v. Kellerman & Drape Consulting
+File No.: CB-2025-002
+Attorney: Derek Briggs
+Note Type: New Matter Opening
+
+Harlan Voss retained Castellan & Briggs. Mr. Voss was terminated from Kellerman & Drape Consulting on December 18, 2024, after 11 years of employment. He was Director of Strategic Accounts earning $187,000 annually plus a $45,000 annual bonus.
+
+Voss alleges:
+1. Wrongful termination — retaliation for internal whistleblower complaint filed October 2024 regarding billing fraud (overbilling clients by submitting inflated expense reports)
+2. Violation of Illinois Whistleblower Act
+3. Breach of implied employment contract (employee handbook promised progressive discipline)
+
+Evidence in client's possession:
+- Copy of internal whistleblower complaint submitted October 14, 2024
+- Termination letter dated December 18, 2024 (states "performance issues" as reason)
+- Employee handbook (2022 edition) with progressive discipline policy
+- Emails from supervisor Marcus Webb (Kellerman & Drape) showing awareness of complaint
+
+Action items:
+1. EEOC charge — must file within 300 days of termination (deadline: October 14, 2025)
+2. Illinois Department of Labor complaint re: Whistleblower Act
+3. Demand letter to Kellerman & Drape before suit
+4. Subpoena client expense records if litigation proceeds
+
+Assigned: Derek Briggs (lead), Imani Foster (associate), Renata Osei (paralegal)
+
+---
+
+CASE NOTE 005
+Date: January 21, 2025
+Case: Voss v. Kellerman & Drape
+File No.: CB-2025-002
+Attorney: Imani Foster
+Note Type: Research Memo — Whistleblower Protections
+
+Illinois Whistleblower Act (740 ILCS 174) protections confirmed applicable:
+- Voss reported suspected illegal activity (billing fraud) to internal compliance
+- Termination followed 65 days after complaint — temporal proximity supports retaliation inference
+- "Performance issues" cited in termination letter undercut by Voss's performance reviews — rated "Exceeds Expectations" in both 2022 and 2023 reviews
+
+Comparable verdict research: Solis v. Meridian Partners (N.D. Ill. 2022) — $340,000 jury award for wrongful termination with similar whistleblower facts. Damages included back pay, front pay, and emotional distress.
+
+Risk assessment: Strong facts for Voss. Weakness is the internal complaint only went to compliance (not external regulator) — some courts require external reporting for full IWA protection. However, Illinois courts have broadly construed "report" to include internal compliance under IWA.
+
+Recommend: Proceed with demand letter, then litigation if no acceptable settlement.
+
+Imani Foster, Associate
+
+---
+
+CASE NOTE 006
+Date: January 24, 2025
+Case: NorthBridge Capital v. Terravast Holdings
+File No.: CB-2025-001
+Attorney: Margaret Castellan
+Note Type: Filing Confirmation
+
+Complaint filed in Cook County Circuit Court, January 24, 2025.
+Case number assigned: 2025-L-001847
+Judge assigned: Hon. Patricia Moreau, Civil Division
+Summons issued for service on Terravast Holdings registered agent.
+
+Causes of action:
+- Count I: Breach of Contract
+- Count II: Breach of Implied Covenant of Good Faith
+- Count III: Unjust Enrichment (pleaded in alternative)
+
+Filed by: Margaret Castellan
+
+---
+
+CASE NOTE 007
+Date: January 28, 2025
+Case: NorthBridge Capital v. Terravast Holdings
+File No.: CB-2025-001
+Investigator: Duncan Farrow
+Note Type: Asset Investigation Report
+
+Terravast Holdings Inc. — asset search completed.
+
+Findings:
+- Registered in Delaware, operating in Illinois
+- Three commercial properties identified in Cook County records (estimated value: $8.4M total)
+- Two active mortgages totaling approximately $5.1M
+- No pending bankruptcy filings — checked Northern District of Illinois
+- Secretary of State records show two active subsidiaries: Terravast Residential LLC and Terravast Commercial Management LLC
+- Litigation history: two prior breach of contract suits, both settled
+
+Assessment: Terravast has assets. Collectability is not a concern assuming we can obtain judgment. The two commercial properties have equity worth pursuing.
+
+Duncan Farrow, Investigator
+
+---
+
+CASE NOTE 008
+Date: February 3, 2025
+Case: Marchand v. City of Chicago (Defense)
+File No.: CB-2025-003
+Attorney: Leo Nakashima
+Note Type: New Matter Opening
+
+Castellan & Briggs retained by City of Chicago's risk management office to defend against personal injury claim by Solenne Marchand.
+
+Facts: Ms. Marchand, 34, slipped and fell on an icy sidewalk on North Michigan Avenue on January 9, 2025, sustaining a fractured left wrist (distal radius) and soft tissue injuries to her left shoulder. She alleges the City negligently failed to salt and sand the sidewalk after a weather advisory was issued January 8th.
+
+Claimed damages: $425,000 (medical bills $38,000, lost wages $12,000, pain and suffering $375,000)
+
+Status of plaintiff's counsel: Janet Osorio of Osorio & Kim LLP.
+
+Key defense arguments to develop:
+1. Comparative fault — was plaintiff wearing appropriate footwear?
+2. Weather records — timing of ice formation relative to city's salting schedule
+3. Notice — did city have actual or constructive notice of specific hazard?
+4. Governmental immunity — limited immunity for discretionary functions
+
+Assigned: Leo Nakashima (lead), Priscilla Thorne (secretary)
+
+---
+
+CASE NOTE 009
+Date: February 6, 2025
+Case: Voss v. Kellerman & Drape
+File No.: CB-2025-002
+Attorney: Derek Briggs
+Note Type: Demand Letter Sent
+
+Demand letter sent via certified mail to Kellerman & Drape's general counsel, February 6, 2025.
+
+Demand: $560,000 (approximately 2 years back pay, 1 year front pay, $50,000 emotional distress, attorney fees).
+
+Response deadline: 21 days (March 6, 2025).
+
+Also filed: EEOC charge submitted February 6, 2025. Charge number: 440-2025-01923. Right-to-sue letter expected in approximately 180 days if no resolution.
+
+Derek Briggs
+
+---
+
+CASE NOTE 010
+Date: February 10, 2025
+Case: Marchand v. City of Chicago
+File No.: CB-2025-003
+Attorney: Leo Nakashima
+Note Type: Investigation Notes
+
+Weather records obtained from NOAA — January 8-9, 2025:
+- Ice storm advisory issued January 8 at 6:00 PM
+- Freezing rain began approximately 11:00 PM January 8
+- Marchand fell at approximately 8:30 AM January 9
+
+City records: Salt truck dispatch logs show North Michigan Avenue treated at 5:45 AM January 9 (before the fall). This is significant — city did treat the area before the incident.
+
+Photo evidence from plaintiff's attorney: Shows icy conditions at scene. However, date/time stamp shows 9:15 AM — 45 minutes AFTER the fall.
+
+Witness: One witness identified — Thomas Quayle, 58, identified himself to responding officers. Address obtained. Needs interview.
+
+Leo Nakashima, Associate
+
+---
+
+CASE NOTE 011
+Date: February 14, 2025
+Case: Brightfield Pharmaceuticals — Product Liability Defense
+File No.: CB-2025-004
+Attorney: Margaret Castellan
+Note Type: New Matter Opening
+
+Castellan & Briggs retained by Brightfield Pharmaceuticals to defend against product liability claims related to their blood pressure medication Velantrix (valsartan 160mg).
+
+Background: Three plaintiffs in Cook County allege Velantrix caused acute kidney injury. FDA issued a safety communication in November 2024 noting elevated rates of renal adverse events in patients with pre-existing chronic kidney disease taking Velantrix. Brightfield disputes the causal link.
+
+Lead plaintiff: Gerald Ostrowski (Ostrowski v. Brightfield — filed December 2024)
+Consolidated cases: Two additional plaintiffs to be joined pending court approval
+Plaintiff counsel: Class action firm — Torres, Reid & Hatch
+
+Expert issues: Will need nephrology expert to dispute causation. Brightfield's internal clinical data will be central to defense.
+
+Strategic note: Settlement discussions may be appropriate early — reputational risk to Brightfield of full trial on drug safety issues.
+
+Assigned: Margaret Castellan (lead), Leo Nakashima (associate), Duncan Farrow (investigation)
+
+---
+
+CASE NOTE 012
+Date: February 18, 2025
+Case: Marchand v. City of Chicago
+File No.: CB-2025-003
+Attorney: Leo Nakashima
+Note Type: Witness Interview — Thomas Quayle
+
+Thomas Quayle interview conducted at his residence, February 18.
+
+Quayle, a 58-year-old retired teacher, was walking northbound on Michigan Avenue when he observed Ms. Marchand fall. Key statements:
+- He observed the sidewalk had been treated (visible salt granules present)
+- Ms. Marchand was wearing "dress shoes — no tread, not boots"
+- She was looking at her phone when she fell
+- He called 911 immediately
+- He did not observe any city vehicles in the area at the time
+
+Assessment: Quayle is a credible witness. His observations support the defense on two key points: (1) sidewalk was treated, (2) plaintiff was distracted and wearing inappropriate footwear. Will be designated as defense witness.
+
+Leo Nakashima
+
+---
+
+CASE NOTE 013
+Date: February 20, 2025
+Case: Voss v. Kellerman & Drape
+File No.: CB-2025-002
+Attorney: Derek Briggs
+Note Type: Response to Demand Letter
+
+Kellerman & Drape's outside counsel (Wallace & Stern LLP) responded on March 6 deadline with counter-offer: $85,000 total, no admission of liability.
+
+Assessment: $85,000 is far below Voss's actual damages. Voss has been unemployed for 8 weeks and is actively job searching. Client advised of offer — client instructed to reject. Client authorized filing suit.
+
+Plan: File complaint in Cook County Circuit Court. Also consider adding individual claim against supervisor who fired Voss (potentially in their personal capacity depending on their knowledge of the whistleblower complaint).
+
+Derek Briggs
+
+---
+
+CASE NOTE 014
+Date: February 24, 2025
+Case: NorthBridge Capital v. Terravast Holdings
+File No.: CB-2025-001
+Attorney: Margaret Castellan
+Note Type: Defendant's Answer Filed
+
+Terravast filed Answer and Affirmative Defenses, February 24, 2025.
+Defense counsel identified: Harrington & Cole LLP (lead attorney: James Varela).
+
+Terravast's affirmative defenses:
+1. NorthBridge failed to obtain required zoning approvals — material breach excusing Terravast's performance
+2. Force majeure — commercial real estate market disruption in Q3 2024
+3. Anticipatory repudiation — NorthBridge indicated it might not perform before the December 1 deadline
+
+Also: Terravast filed a counterclaim for $650,000 alleging NorthBridge's failure to obtain zoning approvals caused Terravast to lose a separate development opportunity.
+
+Margaret Castellan — note: counterclaim must be answered within 21 days (March 17, 2025). Zoning approval issue needs investigation — obtain all communications between NorthBridge and City of Chicago zoning office for 2024.
+
+---
+
+CASE NOTE 015
+Date: February 27, 2025
+Case: Brightfield Pharmaceuticals
+File No.: CB-2025-004
+Attorney: Margaret Castellan
+Note Type: Expert Retention
+
+Retained Dr. Howard Belkin, nephrologist, Northwestern University School of Medicine, as defense expert.
+
+Dr. Belkin's preliminary opinion: The plaintiffs' pre-existing CKD stage 3 (all three plaintiffs) was the primary driver of renal decline. Velantrix, at 160mg dosage, is within FDA-approved parameters for patients with mild-to-moderate CKD. The FDA safety communication was a precautionary notice, not a finding of causation.
+
+Fee agreement: $650/hour for review, $950/hour for deposition/trial testimony. Estimated engagement: 80 hours review + possible deposition.
+
+Opposing expert: Plaintiff has retained Dr. Sylvia Park (Johns Hopkins) — known to be aggressive in drug causation opinions. Belkin is familiar with Park's methodology and believes her approach overstates ARR statistics.
+
+Margaret Castellan
+
+---
+
+CASE NOTE 016
+Date: March 3, 2025
+Case: Voss v. Kellerman & Drape
+File No.: CB-2025-002
+Attorney: Imani Foster
+Note Type: Complaint Filed
+
+Complaint filed in Cook County Circuit Court, March 3, 2025.
+Case number: 2025-L-003291
+Judge assigned: Hon. Samuel Park, Employment Division
+
+Counts:
+- Count I: Retaliatory Discharge (Illinois Whistleblower Act)
+- Count II: Breach of Implied Contract (employee handbook)
+- Count III: Intentional Infliction of Emotional Distress
+
+Named defendants: Kellerman & Drape Consulting LLC and individually, Robert Ashby (Voss's direct supervisor who executed the termination).
+
+Imani Foster, Associate
+
+---
+
+CASE NOTE 017
+Date: March 5, 2025
+Case: Marchand v. City of Chicago
+File No.: CB-2025-003
+Attorney: Leo Nakashima
+Note Type: Settlement Evaluation Memo
+
+Plaintiff's demand: $425,000
+City's exposure analysis:
+
+Strong defense points:
+- Salt truck treated area at 5:45 AM — 45 minutes before fall
+- Witness confirms treatment visible and plaintiff's footwear inappropriate
+- Plaintiff on phone at time of fall (comparative negligence)
+
+Weak defense points:
+- Ice reform possible after treatment (re-icing common after initial treatment)
+- City's duty to monitor post-treatment is ambiguous in Illinois case law
+- Jury sympathy — 34-year-old with fractured wrist and shoulder injury
+
+Recommendation: Offer $95,000. If plaintiff counters above $150,000, consider trial given strength of witness testimony and salt log evidence. Risk of verdict over $200,000 is approximately 25% based on comparable cases.
+
+Leo Nakashima
+
+---
+
+CASE NOTE 018
+Date: March 6, 2025
+Case: NorthBridge Capital v. Terravast Holdings
+File No.: CB-2025-001
+Attorney: Margaret Castellan
+Note Type: Discovery Plan
+
+Joint discovery schedule submitted to Judge Moreau.
+
+Written discovery deadline: May 30, 2025
+Deposition period: June-August 2025
+Expert disclosure: September 15, 2025
+Close of discovery: October 31, 2025
+Trial date requested: February 2026
+
+Key depositions planned:
+1. Patricia Huang (NorthBridge CFO — our client contact)
+2. CEO of Terravast (TBD — need to identify)
+3. James Varela (opposing counsel can't be deposed but his clients can)
+4. Bridge loan officer at First Midwest Bank
+5. City of Chicago zoning officer handling the River North permits
+
+Duncan Farrow assigned: locate all Terravast communications regarding the December 1 deadline and zoning issue.
+
+---
+
+CASE NOTE 019
+Date: March 10, 2025
+Case: Brightfield Pharmaceuticals
+File No.: CB-2025-004
+Attorney: Leo Nakashima
+Note Type: Case Consolidation Order
+
+Judge assigned to consolidated case: Hon. Diana Okonkwo, Complex Civil Division.
+Consolidated case number: 2025-L-002841-CONS
+
+Three plaintiffs now formally joined:
+1. Gerald Ostrowski — CKD Stage 3, on Velantrix 14 months
+2. Ruth Patel — CKD Stage 3, on Velantrix 9 months
+3. Anton Devereux — CKD Stage 3B, on Velantrix 22 months
+
+Devereux has the most severe claimed injury — progressed to Stage 4 CKD during Velantrix use. His case will likely be the bellwether trial.
+
+Plaintiff's counsel Torres, Reid & Hatch filed motion to compel Brightfield's internal safety committee meeting minutes from 2022-2024. Margaret Castellan to oppose — privilege issues.
+
+Leo Nakashima
+
+---
+
+CASE NOTE 020
+Date: March 12, 2025
+Case: Voss v. Kellerman & Drape
+File No.: CB-2025-002
+Attorney: Derek Briggs
+Note Type: Early Mediation Scheduled
+
+Kellerman & Drape's counsel proposed mediation before answer is filed.
+Mediator agreed upon: Hon. (ret.) Clara Whitmore — JAMS Chicago.
+Mediation date: April 8, 2025.
+
+Voss briefed — client open to settlement above $300,000. Below that, wants trial.
+
+Preparation notes:
+- Organize Voss's performance review evidence (2022, 2023 — both "Exceeds Expectations")
+- Timeline of events: whistleblower complaint Oct 14 → termination Dec 18 (65 days)
+- Robert Ashby's emails showing knowledge of complaint — key exhibit
+- Calculate updated damages: now 12 weeks unemployed, $187,000 salary basis
+
+Derek Briggs

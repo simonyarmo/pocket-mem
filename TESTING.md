@@ -78,11 +78,77 @@ Results are written to `tests/simulation/first_sim_test_50_q/last_run_results.tx
 
 **Test run logs:** Every `pytest` run creates a timestamped WARNING-level log file in `logs/` at the repo root (e.g. `logs/2026-04-13_09-19-34.log`). These capture ingestion pipeline warnings — retry attempts, zero-entity extractions, and JSON parse fallbacks — without cluttering the terminal output. The `logs/` directory is created automatically on first run.
 
+### Multi-dataset V2 benchmark (`tests/simulation/complex_sim_test/`)
+
+A more demanding simulation suite that tests three independent domains loaded either separately or together into a single memory store.
+
+**Datasets:**
+
+| Dataset | Source | Documents | Domain |
+|---------|--------|-----------|--------|
+| Veloris Technologies | 20 emails | Engineering communications | B2B SaaS |
+| Hargrove Family Medicine | 20 clinical notes | Patient records, specialist referrals | Medical |
+| Castellan & Briggs LLP | 20 case notes | Four active legal matters | Legal |
+
+**Key design property:** The three domains share zero vocabulary. Any fact about Arthur Pemberton (medical) cannot be confused with a fact about Harlan Voss (legal). Cross-dataset contamination in answers is a hallucination, not a retrieval ambiguity.
+
+**Intentional trap:** The name "Marcus Webb" appears across all three datasets as a different person each time (Veloris CTO, Terravast general counsel, Kellerman & Drape supervisor). Conflating them is a measured failure mode.
+
+**Three test functions:**
+
+| Test | Command | What it does |
+|------|---------|--------------|
+| `test_medical_benchmark` | `-k medical` | Ingests 20 clinical notes, asks 60 questions (T1/T2/T3 + unanswerable) |
+| `test_legal_benchmark` | `-k legal` | Ingests 20 case notes, asks 60 questions (T1/T2/T3 + unanswerable) |
+| `test_combined_benchmark` | `-k combined` | Ingests all 60 documents into one store, asks all 180 questions (60 per dataset) |
+
+**Question tiers per dataset (60 questions each):**
+
+| Tier | Count | Notes |
+|------|-------|-------|
+| T1 — Direct lookup | 20 | Single explicit facts |
+| T2 — Single hop | 20 | Connecting facts across documents |
+| T3 — Multi-hop | 10 | 3+ step chains; tests graph traversal advantage |
+| U — Unanswerable | 10 | Correct decline expected; each dataset has one trap question |
+
+**Trap questions:**
+- `M-U-04`: "What caused Raymond Chu's small vessel disease?" — answerable as "likely hypertension-related per radiology"
+- `L-U-06`: "What is Derek Briggs's area of specialty?" — inferable as employment law from the Voss matter
+- `V-U-05`: "Which cloud provider does Veloris use?" — answerable as AWS (mentioned in email 003)
+
+**Persistent memory:** Each test writes its SQLite database to `tests/simulation/complex_sim_test/memory/{medical,legal,combined}/`. Databases persist after the run for inspection with the built-in visualizer:
+
+```bash
+pocket-mem show --path tests/simulation/complex_sim_test/memory/legal
+pocket-mem show --path tests/simulation/complex_sim_test/memory/combined
+```
+
+Delete the relevant subfolder before a run to start fresh.
+
+**Results files** written after each run:
+- `last_run_results_medical.txt`
+- `last_run_results_legal.txt`
+- `last_run_results_combined.txt` — single file with all 180 answers in three labelled sections
+
+```bash
+# Run all three
+pytest tests/simulation/complex_sim_test/ -v -s
+
+# Run combined only (180 questions)
+pytest tests/simulation/complex_sim_test/ -v -s -k combined
+```
+
+**Benchmark results:** All run history, scores, failure analysis, and root cause notes are tracked in:
+
+**[`tests/simulation/complex_sim_test/BENCHMARK_V2.md`](tests/simulation/complex_sim_test/BENCHMARK_V2.md)**
+
+**Run 2 headline result (2026-04-13):** 160.5/180 = 89% overall across all three domains in a single combined store. Medical 96% · Veloris 90% · Legal 82%. Zero cross-dataset contamination across 401 nodes.
+
 ---
 
 ## Benchmark run history
 
-All benchmark runs, results, model configurations, and root cause analyses are tracked in:
+All Veloris single-dataset benchmark runs, results, model configurations, and root cause analyses are tracked in:
 
 **[`tests/simulation/first_sim_test_50_q/BENCHMARK.md`](tests/simulation/first_sim_test_50_q/BENCHMARK.md)**
 

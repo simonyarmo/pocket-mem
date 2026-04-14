@@ -1,0 +1,407 @@
+=== MEDICAL BENCHMARK — pocket-mem ===
+Run: 2026-04-13 11:14:29   Ingest model: qwen2.5:7b   Answer model: claude-haiku-4-5-20251001
+
+--- INGESTION ---
+Notes ingested  : 20
+Tokens (ingest) : in=21743  out=13132
+Nodes stored    : 188
+Observe p50     : 0ms
+Observe p99     : 0ms
+
+--- SESSION PERSISTENCE ---
+PASS
+
+
+--- TIER 1 — DIRECT LOOKUP ---
+
+M-T1-01 | What is Arthur Pemberton's date of birth?
+  EXPECTED : March 14, 1957
+  ANSWER   : Arthur Pemberton's date of birth is March 14, 1957.
+  SCORE    : REVIEW
+  TOKENS   : 20 output tokens
+
+M-T1-02 | What medication was Arthur Pemberton already taking for hypertension at his first visit?
+  EXPECTED : Lisinopril 10mg daily
+  ANSWER   : At his first visit on January 8, 2025, Arthur Pemberton was taking Lisinopril 10mg daily for hypertension.
+  SCORE    : REVIEW
+  TOKENS   : 36 output tokens
+
+M-T1-03 | What was Arthur Pemberton's BNP level at initial labs?
+  EXPECTED : 387 pg/mL
+  ANSWER   : Arthur Pemberton's BNP level at initial labs was 387 pg/mL, which was elevated (normal <100).
+  SCORE    : REVIEW
+  TOKENS   : 32 output tokens
+
+M-T1-04 | What is Cecilia Vance's occupation?
+  EXPECTED : Graphic designer
+  ANSWER   : Cecilia Vance is a graphic designer.
+  SCORE    : REVIEW
+  TOKENS   : 14 output tokens
+
+M-T1-05 | How much weight did Cecilia Vance lose in the 6 months before her visit?
+  EXPECTED : 14 lbs (down from 162 to 148 lbs)
+  ANSWER   : Cecilia Vance lost 14 lbs over 6 months before her visit on January 20, 2025.
+  SCORE    : REVIEW
+  TOKENS   : 32 output tokens
+
+M-T1-06 | What was Cecilia Vance's initial HbA1c result?
+  EXPECTED : 11.4%
+  ANSWER   : Cecilia Vance's initial HbA1c result was 11.4%, measured on January 23, 2025.
+  SCORE    : REVIEW
+  TOKENS   : 33 output tokens
+
+M-T1-07 | What continuous glucose monitor was prescribed to Cecilia Vance?
+  EXPECTED : Dexcom G7
+  ANSWER   : Cecilia Vance was prescribed a Dexcom G7 continuous glucose monitor. This was ordered by Dr. Patricia Yuen during the endocrinology consultation on January 27, 2025, and the patient successfully set it up during her diabetes education class on February 10, 2025.
+  SCORE    : REVIEW
+  TOKENS   : 70 output tokens
+
+M-T1-08 | What was Raymond Chu's blood pressure when he arrived at the clinic on February 5th?
+  EXPECTED : 196/118 mmHg
+  ANSWER   : Raymond Chu's blood pressure when he arrived at the clinic on February 5th was 196/118 mmHg, which was critically elevated.
+  SCORE    : REVIEW
+  TOKENS   : 35 output tokens
+
+M-T1-09 | What medication did Raymond Chu run out of and for how long?
+  EXPECTED : Amlodipine — ran out 10 days before his visit
+  ANSWER   : Raymond Chu ran out of Amlodipine 10 days before his urgent visit on February 5, 2025. This means he had been without the medication for approximately 10 days.
+  SCORE    : REVIEW
+  TOKENS   : 47 output tokens
+
+M-T1-10 | What did the CT head scan show for Raymond Chu?
+  EXPECTED : No intracranial hemorrhage, no acute ischemic changes, mild periventricular white matter changes (chronic small vessel disease) — no acute pathology
+  ANSWER   : The CT head scan showed no intracranial hemorrhage, no acute ischemic changes, and no mass effect. It did reveal mild periventricular white matter changes, nonspecific findings that may reflect chronic small vessel disease likely related to hypertension.
+  SCORE    : REVIEW
+  TOKENS   : 58 output tokens
+
+M-T1-11 | What is Dolores Estrada's occupation?
+  EXPECTED : Retired librarian
+  ANSWER   : Dolores Estrada is a retired librarian.
+  SCORE    : REVIEW
+  TOKENS   : 15 output tokens
+
+M-T1-12 | What medication is Dolores Estrada on for osteoporosis?
+  EXPECTED : Alendronate 70mg weekly, plus Calcium 1200mg and Vitamin D3 2000 IU daily
+  ANSWER   : Dolores Estrada is on Alendronate 70mg weekly for osteoporosis, along with Calcium 1200mg and Vitamin D3 2000 IU daily.
+  SCORE    : REVIEW
+  TOKENS   : 47 output tokens
+
+M-T1-13 | What was Dolores Estrada's T-score on her DEXA scan?
+  EXPECTED : -2.9 (lumbar spine)
+  ANSWER   : Dolores Estrada's T-score on her DEXA scan was -2.9 (lumbar spine), performed 6 months prior to her February 12, 2025 follow-up visit.
+  SCORE    : REVIEW
+  TOKENS   : 51 output tokens
+
+M-T1-14 | Who is the cardiologist at Hargrove Family Medicine?
+  EXPECTED : Dr. Vikram Suresh
+  ANSWER   : Dr. Vikram Suresh is the cardiologist at Hargrove Family Medicine.
+  SCORE    : REVIEW
+  TOKENS   : 24 output tokens
+
+M-T1-15 | What was Arthur Pemberton's ejection fraction on echocardiogram?
+  EXPECTED : 58%
+  ANSWER   : Arthur Pemberton's ejection fraction on echocardiogram was 58%, which is in the normal range (≥55%). This finding is consistent with heart failure with preserved ejection fraction (HFpEF).
+  SCORE    : REVIEW
+  TOKENS   : 51 output tokens
+
+M-T1-16 | What pharmacy did Raymond Chu use to fill his prescription?
+  EXPECTED : CVS on Lamar Blvd
+  ANSWER   : Raymond Chu filled his prescription at CVS on Lamar Blvd, as documented in the monitoring note from February 5, 2025.
+  SCORE    : REVIEW
+  TOKENS   : 36 output tokens
+
+M-T1-17 | What is the name of the medical records coordinator at Hargrove Family Medicine?
+  EXPECTED : Bethany Holloway
+  ANSWER   : Bethany Holloway is the medical records coordinator at Hargrove Family Medicine.
+  SCORE    : REVIEW
+  TOKENS   : 22 output tokens
+
+M-T1-18 | What were Cecilia Vance's two episodes of hypoglycemia (glucose readings)?
+  EXPECTED : 64 mg/dL and 71 mg/dL
+  ANSWER   : Cecilia Vance's two episodes of hypoglycemia had glucose readings of 64 mg/dL and 71 mg/dL, which she managed with juice at home without requiring emergency care.
+  SCORE    : REVIEW
+  TOKENS   : 49 output tokens
+
+M-T1-19 | What anticoagulant was Arthur Pemberton started on?
+  EXPECTED : Apixaban 5mg twice daily
+  ANSWER   : Arthur Pemberton was started on **Apixaban 5mg twice daily** for stroke prevention due to his atrial fibrillation, as prescribed by Dr. Vikram Suresh during the cardiology consultation on January 15, 2025.
+  SCORE    : REVIEW
+  TOKENS   : 59 output tokens
+
+M-T1-20 | What imaging showed moderate medial compartment osteoarthritis?
+  EXPECTED : Left knee X-ray (3 views)
+  ANSWER   : A left knee X-ray showed moderate medial compartment osteoarthritis in Dolores Estrada. The imaging demonstrated moderate joint space narrowing in the medial compartment with osteophyte formation consistent with osteoarthritis.
+  SCORE    : REVIEW
+  TOKENS   : 54 output tokens
+
+
+--- TIER 2 — SINGLE HOP ---
+
+M-T2-01 | What condition did Dr. Suresh diagnose Arthur Pemberton with, and what confirmed it?
+  EXPECTED : Heart failure with preserved ejection fraction (HFpEF) — confirmed by echocardiogram showing LVEF 58% and Grade II diastolic dysfunction
+  ANSWER   : Dr. Vikram Suresh diagnosed Arthur Pemberton with atrial fibrillation and heart failure with preserved ejection fraction (HFpEF). The diagnosis was confirmed by a 12-lead ECG showing atrial fibrillation and an echocardiogram showing LVEF 58% with Grade II diastolic dysfunction consistent with HFpEF.
+  SCORE    : REVIEW
+  TOKENS   : 86 output tokens
+
+M-T2-02 | Why did Dr. Suresh hold off on increasing Arthur Pemberton's Lisinopril at the cardiology visit?
+  EXPECTED : Because of borderline renal function — creatinine 1.3, eGFR 58 — needed to monitor before adding more Lisinopril
+  ANSWER   : Dr. Suresh held off on increasing Arthur Pemberton's Lisinopril at the cardiology visit because his renal function needed to be clarified first. The initial cardiology consultation note (CLINICAL NOTE 004) states: "Hold on increasing Lisinopril until renal function clarified," given that Pemberton had borderline renal function (creatinine 1.3, eGFR 58). However, at the 4-week follow-up visit on February 14, 2025, Dr. Suresh increased the Lisinopril to 20mg daily because the creatinine had stabilized at 1.4 and was not worsening on Furosemide, indicating the renal function was now stable enough to safely increase the dose.
+  SCORE    : REVIEW
+  TOKENS   : 177 output tokens
+
+M-T2-03 | What type of diabetes does Cecilia Vance have, and how is it different from Type 2?
+  EXPECTED : LADA (Latent Autoimmune Diabetes in Adults / Type 1.5) — distinguished by positive GAD65 antibody and low C-peptide, confirming autoimmune beta cell destruction, not insulin resistance
+  ANSWER   : Cecilia Vance has Type 1.5 diabetes (LADA — Latent Autoimmune Diabetes in Adults), which differs from Type 2 because it involves autoimmune destruction of beta cells, confirmed by a positive GAD65 antibody and low C-peptide levels. Unlike Type 2, which is managed with oral medications like metformin, LADA requires insulin therapy from the start.
+  SCORE    : REVIEW
+  TOKENS   : 96 output tokens
+
+M-T2-04 | Why was Metformin specifically ruled out for Cecilia Vance?
+  EXPECTED : Because she has LADA (autoimmune diabetes with low C-peptide) — oral agents like metformin are insufficient and potentially harmful without insulin for this type
+  ANSWER   : Metformin was ruled out for Cecilia Vance because she has Latent Autoimmune Diabetes in Adults (LADA), confirmed by a positive GAD65 antibody and low C-peptide, indicating autoimmune destruction of beta cells. Dr. Yuen noted that oral agents like metformin alone are insufficient and potentially harmful without insulin in this condition.
+  SCORE    : REVIEW
+  TOKENS   : 87 output tokens
+
+M-T2-05 | What happened to Raymond Chu's blood pressure over the 2-hour monitoring period on February 5th?
+  EXPECTED : 196/118 → 174/104 (after 1 hour) → 158/96 (after 2 hours) — progressively improved
+  ANSWER   : Raymond Chu's blood pressure decreased significantly over the 2-hour monitoring period on February 5th, dropping from 196/118 mmHg at 14:15 to 174/104 mmHg at 15:15, and further declining to 158/96 mmHg at 16:15. This downward trend demonstrated adequate response to the administered medications (Clonidine and Labetolol), leading to his discharge home at 16:30.
+  SCORE    : REVIEW
+  TOKENS   : 109 output tokens
+
+M-T2-06 | What did Arthur Pemberton's echocardiogram show about his left atrium?
+  EXPECTED : (1) sidewalk had visible salt granules — had been treated, (2) plaintiff was wearing dress shoes with no tread and was looking at her phone when she fell
+  ANSWER   : Arthur Pemberton's echocardiogram showed moderate left atrial enlargement, which was consistent with longstanding atrial fibrillation or hypertension.
+  SCORE    : REVIEW
+  TOKENS   : 38 output tokens
+
+M-T2-07 | What lab finding confirmed Cecilia Vance had autoimmune diabetes rather than Type 2?
+  EXPECTED : Positive GAD65 antibody AND low C-peptide (0.4 ng/mL) — together confirming autoimmune destruction of beta cells
+  ANSWER   : A positive GAD65 antibody and low C-peptide confirmed Cecilia Vance had autoimmune diabetes rather than Type 2. These lab findings indicated autoimmune destruction of beta cells, consistent with Latent Autoimmune Diabetes in Adults (LADA).
+  SCORE    : REVIEW
+  TOKENS   : 65 output tokens
+
+M-T2-08 | Why was Arthur Pemberton's Lisinopril finally increased at his February follow-up?
+  EXPECTED : Because his creatinine remained stable at 1.4 (not worsening on Furosemide) — renal function clarified, safe to increase
+  ANSWER   : Arthur Pemberton's Lisinopril was increased to 20mg daily at his February follow-up because his renal function had stabilized and was no longer worsening on Furosemide. Dr. Suresh noted that creatinine was stable at 1.4, allowing safe escalation of the ACE inhibitor for better blood pressure and heart failure control.
+  SCORE    : REVIEW
+  TOKENS   : 85 output tokens
+
+M-T2-09 | What did Dolores Estrada's X-ray show, and what was Dr. Marsh's referral decision based on it?
+  EXPECTED : Moderate medial compartment osteoarthritis, osteophytes, no fracture — referred to orthopedics (Dr. Marcus Bell, March 15 appointment) and ordered physical therapy
+  ANSWER   : The X-ray showed moderate joint space narrowing in the medial compartment, osteophyte formation consistent with osteoarthritis, and mild subchondral sclerosis—with no acute fracture. Based on these findings, Dr. Marsh referred Dolores Estrada to orthopedics (Dr. Marcus Bell) and placed a physical therapy referral, along with continuing conservative management including Naproxen and weight management discussion.
+  SCORE    : REVIEW
+  TOKENS   : 99 output tokens
+
+M-T2-10 | What improvements did Arthur Pemberton show at his 4-week cardiology follow-up?
+  EXPECTED : BP improved to 138/84, weight down 5 lbs, BNP fell from 387 to 241, ankle swelling improved, HR 72 bpm (rate controlled)
+  ANSWER   : At his 4-week cardiology follow-up on February 14, 2025, Arthur Pemberton showed improvement in ankle swelling, weight loss of 5 lbs, and blood pressure reduction to 138/84 mmHg. His BNP decreased from 387 to 241 pg/mL, indicating improved heart failure status, and his atrial fibrillation rate was controlled on Metoprolol at 72 bpm.
+  SCORE    : REVIEW
+  TOKENS   : 105 output tokens
+
+M-T2-11 | What did Cecilia Vance's CGM show at her 6-week follow-up compared to earlier readings?
+  EXPECTED : Average glucose 198 mg/dL at 6 weeks — improved from 248 mg/dL at 2 weeks, which was improved from 312 mg/dL at diagnosis
+  ANSWER   : At Cecilia Vance's 6-week follow-up, her CGM showed an average glucose of 198 mg/dL, improved from 248 mg/dL at 2 weeks and down from 312 mg/dL at diagnosis. Her HbA1c also improved significantly to 9.1%, down from 11.4% at initial diagnosis.
+  SCORE    : REVIEW
+  TOKENS   : 88 output tokens
+
+M-T2-12 | What was the concern about Dolores Estrada's living situation in relation to her knee?
+  EXPECTED : Fall risk — she lives alone, is 72 years old, and the combination of knee pain and age creates moderate fall risk. Dr. Marsh recommended grab bars in bathroom and reviewed fall prevention.
+  ANSWER   : The concern about Dolores Estrada's living situation in relation to her knee was that she lives alone and has moderate fall risk due to her age, knee pain, and osteoporosis. Dr. Marsh recommended grab bars in the bathroom and reviewed fall prevention strategies to address this safety concern.
+  SCORE    : REVIEW
+  TOKENS   : 65 output tokens
+
+M-T2-13 | What two medications were given to Raymond Chu at the clinic on February 5th?
+  EXPECTED : Clonidine 0.1mg orally and Labetolol 200mg PO
+  ANSWER   : The two medications given to Raymond Chu at the clinic on February 5th were **Clonidine 0.1mg** and **Labetolol 200mg**, both administered orally per Dr. Marsh's orders.
+  SCORE    : REVIEW
+  TOKENS   : 55 output tokens
+
+M-T2-14 | What was Raymond Chu's medication regimen after his February 18 follow-up?
+  EXPECTED : Amlodipine 10mg daily (increased from 5mg) PLUS new addition of Hydrochlorothiazide 12.5mg daily
+  ANSWER   : After Raymond Chu's February 18 follow-up, his medication regimen included Amlodipine 10mg daily (continued) and Hydrochlorothiazide 12.5mg daily (newly added). He was also instructed to follow a low sodium diet and monitor his blood pressure at home with a target of <130/80.
+  SCORE    : REVIEW
+  TOKENS   : 80 output tokens
+
+M-T2-15 | What was Arthur Pemberton's weight change from January to February?
+  EXPECTED : Down 5 lbs — from 214 lbs at first visit to 209 lbs at 4-week follow-up (due to Furosemide)
+  ANSWER   : Arthur Pemberton's weight decreased by 5 lbs from January to February. He weighed 214 lbs on January 8, 2025, and 209 lbs on February 14, 2025, with the weight loss attributed to Furosemide therapy.
+  SCORE    : REVIEW
+  TOKENS   : 66 output tokens
+
+M-T2-16 | Where was Cecilia Vance referred for her annual diabetic eye exam?
+  EXPECTED : Ophthalmology — referral placed at her 6-week endocrinology follow-up (specific provider not named in notes)
+  ANSWER   : I don't have that information. The archived records show that Dr. Patricia Yuen placed an "annual ophthalmology referral" for Cecilia Vance's diabetic eye exam in her 6-week follow-up note (February 24, 2025), but the specific facility or provider where she was referred is not documented in these records.
+  SCORE    : REVIEW
+  TOKENS   : 80 output tokens
+
+M-T2-17 | What was Cecilia Vance's insulin dosage at her 6-week follow-up vs when she started?
+  EXPECTED : Glargine increased from 10 units at bedtime (start) to 18 units at bedtime (6-week follow-up)
+  ANSWER   : At initiation, Cecilia Vance started Insulin Glargine 10 units at bedtime. At her 6-week follow-up, this had been titrated to 18 units at bedtime.
+  SCORE    : REVIEW
+  TOKENS   : 52 output tokens
+
+M-T2-18 | What finding on Arthur Pemberton's ECG indicated long-standing hypertension effects?
+  EXPECTED : Left ventricular hypertrophy (LVH) pattern
+  ANSWER   : Left ventricular hypertrophy (LVH) pattern on the ECG indicated long-standing hypertension effects in Arthur Pemberton. The ECG report specifically noted "LVH consistent with chronic hypertension."
+  SCORE    : REVIEW
+  TOKENS   : 52 output tokens
+
+M-T2-19 | What referral did Dr. Marsh make for Raymond Chu at his February 18 follow-up, and why?
+  EXPECTED : Referral to nephrology to evaluate for secondary hypertension causes (i.e., determine if there's an underlying kidney or other condition driving the hypertension)
+  ANSWER   : At his February 18 follow-up, Dr. Marsh referred Raymond Chu to nephrology to evaluate for secondary hypertension causes, because his chronic small vessel disease on CT suggested potential underlying kidney involvement contributing to his hypertension.
+  SCORE    : REVIEW
+  TOKENS   : 53 output tokens
+
+M-T2-20 | What minor bleeding events did Arthur Pemberton report, and what was Dr. Suresh's response?
+  EXPECTED : Bruising on forearms and a 15-minute nosebleed — Dr. Suresh said no medication change needed, common with anticoagulation, educated on when to seek emergency care
+  ANSWER   : Arthur Pemberton reported mild bruising on forearms and a nosebleed lasting 15 minutes. Dr. Suresh, consulted by phone, decided to make no medication changes and educated the patient on when to seek emergency care (prolonged bleeding >30 minutes, blood in urine or stool, severe headache), while advising him to avoid NSAIDs and aspirin while on Apixaban.
+  SCORE    : REVIEW
+  TOKENS   : 94 output tokens
+
+
+--- TIER 3 — MULTI-HOP ---
+
+M-T3-01 | Which nurse handled lab result notifications for multiple patients, and which result required immediate physician contact?
+  EXPECTED : Nurse James Obi — he called Dr. Marsh immediately when Cecilia Vance's fasting glucose came back at 312 mg/dL (critically elevated) and also handled Arthur Pemberton's lab results and Raymond Chu's blood pressure monitoring
+  ANSWER   : Nurse James Obi handled lab result notifications for multiple patients (Cecilia Vance, Raymond Chu, and Arthur Pemberton). The result requiring immediate physician contact was Cecilia Vance's critically elevated fasting glucose of 312 mg/dL and HbA1c of 11.4%, which prompted Dr. Marsh to be contacted immediately.
+  SCORE    : REVIEW
+  TOKENS   : 84 output tokens
+
+M-T3-02 | Two patients had conditions discovered while being evaluated for something else. Who and what was discovered?
+  EXPECTED : (1) Cecilia Vance — came for annual physical, new diabetes symptoms found and workup initiated. (2) Arthur Pemberton — came for fatigue/shortness of breath, atrial fibrillation discovered on exam and confirmed by ECG
+  ANSWER   : Two patients had conditions discovered incidentally during evaluations for other reasons: **Arthur Pemberton** had **heart failure with preserved ejection fraction (HFpEF)** discovered during cardiac workup for atrial fibrillation, and **Raymond Chu** had **chronic small vessel disease** discovered on CT head imaging performed during evaluation for hypertensive urgency.
+  SCORE    : REVIEW
+  TOKENS   : 81 output tokens
+
+M-T3-03 | Which patient had the most medications at their February follow-up, and what were all of them?
+  EXPECTED : Arthur Pemberton — at February 14 follow-up: Apixaban 5mg twice daily, Furosemide 20mg daily, Metoprolol Succinate 25mg daily, Lisinopril (increased to 20mg daily at that visit)
+  ANSWER   : Arthur Pemberton had the most medications at his February follow-up with five: Lisinopril 20mg daily, Apixaban, Furosemide, Metoprolol, and an increased dose of Lisinopril to 20mg daily (as noted in the February 14, 2025 cardiology follow-up note).
+  SCORE    : REVIEW
+  TOKENS   : 82 output tokens
+
+M-T3-04 | What is the connection between Cecilia Vance's father and her diagnosis — and what is the important distinction?
+  EXPECTED : Her father had Type 2 diabetes diagnosed at age 52 — this is her family history. However she was diagnosed with LADA (autoimmune/Type 1.5), NOT Type 2 — so her family history was relevant context but her diagnosis is autoimmune in nature, not the same as her father's
+  ANSWER   : Cecilia Vance's father had Type 2 diabetes, but her diagnosis is LADA (Latent Autoimmune Diabetes in Adults/Type 1.5), which is autoimmune—not the same disease. The key distinction is that her positive GAD65 antibody and low C-peptide confirm autoimmune beta cell destruction, requiring insulin therapy, whereas Type 2 is metabolic and typically managed with oral medications.
+  SCORE    : REVIEW
+  TOKENS   : 101 output tokens
+
+M-T3-05 | Which radiologist reported on tests for the most patients, and list all the tests they reported on?
+  EXPECTED : Dr. Tomas Reinholt — reported on: Arthur Pemberton's ECG (Jan 8), Arthur Pemberton's echocardiogram (Feb 3), Raymond Chu's CT head (Feb 5), Dolores Estrada's left knee X-ray (Feb 20) — four separate reports across three patients
+  ANSWER   : Dr. Tomas Reinholt reported on tests for the most patients (3 patients: Arthur Pemberton, Raymond Chu, and Dolores Estrada). The tests he reported on were: ECG, CT Head, Echocardiogram, and Left Knee X-ray.
+  SCORE    : REVIEW
+  TOKENS   : 69 output tokens
+
+M-T3-06 | What was the full chain of events that led to Cecilia Vance being diagnosed with LADA rather than Type 2?
+  EXPECTED : Annual physical → unusual symptoms (increased thirst, urination, 14 lb weight loss) → Dr. Marsh ordered specific labs including C-peptide and GAD65 antibody to differentiate types → C-peptide came back low (0.4) and GAD65 antibody positive → Dr. Yuen (endocrinologist) interpreted these as confirming autoimmune beta cell destruction = LADA, not Type 2
+  ANSWER   : Cecilia Vance was diagnosed with LADA rather than Type 2 based on three key findings: a positive GAD65 antibody test, a low C-peptide level (0.4 ng/mL), and her clinical presentation of rapid-onset hyperglycemia symptoms (increased thirst, frequent urination, 14-lb weight loss over 6 months) despite a normal BMI of 23.1. Dr. Patricia Yuen's endocrinology consultation confirmed these results indicated autoimmune destruction of beta cells characteristic of LADA, not the insulin resistance typical of Type 2 diabetes.
+  SCORE    : REVIEW
+  TOKENS   : 140 output tokens
+
+M-T3-07 | Which patient had the highest blood pressure recorded, and what was the full sequence of clinical decisions made that day?
+  EXPECTED : Raymond Chu — 196/118 mmHg. Sequence: IV access established → Clonidine 0.1mg PO + Labetolol 200mg PO given → urgent CT head ordered → labs drawn → monitored for 2 hours → BP 174/104 at 1 hour, 158/96 at 2 hours → discharged home (adequate response) with Amlodipine increased to 10mg and strict return precautions
+  ANSWER   : Raymond Chu had the highest blood pressure recorded at 196/118 mmHg on February 5, 2025. The clinical decisions that day included: (1) IV access and oral Clonidine 0.1mg with BP recheck in 1 hour, (2) Labetolol 200mg PO, (3) urgent CT head to rule out hemorrhagic stroke, (4) labs ordered (BMP, CBC, urinalysis), (5) Amlodipine increased to 10mg daily, and (6) discharge home after 2-hour monitoring with instructions to transfer to ED if BP remained above 160/100.
+  SCORE    : REVIEW
+  TOKENS   : 150 output tokens
+
+M-T3-08 | Two patients were referred to specialists. Who were the specialists and what did they each order or start?
+  EXPECTED : Arthur Pemberton → Dr. Vikram Suresh (Cardiology) who started Apixaban, Furosemide, Metoprolol, ordered echocardiogram. Cecilia Vance → Dr. Patricia Yuen (Endocrinology) who started Insulin Glargine and Lispro, prescribed Dexcom G7, ordered diabetes education class, placed ophthalmology referral
+  ANSWER   : Two patients were referred to specialists:
+
+1. **Arthur Pemberton** was referred to **Dr. Vikram Suresh (Cardiologist)**, who ordered an echocardiogram and started Apixaban, Furosemide, and Metoprolol for atrial fibrillation and heart failure management.
+
+2. **Cecilia Vance** was referred to **Dr. Patricia Yuen (Endocrinologist)**, who started Insulin Glargine, Insulin Lispro, and prescribed a Dexcom G7 continuous glucose monitor for LADA (Latent Autoimmune Diabetes in Adults).
+  SCORE    : REVIEW
+  TOKENS   : 152 output tokens
+
+M-T3-09 | How does Dolores Estrada's osteoporosis affect her overall care plan for her knee?
+  EXPECTED : Osteoporosis creates higher fracture risk → makes fall prevention more critical (knee pain increases fall risk) → Alendronate must be continued even as knee is treated → intra-articular steroid injection (which was discussed) must be considered carefully as steroids can worsen bone density → weight loss recommendation benefits both knee (less joint load) and bone health
+  ANSWER   : Dolores Estrada's osteoporosis affects her knee care plan in two key ways: her osteoporosis medication (Alendronate) must be continued because knee instability from osteoarthritis increases her fracture risk, and her moderate osteoporosis (T-score -2.9) contributes to her overall fall risk assessment, which is rated as moderate given her age, living alone, and new knee pain. The care plan emphasizes fall prevention measures like grab bars to protect her bones while managing her knee osteoarthritis.
+  SCORE    : REVIEW
+  TOKENS   : 121 output tokens
+
+M-T3-10 | Which patient's condition was identified as a medical urgency (not emergency), and what is the clinical distinction?
+  EXPECTED : Raymond Chu — hypertensive urgency. The distinction: urgency = severely elevated BP (196/118) with symptoms (headache, blurred vision) but NO confirmed acute end-organ damage. Emergency = same severe BP WITH confirmed acute end-organ damage (stroke, heart attack, aortic dissection). Dr. Marsh noted "not hypertensive emergency as no acute end-organ damage confirmed" — the CT head confirmed no hemorrhage or ischemia, supporting urgency classification.
+  ANSWER   : Raymond Chu's condition was identified as a medical urgency (not emergency). The clinical distinction is that hypertensive urgency involves severely elevated blood pressure (196/118 mmHg) with signs of end-organ involvement like papilledema, but without acute end-organ damage confirmation, whereas a hypertensive emergency would involve confirmed acute end-organ damage such as hemorrhagic stroke or acute kidney injury.
+  SCORE    : REVIEW
+  TOKENS   : 90 output tokens
+
+
+--- UNANSWERABLE ---
+
+M-U-01 | What is Dr. Eleanor Marsh's medical school?
+  EXPECTED : Not mentioned
+  ANSWER   : I don't have that information. The archived records do not contain Dr. Eleanor Marsh's medical school.
+  SCORE    : PASS
+  TOKENS   : 25 output tokens
+
+M-U-02 | What is Arthur Pemberton's home address?
+  EXPECTED : Not mentioned
+  ANSWER   : I don't have that information. The archived records contain clinical notes, lab results, and medical documentation for Arthur Pemberton, but none of them include his home address.
+  SCORE    : PASS
+  TOKENS   : 38 output tokens
+
+M-U-03 | Does Cecilia Vance have health insurance?
+  EXPECTED : Not mentioned
+  ANSWER   : I don't have that information.
+  SCORE    : PASS
+  TOKENS   : 10 output tokens
+
+M-U-04 | What caused Raymond Chu's small vessel disease?
+  EXPECTED : Likely hypertension-related per radiologist — but cause not definitively stated ← TRAP: radiologist says "may reflect chronic small vessel disease" and "likely hypertension-related" — agent should say "likely hypertension-related per radiology report" not "not mentioned"
+  ANSWER   : According to the CT Head Report from February 5, 2025, Raymond Chu's small vessel disease is likely hypertension-related. The radiologist noted "Chronic small vessel disease noted — likely hypertension-related" based on mild periventricular white matter changes seen on imaging.
+  SCORE    : PASS (trap)
+  TOKENS   : 66 output tokens
+
+M-U-05 | What is Dolores Estrada's blood type?
+  EXPECTED : Not mentioned
+  ANSWER   : I don't have that information. The archived records do not contain Dolores Estrada's blood type.
+  SCORE    : PASS
+  TOKENS   : 26 output tokens
+
+M-U-06 | Who is Arthur Pemberton's emergency contact?
+  EXPECTED : Not mentioned
+  ANSWER   : I don't have that information.
+
+The archived records contain clinical notes for Arthur Pemberton but do not include his emergency contact information.
+  SCORE    : PASS
+  TOKENS   : 31 output tokens
+
+M-U-07 | Has Cecilia Vance ever been hospitalized before?
+  EXPECTED : Not mentioned
+  ANSWER   : Based on the archived records provided, there is no documentation of Cecilia Vance ever being hospitalized. The clinical notes show she has been managed entirely in outpatient settings (clinic visits and endocrinology consultations) for her newly diagnosed LADA diabetes.
+  SCORE    : FAIL? (possible false positive — review)
+  TOKENS   : 60 output tokens
+
+M-U-08 | What hospital is Hargrove Family Medicine affiliated with?
+  EXPECTED : Not mentioned
+  ANSWER   : I don't have that information. The archived records do not specify which hospital Hargrove Family Medicine is affiliated with.
+  SCORE    : PASS
+  TOKENS   : 28 output tokens
+
+M-U-09 | What is Nurse James Obi's nursing specialty certification?
+  EXPECTED : Not mentioned
+  ANSWER   : Based on the archived records, Nurse James Obi's nursing specialty certification is not explicitly stated. The records only identify him as "RN, primary care floor," indicating he works in primary care, but no specific nursing specialty certification is documented.
+  SCORE    : FAIL? (possible false positive — review)
+  TOKENS   : 54 output tokens
+
+M-U-10 | How long has Dr. Patricia Yuen been practicing endocrinology?
+  EXPECTED : Not mentioned
+  ANSWER   : I don't have that information. The archived records do not contain any details about how long Dr. Patricia Yuen has been practicing endocrinology.
+  SCORE    : PASS
+  TOKENS   : 35 output tokens
+
+
+--- LATENCY ---
+Recall p50 : 15879ms
+Recall p99 : 21076ms
+
+--- TOKEN TOTALS ---
+tokens_in  : 797222
+tokens_out : 3860
+Est. cost (Haiku pricing) : $0.2041
+
+--- SCORE SUMMARY (fill in manually) ---
+T1 accuracy : __/20
+T2 accuracy : __/20
+T3 accuracy : __/10
+U  auto-scored : 7/9 pass (excl. traps)
+Trap: M-U-04: PASS (trap)
