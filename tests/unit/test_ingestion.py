@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import MagicMock
-from memory_agent.config import StorageConfig
-from memory_agent.store.local import SQLiteStore
-from memory_agent.llm.client import LLMClient
-from memory_agent.ingestion import (
+from pocket_mem.config import StorageConfig
+from pocket_mem.store.local import SQLiteStore
+from pocket_mem.llm.client import LLMClient
+from pocket_mem.ingestion import (
     ingest, _classify, _extract, _resolve_entity, _get_or_create_topic,
 )
 
@@ -41,7 +41,7 @@ def test_classify_ignore():
 
 
 def test_classify_uses_schema():
-    from memory_agent.llm.prompts import CLASSIFY_SCHEMA
+    from pocket_mem.llm.prompts import CLASSIFY_SCHEMA
     llm = MagicMock(spec=LLMClient)
     llm.complete_json.return_value = {"category": "remember", "topics": []}
     _classify("some turn", [], llm)
@@ -89,7 +89,7 @@ def test_extract_includes_tone_when_present():
 
 
 def test_extract_uses_extraction_schema():
-    from memory_agent.llm.prompts import EXTRACTION_SCHEMA
+    from pocket_mem.llm.prompts import EXTRACTION_SCHEMA
     llm = MagicMock(spec=LLMClient)
     llm.complete_json.return_value = {"entities": [], "relationships": []}
     _extract("some turn", "context", llm)
@@ -105,7 +105,7 @@ def test_resolve_entity_returns_none_when_missing(tmp_store):
 
 
 def test_resolve_entity_finds_existing(tmp_store):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="e1", label="David", entity_type="person",
                     attributes={"role": "boss"})
     node = entity.to_node()
@@ -118,7 +118,7 @@ def test_resolve_entity_finds_existing(tmp_store):
 
 
 def test_resolve_entity_case_insensitive(tmp_store):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="e1", label="David", entity_type="person", attributes={})
     node = entity.to_node()
     node.created_at = node.updated_at = "2026-04-05T00:00:00"
@@ -130,7 +130,7 @@ def test_resolve_entity_case_insensitive(tmp_store):
 
 
 def test_resolve_entity_ignores_wrong_type(tmp_store):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="e1", label="Python", entity_type="tool", attributes={})
     node = entity.to_node()
     node.created_at = node.updated_at = "2026-04-05T00:00:00"

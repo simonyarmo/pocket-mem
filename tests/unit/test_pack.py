@@ -1,9 +1,9 @@
 import json
 import zipfile
 import pytest
-from memory_agent.config import StorageConfig
-from memory_agent.store.local import SQLiteStore
-from memory_agent.models import Entity, Topic, Edge, MemoryChunk
+from pocket_mem.config import StorageConfig
+from pocket_mem.store.local import SQLiteStore
+from pocket_mem.models import Entity, Topic, Edge, MemoryChunk
 
 
 @pytest.fixture
@@ -157,7 +157,7 @@ def test_import_makes_nodes_searchable(tmp_path, store_a, store_b):
 
 def test_export_import_recall_roundtrip(tmp_path):
     """Canonical: export A → import B → recall from B finds same nodes."""
-    from memory_agent.embedding import embed
+    from pocket_mem.embedding import embed
     sa = SQLiteStore("proj", StorageConfig(path=str(tmp_path / "a")))
     sb = SQLiteStore("proj", StorageConfig(path=str(tmp_path / "b")))
 

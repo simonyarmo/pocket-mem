@@ -6,14 +6,14 @@ from datetime import datetime
 
 _log = logging.getLogger(__name__)
 
-from memory_agent.config import LLMConfig, MemoryConfig, StorageConfig
-from memory_agent.compactor import compress, prune
-from memory_agent.ingestion import ingest
-from memory_agent.llm.client import LLMClient
-from memory_agent.retrieval import as_tool as _as_tool
-from memory_agent.retrieval import recall as _recall
-from memory_agent.retrieval import search
-from memory_agent.store.local import SQLiteStore
+from pocket_mem.config import LLMConfig, MemoryConfig, StorageConfig
+from pocket_mem.compactor import compress, prune
+from pocket_mem.ingestion import ingest
+from pocket_mem.llm.client import LLMClient
+from pocket_mem.retrieval import as_tool as _as_tool
+from pocket_mem.retrieval import recall as _recall
+from pocket_mem.retrieval import search
+from pocket_mem.store.local import SQLiteStore
 
 
 class MemoryAgent:
@@ -97,7 +97,7 @@ class MemoryAgent:
         """Search memory and return results in the requested mode.
 
         mode="context"   → formatted context string (default) — full retrieved nodes
-        mode="raw"       → list of Node objects
+        mode="raw"       → list of dicts (JSON-serializable, embedding excluded)
         mode="answer"    → LLM synthesizes an answer from retrieved context
         """
         return _recall(query, self._store, llm=self._llm, mode=mode)

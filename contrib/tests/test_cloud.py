@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from memory_agent.models import Node, Edge
+from pocket_mem.models import Node, Edge
 
 
 # ---------------------------------------------------------------------------
@@ -52,13 +52,13 @@ def _mock_response(data: list) -> MagicMock:
 
 @pytest.fixture
 def adapter():
-    with patch("memory_agent.store.cloud._load_credentials",
+    with patch("pocket_mem.store.cloud._load_credentials",
                return_value=("https://fake.supabase.co", "fake-key")):
         with patch("supabase.create_client") as mock_create:
             mock_client = MagicMock()
             mock_create.return_value = mock_client
 
-            from memory_agent.store.cloud import SupabaseAdapter
+            from pocket_mem.store.cloud import SupabaseAdapter
             a = SupabaseAdapter("test-project", user_id="alice")
             a._mock_client = mock_client
             return a
@@ -103,7 +103,7 @@ def test_write_node_embeds_if_missing(adapter):
     builder = _chain(adapter, [])
     node = _make_node()
     assert node.embedding is None
-    with patch("memory_agent.store.cloud.embed", return_value=_make_embedding()):
+    with patch("pocket_mem.store.cloud.embed", return_value=_make_embedding()):
         adapter.write_node(node)
     assert node.embedding is not None
 
@@ -229,11 +229,11 @@ def test_search_keyword_empty_for_short_words(adapter):
 
 
 def test_path_routing_creates_supabase_adapter():
-    with patch("memory_agent.store.cloud._load_credentials",
+    with patch("pocket_mem.store.cloud._load_credentials",
                return_value=("https://x.supabase.co", "key")):
         with patch("supabase.create_client", return_value=MagicMock()):
-            from memory_agent import MemoryAgent, LLMConfig
-            from memory_agent.store.cloud import SupabaseAdapter
+            from pocket_mem import MemoryAgent, LLMConfig
+            from pocket_mem.store.cloud import SupabaseAdapter
             agent = MemoryAgent(
                 "proj",
                 path="supabase://",

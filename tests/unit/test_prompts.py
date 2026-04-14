@@ -1,4 +1,4 @@
-from memory_agent.llm.prompts import CLASSIFY, EXTRACT, SUMMARIZE, ANSWER
+from pocket_mem.llm.prompts import CLASSIFY, EXTRACT, SUMMARIZE, ANSWER
 
 
 def test_classify_is_string():
@@ -44,7 +44,7 @@ def test_prompts_are_distinct():
     assert len(set(prompts)) == 4  # all unique
 
 
-from memory_agent.llm.prompts import (
+from pocket_mem.llm.prompts import (
     CLASSIFY, EXTRACT, SUMMARIZE, ANSWER,
     CLASSIFY_SCHEMA, EXTRACTION_SCHEMA,
 )

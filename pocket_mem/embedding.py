@@ -3,7 +3,7 @@ import threading
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from memory_agent.models import Node
+from pocket_mem.models import Node
 
 _model: SentenceTransformer | None = None
 _model_lock = threading.Lock()

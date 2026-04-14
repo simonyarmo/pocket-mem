@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from memory_agent.models import Node, Edge
+from pocket_mem.models import Node, Edge
 
 
 class StoreInterface(ABC):

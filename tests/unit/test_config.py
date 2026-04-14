@@ -1,4 +1,4 @@
-from memory_agent.config import LLMConfig, StorageConfig, MemoryConfig
+from pocket_mem.config import LLMConfig, StorageConfig, MemoryConfig
 
 
 def test_llm_config_defaults():

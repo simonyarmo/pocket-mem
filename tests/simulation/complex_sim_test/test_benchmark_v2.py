@@ -26,7 +26,7 @@ from time import perf_counter
 
 import pytest
 
-from memory_agent import MemoryAgent, LLMConfig
+from pocket_mem import MemoryAgent, LLMConfig
 
 # ---------------------------------------------------------------------------
 # Paths

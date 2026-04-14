@@ -1,10 +1,10 @@
 import pytest
 from unittest.mock import MagicMock
-from memory_agent.config import LLMConfig, StorageConfig
-from memory_agent.store.local import SQLiteStore
-from memory_agent.llm.client import LLMClient
-from memory_agent.models import Entity, MemoryChunk, Tone, Edge
-from memory_agent.retrieval import (
+from pocket_mem.config import LLMConfig, StorageConfig
+from pocket_mem.store.local import SQLiteStore
+from pocket_mem.llm.client import LLMClient
+from pocket_mem.models import Entity, MemoryChunk, Tone, Edge
+from pocket_mem.retrieval import (
     search, traverse, format_context, synthesize_answer, recall, as_tool,
 )
 

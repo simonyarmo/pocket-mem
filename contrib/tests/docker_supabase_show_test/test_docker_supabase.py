@@ -242,7 +242,7 @@ def test_ingest_and_show():
 
     else:
         # ── Local mode: direct Python API → test_memory/ ──────────────────────
-        from memory_agent import MemoryAgent, LLMConfig
+        from pocket_mem import MemoryAgent, LLMConfig
 
         claude_key = _load_claude_key()
         llm_cfg = LLMConfig(

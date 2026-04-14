@@ -50,9 +50,9 @@ import struct
 import tempfile
 from pathlib import Path
 
-from memory_agent.embedding import embed, _embed_text, cosine_similarity
-from memory_agent.models import Node, Edge
-from memory_agent.store.base import StoreInterface
+from pocket_mem.embedding import embed, _embed_text, cosine_similarity
+from pocket_mem.models import Node, Edge
+from pocket_mem.store.base import StoreInterface
 
 _NODES_TABLE = "pm_nodes"
 _EDGES_TABLE = "pm_edges"
@@ -443,8 +443,8 @@ class SupabaseAdapter(StoreInterface):
 
     def export_pack(self, path: str) -> None:
         """Dump all nodes/edges to a local .mempack via a temporary SQLiteStore."""
-        from memory_agent.store.local import SQLiteStore
-        from memory_agent.config import StorageConfig
+        from pocket_mem.store.local import SQLiteStore
+        from pocket_mem.config import StorageConfig
         import tempfile, os
 
         with tempfile.TemporaryDirectory() as tmp:
@@ -470,8 +470,8 @@ class SupabaseAdapter(StoreInterface):
 
     def import_pack(self, path: str) -> None:
         """Import a .mempack, upserting all nodes and edges into Supabase."""
-        from memory_agent.store.local import SQLiteStore
-        from memory_agent.config import StorageConfig
+        from pocket_mem.store.local import SQLiteStore
+        from pocket_mem.config import StorageConfig
 
         with tempfile.TemporaryDirectory() as tmp:
             store = SQLiteStore(self._project, StorageConfig(path=tmp))

@@ -29,14 +29,14 @@ dependencies = ["requests", "sentence-transformers"]
 dev = ["pytest"]
 
 [project.scripts]
-pocket-mem = "memory_agent.visualizer.cli:main"
+pocket-mem = "pocket_mem.visualizer.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["memory_agent*"]
+include = ["pocket_mem*"]
 
 [tool.setuptools.package-data]
-"memory_agent.visualizer.ui" = ["*.html"]
+"pocket_mem.visualizer.ui" = ["*.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

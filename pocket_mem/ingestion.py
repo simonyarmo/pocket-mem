@@ -5,13 +5,13 @@ from datetime import datetime
 
 _log = logging.getLogger(__name__)
 
-from memory_agent.llm.client import LLMClient
-from memory_agent.llm.prompts import (
+from pocket_mem.llm.client import LLMClient
+from pocket_mem.llm.prompts import (
     CLASSIFY, CLASSIFY_SCHEMA,
     EXTRACT, EXTRACTION_SCHEMA,
 )
-from memory_agent.models import Edge, Entity, MemoryChunk, Tone, Topic
-from memory_agent.store.base import StoreInterface
+from pocket_mem.models import Edge, Entity, MemoryChunk, Tone, Topic
+from pocket_mem.store.base import StoreInterface
 
 
 def _now() -> str:

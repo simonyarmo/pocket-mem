@@ -3,7 +3,7 @@ Behavioral smoke test — requires Ollama running with qwen2.5:7b pulled.
 Run with: pytest tests/behavioral/ -v -s
 """
 import pytest
-from memory_agent import MemoryAgent, LLMConfig
+from pocket_mem import MemoryAgent, LLMConfig
 
 
 @pytest.fixture(scope="module")

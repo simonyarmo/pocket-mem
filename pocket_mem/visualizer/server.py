@@ -42,7 +42,7 @@ def launch(
 
     url = f"http://localhost:{port}"
     webbrowser.open(url)
-    print(f"  pocket-mem visualizer -> {url}")
+    print(f"  pocket-mem visualizer → {url}")
     print("  Press Ctrl+C to close")
 
     try:
@@ -73,7 +73,7 @@ def _build_html(graph_data: dict, initial_search: str = "") -> str:
     """Load index.html template and inject the graph data."""
     try:
         # Python 3.9+ path
-        ref = importlib.resources.files("memory_agent.visualizer.ui").joinpath("index.html")
+        ref = importlib.resources.files("pocket_mem.visualizer.ui").joinpath("index.html")
         template = ref.read_text(encoding="utf-8")
     except Exception:
         # Fallback: read relative to this file

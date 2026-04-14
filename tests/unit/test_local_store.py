@@ -1,5 +1,5 @@
 import pytest
-from memory_agent.store.base import StoreInterface
+from pocket_mem.store.base import StoreInterface
 
 
 def test_store_interface_is_abstract():
@@ -20,8 +20,8 @@ def test_store_interface_has_required_methods():
 
 
 from pathlib import Path
-from memory_agent.config import StorageConfig
-from memory_agent.store.local import SQLiteStore
+from pocket_mem.config import StorageConfig
+from pocket_mem.store.local import SQLiteStore
 
 
 @pytest.fixture
@@ -84,7 +84,7 @@ def test_schema_has_indexes(tmp_store):
 
 
 import uuid
-from memory_agent.models import Node
+from pocket_mem.models import Node
 
 
 def _make_node(**kwargs) -> Node:
@@ -143,7 +143,7 @@ def test_write_node_data_roundtrip(tmp_store):
     assert result.data == {"key": "value", "nested": {"a": 1}}
 
 
-from memory_agent.models import Edge
+from pocket_mem.models import Edge
 
 
 def _make_edge(**kwargs) -> Edge:
@@ -238,7 +238,7 @@ def test_search_keyword_no_results(tmp_store):
     assert results == []
 
 
-from memory_agent.models import Topic
+from pocket_mem.models import Topic
 
 
 def test_delete_node(tmp_store):
@@ -285,7 +285,7 @@ def test_write_node_stores_embedding(tmp_store):
 
 def test_search_vector_returns_nodes(tmp_store):
     tmp_store.write_node(_make_node(id="n1", label="David", data={"entity_type": "person"}))
-    from memory_agent.embedding import embed
+    from pocket_mem.embedding import embed
     results = tmp_store.search_vector(embed("person named David"))
     assert any(r.id == "n1" for r in results)
 
@@ -293,7 +293,7 @@ def test_search_vector_returns_nodes(tmp_store):
 def test_search_vector_ranks_by_similarity(tmp_store):
     tmp_store.write_node(_make_node(id="n1", label="David", data={"role": "boss manager"}))
     tmp_store.write_node(_make_node(id="n2", label="httpx", data={"entity_type": "tool"}))
-    from memory_agent.embedding import embed
+    from pocket_mem.embedding import embed
     results = tmp_store.search_vector(embed("my boss manager"), limit=2)
     ids = [r.id for r in results]
     assert ids[0] == "n1"  # David (boss/manager) should rank above httpx
@@ -302,7 +302,7 @@ def test_search_vector_ranks_by_similarity(tmp_store):
 def test_search_vector_respects_limit(tmp_store):
     for i in range(5):
         tmp_store.write_node(_make_node(id=f"n{i}", label=f"Node {i}", data={}))
-    from memory_agent.embedding import embed
+    from pocket_mem.embedding import embed
     results = tmp_store.search_vector(embed("node"), limit=2)
     assert len(results) <= 2
 
@@ -310,14 +310,14 @@ def test_search_vector_respects_limit(tmp_store):
 def test_search_vector_semantic_boss(tmp_store):
     """Vector search finds David for 'supervisor' even though neither label nor
     attributes contain that word — purely semantic via embedding."""
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="n1", label="David", entity_type="person",
                     topic_id=None, attributes={"role": "boss"})
     node = entity.to_node()
     node.created_at = node.updated_at = "2026-04-03T00:00:00"
     tmp_store.write_node(node)
 
-    from memory_agent.embedding import embed
+    from pocket_mem.embedding import embed
     # BM25 should NOT find David for "supervisor" — word not in any indexed text
     bm25_results = tmp_store.search_keyword("supervisor")
     assert not any(r.id == "n1" for r in bm25_results)
@@ -332,14 +332,14 @@ def test_search_hybrid_combines_results(tmp_store):
     tmp_store.write_node(_make_node(id="n1", label="httpx library",
                                     data={"description": "my boss recommended this"}))
     # n2: no keyword match but high semantic similarity
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="n2", label="David", entity_type="person",
                     attributes={"role": "boss"})
     node = entity.to_node()
     node.created_at = node.updated_at = "2026-04-03T00:00:00"
     tmp_store.write_node(node)
 
-    from memory_agent.embedding import embed
+    from pocket_mem.embedding import embed
     results = tmp_store.search_hybrid(
         query="my boss", embedding=embed("my boss"), limit=5
     )
@@ -353,7 +353,7 @@ def test_search_hybrid_respects_limit(tmp_store):
     for i in range(6):
         tmp_store.write_node(_make_node(id=f"n{i}", label=f"Item {i}",
                                         data={"tag": "searchable"}))
-    from memory_agent.embedding import embed
+    from pocket_mem.embedding import embed
     results = tmp_store.search_hybrid(
         query="Item", embedding=embed("Item"), limit=3
     )
@@ -365,7 +365,7 @@ def test_store_interface_has_search_hybrid():
 
 
 def test_get_edges_returns_outgoing(tmp_store):
-    from memory_agent.models import Edge
+    from pocket_mem.models import Edge
     edge = Edge(id="e1", from_id="n1", to_id="n2", relation="recommended",
                 created_at="2026-04-05T00:00:00")
     tmp_store.write_edge(edge)
@@ -376,7 +376,7 @@ def test_get_edges_returns_outgoing(tmp_store):
 
 
 def test_get_edges_returns_incoming(tmp_store):
-    from memory_agent.models import Edge
+    from pocket_mem.models import Edge
     edge = Edge(id="e1", from_id="n1", to_id="n2", relation="derived_from",
                 created_at="2026-04-05T00:00:00")
     tmp_store.write_edge(edge)
@@ -386,7 +386,7 @@ def test_get_edges_returns_incoming(tmp_store):
 
 
 def test_get_edges_excludes_invalid(tmp_store):
-    from memory_agent.models import Edge
+    from pocket_mem.models import Edge
     edge = Edge(id="e1", from_id="n1", to_id="n2", relation="mentioned",
                 invalid_at="2026-01-01T00:00:00", created_at="2026-04-05T00:00:00")
     tmp_store.write_edge(edge)
@@ -409,7 +409,7 @@ def test_stats_returns_dict(tmp_store):
 
 
 def test_stats_counts_nodes_by_type(tmp_store):
-    from memory_agent.models import Entity, Topic
+    from pocket_mem.models import Entity, Topic
     import uuid
     entity = Entity(id="e1", label="David", entity_type="person")
     n = entity.to_node()
@@ -428,7 +428,7 @@ def test_stats_counts_nodes_by_type(tmp_store):
 
 
 def test_stats_counts_edges(tmp_store):
-    from memory_agent.models import Edge
+    from pocket_mem.models import Edge
     edge = Edge(id="e1", from_id="n1", to_id="n2", relation="related_to",
                 created_at="2026-04-06T00:00:00")
     tmp_store.write_edge(edge)
@@ -447,7 +447,7 @@ def test_store_interface_has_stats():
 
 
 def test_stats_excludes_invalid_edges(tmp_store):
-    from memory_agent.models import Edge
+    from pocket_mem.models import Edge
     edge = Edge(id="e1", from_id="n1", to_id="n2", relation="related",
                 invalid_at="2026-04-06T00:00:00", created_at="2026-04-06T00:00:00")
     tmp_store.write_edge(edge)
@@ -456,7 +456,7 @@ def test_stats_excludes_invalid_edges(tmp_store):
 
 
 def test_get_nodes_by_type_returns_matching(tmp_store):
-    from memory_agent.models import Entity, Topic
+    from pocket_mem.models import Entity, Topic
     entity = Entity(id="e1", label="David", entity_type="person")
     n = entity.to_node()
     n.created_at = n.updated_at = "2026-04-06T00:00:00"

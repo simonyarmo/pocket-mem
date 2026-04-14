@@ -5,7 +5,7 @@ import time
 
 import requests
 
-from memory_agent.config import LLMConfig
+from pocket_mem.config import LLMConfig
 
 _RETRY_STATUSES = {429, 529}  # 429 = rate limit, 529 = Anthropic overload
 

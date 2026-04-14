@@ -1,8 +1,8 @@
 import time
 import pytest
 from unittest.mock import MagicMock, patch
-from memory_agent.config import LLMConfig, MemoryConfig, StorageConfig
-from memory_agent.agent import MemoryAgent
+from pocket_mem.config import LLMConfig, MemoryConfig, StorageConfig
+from pocket_mem.agent import MemoryAgent
 
 
 @pytest.fixture
@@ -53,7 +53,7 @@ def test_observe_is_nonblocking(agent):
     def slow_ingest(*args, **kwargs):
         time.sleep(0.3)
 
-    with patch("memory_agent.agent.ingest", side_effect=slow_ingest):
+    with patch("pocket_mem.agent.ingest", side_effect=slow_ingest):
         start = time.monotonic()
         agent.observe("hello", "world")
         elapsed = time.monotonic() - start
@@ -63,7 +63,7 @@ def test_observe_is_nonblocking(agent):
 
 def test_observe_calls_ingest(agent):
     """observe() submits ingest() with correct arguments."""
-    with patch("memory_agent.agent.ingest") as mock_ingest:
+    with patch("pocket_mem.agent.ingest") as mock_ingest:
         agent.observe("user said hi", "agent said hi back")
         agent._executor.shutdown(wait=True)
 
@@ -79,7 +79,7 @@ def test_observe_calls_ingest(agent):
 # ── recall() ─────────────────────────────────────────────────────────────────
 
 def test_recall_context_returns_string(agent):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="n1", label="David", entity_type="person",
                     attributes={"role": "boss"})
     node = entity.to_node()
@@ -92,7 +92,7 @@ def test_recall_context_returns_string(agent):
 
 
 def test_recall_raw_returns_list(agent):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="n1", label="David", entity_type="person")
     node = entity.to_node()
     node.created_at = node.updated_at = "2026-04-06T00:00:00"
@@ -113,7 +113,7 @@ def test_recall_answer_uses_llm(agent):
 # ── forget() ─────────────────────────────────────────────────────────────────
 
 def test_forget_deletes_matching_node(agent):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="n1", label="David", entity_type="person")
     node = entity.to_node()
     node.created_at = node.updated_at = "2026-04-06T00:00:00"
@@ -125,7 +125,7 @@ def test_forget_deletes_matching_node(agent):
 
 
 def test_forget_invalidates_edges(agent):
-    from memory_agent.models import Entity, Edge
+    from pocket_mem.models import Entity, Edge
     n1 = Entity(id="n1", label="David", entity_type="person").to_node()
     n1.created_at = n1.updated_at = "2026-04-06T00:00:00"
     n2 = Entity(id="n2", label="httpx", entity_type="tool").to_node()
@@ -149,7 +149,7 @@ def test_forget_invalidates_edges(agent):
 
 
 def test_forget_returns_count(agent):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     for i in range(3):
         e = Entity(id=f"n{i}", label=f"David {i}", entity_type="person")
         n = e.to_node()
@@ -169,7 +169,7 @@ def test_topics_returns_list(agent):
 
 
 def test_topics_returns_topic_labels(agent):
-    from memory_agent.models import Topic
+    from pocket_mem.models import Topic
     import uuid
     for label in ["People", "Tools"]:
         t = Topic(id=str(uuid.uuid4()), label=label)
@@ -196,7 +196,7 @@ def test_stats_includes_required_keys(agent):
 
 
 def test_stats_reflects_written_nodes(agent):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     entity = Entity(id="n1", label="David", entity_type="person")
     node = entity.to_node()
     node.created_at = node.updated_at = "2026-04-06T00:00:00"
@@ -220,7 +220,7 @@ def test_as_tool_has_recall_name(agent):
 # ── export / import_pack ─────────────────────────────────────────────────────
 
 def test_export_creates_mempack(tmp_path):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     ag = MemoryAgent("test", path=str(tmp_path / "agent"))
     entity = Entity(id="e1", label="David", entity_type="person")
     node = entity.to_node()
@@ -237,7 +237,7 @@ def test_export_creates_mempack(tmp_path):
 
 
 def test_import_pack_merges_into_agent(tmp_path):
-    from memory_agent.models import Entity
+    from pocket_mem.models import Entity
     ag_a = MemoryAgent("src", path=str(tmp_path / "a"))
     ag_b = MemoryAgent("dst", path=str(tmp_path / "b"))
 
@@ -266,13 +266,13 @@ def test_close_shuts_down_executor_and_store(tmp_path):
 
 def test_observe_triggers_compaction_at_threshold(tmp_path):
     """When chunk_count >= threshold, observe() submits a compaction job."""
-    from memory_agent.config import MemoryConfig
+    from pocket_mem.config import MemoryConfig
     from unittest.mock import patch, MagicMock
     ag = MemoryAgent("test", path=str(tmp_path),
                      config=MemoryConfig(compaction_threshold=1))
 
-    with patch("memory_agent.agent._run_compaction") as mock_compact, \
-         patch("memory_agent.agent.ingest"):
+    with patch("pocket_mem.agent._run_compaction") as mock_compact, \
+         patch("pocket_mem.agent.ingest"):
         ag._store.stats = MagicMock(return_value={
             "chunk_count": 1, "node_count": 1, "entity_count": 0,
             "topic_count": 0, "tone_count": 0, "edge_count": 0,
@@ -287,13 +287,13 @@ def test_observe_triggers_compaction_at_threshold(tmp_path):
 
 def test_observe_does_not_compact_below_threshold(tmp_path):
     """When chunk_count < threshold, observe() does NOT submit compaction."""
-    from memory_agent.config import MemoryConfig
+    from pocket_mem.config import MemoryConfig
     from unittest.mock import patch, MagicMock
     ag = MemoryAgent("test", path=str(tmp_path),
                      config=MemoryConfig(compaction_threshold=100))
 
-    with patch("memory_agent.agent._run_compaction") as mock_compact, \
-         patch("memory_agent.agent.ingest"):
+    with patch("pocket_mem.agent._run_compaction") as mock_compact, \
+         patch("pocket_mem.agent.ingest"):
         ag._store.stats = MagicMock(return_value={
             "chunk_count": 0, "node_count": 0, "entity_count": 0,
             "topic_count": 0, "tone_count": 0, "edge_count": 0,

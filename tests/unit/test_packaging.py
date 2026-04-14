@@ -47,21 +47,21 @@ def test_package_discovery_configured():
 
 # ── subpackage importability ──────────────────────────────────────────────────
 
-def test_memory_agent_importable():
-    import memory_agent
-    assert memory_agent.__file__ is not None
+def test_pocket_mem_importable():
+    import pocket_mem
+    assert pocket_mem.__file__ is not None
 
 
 def test_store_subpackage_importable():
-    from memory_agent.store.local import SQLiteStore
+    from pocket_mem.store.local import SQLiteStore
     assert SQLiteStore is not None
 
 
 def test_llm_subpackage_importable():
-    from memory_agent.llm.client import LLMClient
+    from pocket_mem.llm.client import LLMClient
     assert LLMClient is not None
 
 
 def test_public_api_importable():
-    from memory_agent import MemoryAgent, LLMConfig, StorageConfig, MemoryConfig
+    from pocket_mem import MemoryAgent, LLMConfig, StorageConfig, MemoryConfig
     assert all(x is not None for x in [MemoryAgent, LLMConfig, StorageConfig, MemoryConfig])

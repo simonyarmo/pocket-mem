@@ -5,7 +5,7 @@ Exposes pocket-mem as a language-agnostic HTTP API so any process
 (Python, Node, Go, etc.) can use memory without importing the package.
 
 Start:
-    uvicorn memory_agent.server:app --host 0.0.0.0 --port 8000
+    uvicorn pocket_mem.server:app --host 0.0.0.0 --port 8000
 
 Environment variables (ingestion model — always Ollama/local):
     OLLAMA_BASE_URL   LLM endpoint  (default: http://localhost:11434/v1)
@@ -36,7 +36,7 @@ from typing import Literal
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from memory_agent import MemoryAgent, LLMConfig
+from pocket_mem import MemoryAgent, LLMConfig
 
 app = FastAPI(title="pocket-mem", version="0.1.0")
 

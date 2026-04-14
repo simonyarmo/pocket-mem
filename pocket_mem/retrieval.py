@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from memory_agent.embedding import embed
-from memory_agent.llm.client import LLMClient
-from memory_agent.llm.prompts import ANSWER, ANSWER_SYSTEM
-from memory_agent.models import Edge, Node
-from memory_agent.store.base import StoreInterface
+import dataclasses
+
+from pocket_mem.embedding import embed
+from pocket_mem.llm.client import LLMClient
+from pocket_mem.llm.prompts import ANSWER, ANSWER_SYSTEM
+from pocket_mem.models import Edge, Node
+from pocket_mem.store.base import StoreInterface
 
 
 def search(query: str, store: StoreInterface, limit: int = 10) -> list[Node]:
@@ -110,11 +112,11 @@ def recall(
     mode: str = "context",
     limit: int = 10,
     hops: int = 2,
-) -> list[Node] | str:
+) -> list[dict] | str:
     """Entry point for memory retrieval.
 
     Modes:
-      "raw"       → list[Node]  — raw nodes, no formatting
+      "raw"       → list[dict]  — raw nodes as plain dicts (JSON-serializable, embedding excluded)
       "context"   → str         — formatted context string (full retrieved nodes)
       "answer"    → str         — LLM synthesizes an answer from retrieved context (requires llm=)
     """
@@ -122,7 +124,11 @@ def recall(
     nodes = traverse(nodes, store, hops=hops)
 
     if mode == "raw":
-        return nodes
+        # Return plain dicts (embedding excluded — binary, not useful to callers)
+        return [
+            {k: v for k, v in dataclasses.asdict(n).items() if k != "embedding"}
+            for n in nodes
+        ]
 
     # Collect entity-to-entity edges between retrieved nodes for context rendering
     node_ids = {n.id for n in nodes}

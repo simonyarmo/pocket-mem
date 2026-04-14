@@ -1,6 +1,6 @@
 import numpy as np
-from memory_agent.embedding import embed, cosine_similarity, _embed_text
-from memory_agent.models import Node, Entity, Tone
+from pocket_mem.embedding import embed, cosine_similarity, _embed_text
+from pocket_mem.models import Node, Entity, Tone
 
 
 def test_embed_returns_bytes():

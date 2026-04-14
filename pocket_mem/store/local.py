@@ -7,10 +7,10 @@ import zipfile
 from datetime import datetime
 from pathlib import Path
 
-from memory_agent.config import StorageConfig
-from memory_agent.embedding import embed, _embed_text, cosine_similarity
-from memory_agent.models import Node, Edge
-from memory_agent.store.base import StoreInterface
+from pocket_mem.config import StorageConfig
+from pocket_mem.embedding import embed, _embed_text, cosine_similarity
+from pocket_mem.models import Node, Edge
+from pocket_mem.store.base import StoreInterface
 
 
 _STOP_WORDS = {

@@ -1,7 +1,7 @@
 import pytest
 from dataclasses import fields as dc_fields
-from memory_agent.models import Node, Edge
-from memory_agent.models import Topic, Entity, MemoryChunk, Event, Tone
+from pocket_mem.models import Node, Edge
+from pocket_mem.models import Topic, Entity, MemoryChunk, Event, Tone
 
 
 def test_node_fields():

@@ -299,7 +299,7 @@ def test_ingest():
         node_count = stats.get("node_count", 0)
 
     else:
-        from memory_agent import MemoryAgent, LLMConfig
+        from pocket_mem import MemoryAgent, LLMConfig
         claude_key = _load_claude_key()
         llm_cfg = LLMConfig(
             base_url=OLLAMA_BASE, model=MODEL,
@@ -344,7 +344,7 @@ def test_recall():
         ingest_model = cfg.get("ingest_model", MODEL)
         answer_model = cfg.get("answer_model", MODEL)
     else:
-        from memory_agent import MemoryAgent, LLMConfig
+        from pocket_mem import MemoryAgent, LLMConfig
         claude_key = _load_claude_key()
         llm_cfg = LLMConfig(
             base_url=OLLAMA_BASE, model=MODEL,

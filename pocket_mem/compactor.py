@@ -2,11 +2,11 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timedelta
 
-from memory_agent.config import MemoryConfig
-from memory_agent.llm.client import LLMClient
-from memory_agent.llm.prompts import SUMMARIZE_GROUP, SUMMARIZE_GROUP_SCHEMA
-from memory_agent.models import Edge, MemoryChunk, Node
-from memory_agent.store.base import StoreInterface
+from pocket_mem.config import MemoryConfig
+from pocket_mem.llm.client import LLMClient
+from pocket_mem.llm.prompts import SUMMARIZE_GROUP, SUMMARIZE_GROUP_SCHEMA
+from pocket_mem.models import Edge, MemoryChunk, Node
+from pocket_mem.store.base import StoreInterface
 
 
 def _now() -> str:

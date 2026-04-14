@@ -53,8 +53,8 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.cmd == "show":
-        from memory_agent.visualizer.query import build_graph
-        from memory_agent.visualizer.server import launch
+        from pocket_mem.visualizer.query import build_graph
+        from pocket_mem.visualizer.server import launch
 
         graph = build_graph(
             path=args.path,
