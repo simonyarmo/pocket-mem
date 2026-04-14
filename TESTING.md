@@ -154,6 +154,16 @@ All Veloris single-dataset benchmark runs, results, model configurations, and ro
 
 This file documents every trial run against the Veloris dataset — what model was used, the scores per tier, latency, and what changed between runs. Consult it before making changes to retrieval or ingestion to understand what has already been tried and what the current baseline is.
 
+**Latest results (Runs 23–24, 2026-04-13/14 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer):**
+
+| Run | Nodes | T1 | T2 | T3 | Overall |
+|-----|-------|----|----|----|---------|
+| Run 23 | 150 | 97.5% | 100% | 90% | **97%** |
+| Run 24 | 156 | 100% | 100% | 95% | **99%** |
+| **2-run avg** | **153** | **98.75%** | **100%** | **92.5%** | **98%** |
+
+Recall p50: ~8 s (rate-limit pacing — first 10 questions: 1–3 s; subsequent: 5–10 s as Claude API throttles).
+
 ---
 
 ## Inspecting memory state

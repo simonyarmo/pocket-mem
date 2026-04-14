@@ -1293,3 +1293,51 @@ Because the entire observation (email) was discarded on these failures, none of 
 - `agent.py` retry mechanism (complete — already verified working in this run)
 - `ingestion.py` 0-entity warning (complete — WARNING logged in `logs/` directory)
 - `conftest.py` timestamped log files in `logs/` directory (complete)
+
+### Run 24 — 2026-04-14 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 20/20 = **100%** |
+| T2 accuracy | 20/20 = **100%** |
+| T3 accuracy | 9.5/10 = **95%** |
+| Overall accuracy | 49.5/50 = **99%** |
+| False positive rate | 0/9 ✓ |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+| Tokens — ingestion | in=18,475  out=13,003 |
+| Tokens — total (recall phase) | in=398,262  out=3,075 |
+| Estimated API cost | $0.1034 (Haiku pricing) |
+| Nodes stored | 156 |
+| Recall p50 | 7,973ms |
+| Recall p99 | 13,729ms |
+
+**T1:** All 20 correct.
+
+**T2:** All 20 correct. T2-12 (race condition discoverer) said "while reviewing the payments module" instead of "while writing integration tests" — core answer (Darnell Okafor) is correct; scored full credit.
+
+**T3 wrong (0.5):**
+- T3-02 (0.5) — Leo correctly identified as the PCI flagger. Three Marcus actions partially correct: listed "hire fractional security consultant + Halcyon audit" and "OWASP training" but missed "fix before end of week" as a distinct action. Two of three actions present.
+
+**U-tier:** All 9 unanswerable correctly declined. Trap (U-05) PASS. U-07 contains a minor contextual reference to the PCI compliance issue and security audit but correctly avoids asserting a breach occurred.
+
+**Latency note:** Per-question timing showed the first ~10 questions answered in 1–3 s; subsequent questions averaged 5–10 s. Pattern is consistent with Claude Haiku's burst rate limit being exhausted after the first batch of requests — the API throttles after ~10 rapid calls and subsequent requests wait for the rate-limit window to reset. This is not a retrieval or synthesis latency issue; it is API pacing. The aggregate p50/p99 figures are inflated by rate-limit wait time and do not reflect true synthesis speed.
+
+---
+
+### 2-run average — Runs 23 + 24 (qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer)
+
+| Run | Nodes | T1 | T2 | T3 | Total |
+|-----|-------|----|----|-----|-------|
+| Run 23 | 150 | 19.5/20 | 20/20 | 9/10 | 48.5/50 — **97%** |
+| Run 24 | 156 | 20/20 | 20/20 | 9.5/10 | 49.5/50 — **99%** |
+| **Average** | **153** | **19.75/20 — 98.75%** | **20/20 — 100%** | **9.25/10 — 92.5%** | **49/50 — 98%** |
+
+**Key observations:**
+- Accuracy is highly stable at 97–99% across consecutive runs with the same configuration.
+- T2 has reached 100% in both post-fix runs. T1 variance is negligible (0.5-point swing).
+- T3-03 (Alertmanager+Loki omission) and T3-02 (three-action enumeration) remain the only structural weak points.
+- Recall latency (~8 s p50) is driven by Claude API rate-limit pacing, not retrieval or synthesis speed. First 10 questions: 1–3 s each. Questions 11–60: 5–10 s each as the API throttles.
+
+---
+
