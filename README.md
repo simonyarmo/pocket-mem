@@ -155,46 +155,74 @@ agent = MemoryAgent(
 )
 ```
 
-### Cloud models (OpenAI, Claude, any OpenAI-compatible provider)
+### Cloud models (OpenAI, Claude, OpenRouter, z.ai, any OpenAI-compatible provider)
 
 You can use any cloud LLM for both ingestion and recall. pocket-mem uses the OpenAI-compatible chat completions API, so it works with any provider that exposes it.
 
 Cloud models give you the highest extraction quality with no local GPU requirement.
 
+#### Quickest path — provider presets
+
+`LLMConfig.for_provider(...)` configures the right `base_url` and reads the matching env var (e.g. `OPENROUTER_API_KEY`, `ZAI_API_KEY`, `OPENAI_API_KEY`) for you:
+
+```python
+from pocket_mem import MemoryAgent, LLMConfig
+
+# OpenRouter — gateway to dozens of models behind one key
+agent = MemoryAgent(
+    project="my-app",
+    llm=LLMConfig.for_provider("openrouter", model="anthropic/claude-3-haiku"),
+)
+
+# z.ai subscription
+agent = MemoryAgent(
+    project="my-app",
+    llm=LLMConfig.for_provider("zai", model="glm-4.5"),
+)
+
+# Other supported presets: "ollama", "openai", "anthropic", "groq", "gemini", "together"
+```
+
+Pass `api_key=` explicitly to override the env var, or `extra_headers={"HTTP-Referer": ...}` for OpenRouter's optional ranking headers.
+
+#### Manual config
+
+For any provider not in the presets, set `base_url`, `model`, and `api_key` directly:
+
 ```python
 import os
 from pocket_mem import MemoryAgent, LLMConfig
 
-# Anthropic Claude Haiku — excellent JSON extraction, low cost
 agent = MemoryAgent(
     project="my-app",
     llm=LLMConfig(
         base_url="https://api.anthropic.com/v1",
         model="claude-haiku-4-5-20251001",
-        api_key=os.environ["ANTHROPIC_API_KEY"]
-    )
-)
-
-# OpenAI GPT-4o Mini
-agent = MemoryAgent(
-    project="my-app",
-    llm=LLMConfig(
-        base_url="https://api.openai.com/v1",
-        model="gpt-4o-mini",
-        api_key=os.environ["OPENAI_API_KEY"]
-    )
-)
-
-# Any OpenAI-compatible provider (Groq, Together AI, Mistral, etc.)
-agent = MemoryAgent(
-    project="my-app",
-    llm=LLMConfig(
-        base_url="https://api.groq.com/openai/v1",
-        model="llama-3.1-8b-instant",
-        api_key=os.environ["GROQ_API_KEY"]
-    )
+        api_key=os.environ["ANTHROPIC_API_KEY"],
+    ),
 )
 ```
+
+#### LiteLLM backend (optional)
+
+For unified provider routing (model strings like `openrouter/anthropic/claude-3-haiku`, `gemini/gemini-1.5-pro`, `bedrock/...`) install the LiteLLM extra and pass `backend="litellm"`:
+
+```bash
+pip install 'pocket-mem[litellm]'
+```
+
+```python
+agent = MemoryAgent(
+    project="my-app",
+    llm=LLMConfig.for_provider(
+        "openrouter",
+        model="anthropic/claude-3-haiku",
+        backend="litellm",
+    ),
+)
+```
+
+[LiteLLM](https://github.com/BerriAI/litellm) is an open-source Python SDK that translates a unified API across 100+ LLM providers. With it, pocket-mem works with any provider LiteLLM supports, including ones without an OpenAI-compatible endpoint.
 
 ---
 

@@ -27,6 +27,7 @@ dependencies = ["requests", "sentence-transformers"]
 
 [project.optional-dependencies]
 dev = ["pytest"]
+litellm = ["litellm>=1.50"]
 
 [project.scripts]
 pocket-mem = "pocket_mem.visualizer.cli:main"
