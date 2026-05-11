@@ -1,6 +1,6 @@
 from __future__ import annotations
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from pocket_mem.config import MemoryConfig
 from pocket_mem.llm.client import LLMClient
@@ -11,7 +11,7 @@ from pocket_mem.store.base import StoreInterface
 
 
 def _now() -> str:
-    return datetime.utcnow().isoformat()
+    return datetime.now(timezone.utc).isoformat()
 
 
 def _find_topic_for_chunk(chunk: Node, store: StoreInterface) -> str | None:
@@ -140,7 +140,7 @@ def prune(store: StoreInterface, config: MemoryConfig) -> int:
     Returns number of nodes deleted.
     """
     cutoff = (
-        datetime.utcnow() - timedelta(days=config.prune_after_days)
+        datetime.now(timezone.utc) - timedelta(days=config.prune_after_days)
     ).isoformat()
     now = _now()
 

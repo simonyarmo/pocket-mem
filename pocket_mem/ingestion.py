@@ -1,7 +1,7 @@
 from __future__ import annotations
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 _log = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ from pocket_mem.store.base import StoreInterface
 
 
 def _now() -> str:
-    return datetime.utcnow().isoformat()
+    return datetime.now(timezone.utc).isoformat()
 
 
 def _classify(turn: str, topics: list[str], llm: LLMClient) -> dict:

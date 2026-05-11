@@ -1,7 +1,7 @@
 from __future__ import annotations
 import logging
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from pocket_mem.embedding import cosine_similarity, embed
 from pocket_mem.llm.client import LLMClient
@@ -74,8 +74,8 @@ def _write_qa_cache_node(
     model_name: str,
     store: StoreInterface,
 ) -> None:
-    now = datetime.utcnow().isoformat()
-    expires_at = (datetime.utcnow() + timedelta(days=_QA_CACHE_TTL_DAYS)).isoformat()
+    now = datetime.now(timezone.utc).isoformat()
+    expires_at = (datetime.now(timezone.utc) + timedelta(days=_QA_CACHE_TTL_DAYS)).isoformat()
     node = Node(
         id=str(uuid.uuid4()),
         node_type="qa_cache",

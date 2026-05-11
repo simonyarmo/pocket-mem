@@ -4,7 +4,7 @@ import re
 import sqlite3
 import tempfile
 import zipfile
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from pocket_mem.config import StorageConfig
@@ -309,7 +309,7 @@ class SQLiteStore(StoreInterface):
             return
         data = json.loads(row["data"])
         data["hit_count"] = data.get("hit_count", 0) + 1
-        data["last_hit_at"] = datetime.utcnow().isoformat()
+        data["last_hit_at"] = datetime.now(timezone.utc).isoformat()
         self._conn.execute(
             "UPDATE nodes SET data = ? WHERE id = ?",
             (json.dumps(data), node_id),
@@ -321,7 +321,7 @@ class SQLiteStore(StoreInterface):
         qa_nodes = self.get_nodes_by_type("qa_cache")
         if not qa_nodes:
             return
-        now = datetime.utcnow().isoformat()
+        now = datetime.now(timezone.utc).isoformat()
         for node in qa_nodes:
             if source_node_id in node.data.get("source_node_ids", []):
                 node.data["expires_at"] = now
@@ -341,7 +341,7 @@ class SQLiteStore(StoreInterface):
         manifest = {
             "version": "1.0",
             "project": self.db_path.stem,
-            "exported_at": datetime.utcnow().isoformat(),
+            "exported_at": datetime.now(timezone.utc).isoformat(),
             "node_count": s["node_count"],
             "topics": self.list_topics(),
         }

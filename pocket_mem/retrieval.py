@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from datetime import datetime
+from datetime import datetime, timezone
 
 from pocket_mem.embedding import cosine_similarity, embed
 from pocket_mem.llm.client import LLMClient
@@ -115,7 +115,7 @@ def check_qa_cache(query: str, store: StoreInterface) -> str | None:
 
     for node in cache_nodes:
         expires = node.data.get("expires_at")
-        if expires and datetime.fromisoformat(expires) < datetime.utcnow():
+        if expires and datetime.fromisoformat(expires) < datetime.now(timezone.utc):
             continue
         if not node.data.get("verified"):
             continue

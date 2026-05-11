@@ -2,7 +2,7 @@ from __future__ import annotations
 import logging
 import uuid
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timezone
 
 _log = logging.getLogger(__name__)
 
@@ -56,7 +56,7 @@ class MemoryAgent:
             return
 
         existing = {t.lower() for t in self._store.list_topics()}
-        now = datetime.utcnow().isoformat()
+        now = datetime.now(timezone.utc).isoformat()
 
         for label in identity.derived.get("seed_topics", []):
             if label.lower() in existing:
@@ -149,7 +149,7 @@ class MemoryAgent:
         job may write a new node for the same entity between the search and delete.
         For v1, callers should treat forget() as a best-effort operation.
         """
-        now = datetime.utcnow().isoformat()
+        now = datetime.now(timezone.utc).isoformat()
         nodes = search(query, self._store, limit=5)
         count = 0
         for node in nodes:

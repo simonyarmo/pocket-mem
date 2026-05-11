@@ -3,7 +3,7 @@ import hashlib
 import json
 import logging
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
 from pocket_mem.identities.prebuilt import match_prebuilt
 
@@ -51,11 +51,11 @@ def _save_to_cache(description: str, derived: dict, model_name: str, store) -> N
             "description": description,
             "derived": derived,
             "model_used": model_name,
-            "derived_at": datetime.utcnow().isoformat(),
+            "derived_at": datetime.now(timezone.utc).isoformat(),
         },
         importance=1.0,
     )
-    now = datetime.utcnow().isoformat()
+    now = datetime.now(timezone.utc).isoformat()
     node.created_at = now
     node.updated_at = now
     try:
