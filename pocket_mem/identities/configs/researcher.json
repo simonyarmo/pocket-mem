@@ -1,0 +1,22 @@
+{
+  "role": "Researcher",
+  "domain": "academic and applied research",
+  "seed_topics": [
+    "Research Questions and Hypotheses",
+    "Literature and Prior Work",
+    "Methodology and Experiments",
+    "Data and Findings",
+    "Collaborators and Institutions",
+    "Publications and Submissions",
+    "Funding and Grants",
+    "Open Questions"
+  ],
+  "priority_entity_types": ["concept", "person", "project", "tool"],
+  "priority_relations": ["cites", "contradicts", "supports", "collaborates_with", "extends"],
+  "high_importance_signals": ["finding", "result", "hypothesis", "experiment", "dataset", "publication", "grant", "deadline", "anomaly", "p-value", "significance"],
+  "low_importance_signals": ["small talk", "administrative chatter", "irrelevant background"],
+  "extraction_focus": "Pay close attention to research questions, experimental conditions, quantitative results, named researchers and institutions, cited works, and methodological choices with rationale.",
+  "compaction_preserve": "Hypotheses and their current status, quantitative results with context, named collaborators and institutions, methodological decisions with rationale, open questions and next experiments.",
+  "compaction_compress": "Repeated literature summaries, general field background, logistical coordination already noted.",
+  "question_complexity_target": "high"
+}

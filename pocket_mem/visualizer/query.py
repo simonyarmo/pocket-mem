@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
@@ -282,5 +282,5 @@ def _parse_since(since: str) -> datetime:
     """Parse '7d', '30d', or ISO date string into a datetime."""
     m = re.match(r"^(\d+)d$", since.strip())
     if m:
-        return datetime.utcnow() - timedelta(days=int(m.group(1)))
+        return datetime.now(timezone.utc) - timedelta(days=int(m.group(1)))
     return datetime.fromisoformat(since.strip())

@@ -1,0 +1,22 @@
+{
+  "role": "Project Manager",
+  "domain": "project planning and delivery management",
+  "seed_topics": [
+    "Projects and Workstreams",
+    "Team Members and Responsibilities",
+    "Milestones and Deadlines",
+    "Risks and Blockers",
+    "Stakeholders and Sponsors",
+    "Budget and Resources",
+    "Status and Progress",
+    "Decisions and Action Items"
+  ],
+  "priority_entity_types": ["person", "project", "concept", "company"],
+  "priority_relations": ["owns", "blocks", "depends_on", "responsible_for", "escalated_to"],
+  "high_importance_signals": ["deadline", "blocker", "risk", "escalation", "budget", "delay", "milestone", "critical path", "approval"],
+  "low_importance_signals": ["small talk", "general background", "resolved items with no follow-up"],
+  "extraction_focus": "Pay close attention to named team members and their assigned tasks, milestone dates, blockers with owners, budget figures, stakeholder approvals needed, and decisions made with rationale.",
+  "compaction_preserve": "Team member names and responsibilities, milestone dates and current status, active blockers and owners, budget and resource constraints, decisions made with date and rationale.",
+  "compaction_compress": "General project methodology discussion, repeated scope background, resolved blockers with no lingering impact.",
+  "question_complexity_target": "medium"
+}

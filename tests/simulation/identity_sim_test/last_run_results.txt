@@ -1,0 +1,476 @@
+=== LEGAL BENCHMARK (Castellan & Briggs) — identity vs baseline ===
+Run: 2026-05-11 12:24:33   Ingest: qwen2.5:7b   Answer: claude-haiku-4-5-20251001   Identity derivation: prebuilt
+
+--- IDENTITY ---
+Description : Paralegal at Castellan & Briggs LLP, a litigation law firm in Chicago. My job is to read all case notes every day — tracking clients, opposing parties, attorneys, deadlines, damages, filings, and anything happening across active cases so I can brief the attorneys and answer questions about case status, key facts, and upcoming deadlines.
+Derived role: Paralegal
+Seed topics : Active Cases, Clients and Parties, Deadlines and Filings, Opposing Counsel, Financial Terms and Damages, Settlements and Offers, Expert Witnesses, Discovery and Evidence
+Complexity  : high
+
+--- INGESTION ---
+Case notes ingested : 20
+Identity    : nodes=138  in=24235  out=13193
+Baseline    : nodes=142  in=23295  out=11604
+
+--- SESSION PERSISTENCE ---
+Identity: PASS   Baseline: PASS
+
+
+--- TIER 1 — DIRECT LOOKUP ---
+
+L-T1-01 | What city is Castellan & Briggs LLP located in?
+  EXPECTED        : Chicago, Illinois
+  IDENTITY ANSWER : Castellan & Briggs LLP is located in Chicago, Illinois.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1256ms
+  BASELINE ANSWER : Castellan & Briggs LLP is located in Chicago, Illinois.
+  BASELINE SCORE  : REVIEW  [retrieval]  1180ms
+
+L-T1-02 | What are the claimed damages in NorthBridge Capital v. Terravast Holdings?
+  EXPECTED        : $2,080,000 ($780,000 bridge financing costs + $1,300,000 discounted sale loss)
+  IDENTITY ANSWER : The claimed damages in NorthBridge Capital v. Terravast Holdings are $2,080,000, consisting of $780,000 in bridge financing costs and $1,300,000 in losses from the forced sale of the Meridian Tower property at a discount. Additionally, Terravast filed a counterclaim for $650,000 alleging NorthBridge's failure to obtain zoning approvals caused Terravast to lose a separate development opportunity.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1859ms
+  BASELINE ANSWER : The claimed damages in NorthBridge Capital v. Terravast Holdings are $2,080,000, consisting of $780,000 in bridge financing costs and $1,300,000 from the discounted sale of the Meridian Tower property. These damages arose from Terravast's failure to contribute the agreed $4.2 million capital injection by the December 1, 2024 deadline.
+  BASELINE SCORE  : REVIEW  [retrieval]  1940ms
+
+L-T1-03 | Who is the client contact at NorthBridge Capital?
+  EXPECTED        : Patricia Huang, CFO
+  IDENTITY ANSWER : Patricia Huang, CFO of NorthBridge Capital, is the client contact for NorthBridge Capital.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1261ms
+  BASELINE ANSWER : Patricia Huang, CFO of NorthBridge Capital, is the client contact at NorthBridge Capital.
+  BASELINE SCORE  : REVIEW  [retrieval]  1113ms
+
+L-T1-04 | What case number was assigned to NorthBridge v. Terravast when filed?
+  EXPECTED        : 2025-L-001847
+  IDENTITY ANSWER : The case number assigned to NorthBridge v. Terravast when filed was **2025-L-001847**. The complaint was filed in Cook County Circuit Court on January 24, 2025, with Judge Patricia Moreau assigned to the Civil Division.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1632ms
+  BASELINE ANSWER : The case number assigned to NorthBridge Capital LLC v. Terravast Holdings Inc. when filed was **2025-L-001847**. The complaint was filed in Cook County Circuit Court on January 24, 2025, and Judge Patricia Moreau was assigned to the Civil Division.
+  BASELINE SCORE  : REVIEW  [retrieval]  1616ms
+
+L-T1-05 | What judge was assigned to NorthBridge v. Terravast?
+  EXPECTED        : Hon. Patricia Moreau, Civil Division
+  IDENTITY ANSWER : Judge Patricia Moreau was assigned to NorthBridge v. Terravast Holdings. She is a judge in the Civil Division of Cook County Circuit Court, and the case number is 2025-L-001847.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1338ms
+  BASELINE ANSWER : Hon. Patricia Moreau, Civil Division was assigned to NorthBridge v. Terravast. The case number is 2025-L-001847, and the complaint was filed in Cook County Circuit Court on January 24, 2025.
+  BASELINE SCORE  : REVIEW  [retrieval]  1276ms
+
+L-T1-06 | What was Harlan Voss's annual salary at Kellerman & Drape?
+  EXPECTED        : $187,000 plus $45,000 annual bonus
+  IDENTITY ANSWER : Harlan Voss's annual salary at Kellerman & Drape was $187,000, plus a $45,000 annual bonus.
+  IDENTITY SCORE  : REVIEW  [retrieval]  10555ms
+  BASELINE ANSWER : Harlan Voss earned $187,000 annually plus a $45,000 annual bonus at Kellerman & Drape Consulting, where he served as Director of Strategic Accounts.
+  BASELINE SCORE  : REVIEW  [retrieval]  7799ms
+
+L-T1-07 | On what date was Harlan Voss terminated?
+  EXPECTED        : December 18, 2024
+  IDENTITY ANSWER : Harlan Voss was terminated on December 18, 2024, after 11 years of employment as Director of Strategic Accounts at Kellerman & Drape Consulting.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7844ms
+  BASELINE ANSWER : Harlan Voss was terminated on December 18, 2024, after 11 years of employment as Director of Strategic Accounts at Kellerman & Drape Consulting.
+  BASELINE SCORE  : REVIEW  [retrieval]  7798ms
+
+L-T1-08 | What were Harlan Voss's performance review ratings in 2022 and 2023?
+  EXPECTED        : "Exceeds Expectations" in both 2022 and 2023
+  IDENTITY ANSWER : Harlan Voss's performance review ratings in 2022 and 2023 were both "Exceeds Expectations." This evidence was cited in the research memo as undercutting Kellerman & Drape's stated reason for termination ("performance issues").
+  IDENTITY SCORE  : REVIEW  [retrieval]  8574ms
+  BASELINE ANSWER : Harlan Voss's performance review ratings were "Exceeds Expectations" in both 2022 and 2023, according to the archived records.
+  BASELINE SCORE  : REVIEW  [retrieval]  6763ms
+
+L-T1-09 | What was Solenne Marchand's claimed injury from the slip and fall?
+  EXPECTED        : Fractured left wrist (distal radius) and soft tissue injuries to her left shoulder
+  IDENTITY ANSWER : Solenne Marchand claimed a fractured left wrist (distal radius) and soft tissue injuries to her left shoulder from the slip and fall on the icy sidewalk on North Michigan Avenue on January 9, 2025.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7955ms
+  BASELINE ANSWER : Solenne Marchand claimed a fractured left wrist (distal radius) and soft tissue injuries to her left shoulder from the slip and fall on the icy sidewalk on North Michigan Avenue on January 9, 2025.
+  BASELINE SCORE  : REVIEW  [retrieval]  8074ms
+
+L-T1-10 | What is the total damages amount claimed by Solenne Marchand?
+  EXPECTED        : $425,000 ($38,000 medical bills, $12,000 lost wages, $375,000 pain and suffering)
+  IDENTITY ANSWER : The total damages amount claimed by Solenne Marchand is $425,000, consisting of medical bills ($38,000), lost wages ($12,000), and pain and suffering ($375,000).
+  IDENTITY SCORE  : REVIEW  [retrieval]  7728ms
+  BASELINE ANSWER : The total damages amount claimed by Solenne Marchand is $425,000, consisting of medical bills ($38,000), lost wages ($12,000), and pain and suffering ($375,000).
+  BASELINE SCORE  : REVIEW  [retrieval]  8816ms
+
+L-T1-11 | What is the name of Brightfield Pharmaceuticals' blood pressure medication at the center of the product liability case?
+  EXPECTED        : Velantrix (valsartan 160mg)
+  IDENTITY ANSWER : The blood pressure medication at the center of Brightfield Pharmaceuticals' product liability case is **Velantrix (valsartan 160mg)**. Three plaintiffs with pre-existing chronic kidney disease allege the medication caused acute kidney injury, with the FDA having issued a safety communication in November 2024 noting elevated rates of renal adverse events in patients with CKD taking Velantrix.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8437ms
+  BASELINE ANSWER : The blood pressure medication at the center of Brightfield Pharmaceuticals' product liability case is **Velantrix (valsartan 160mg)**. Three plaintiffs allege it caused acute kidney injury, with the FDA issuing a safety communication in November 2024 noting elevated rates of renal adverse events in patients with pre-existing chronic kidney disease.
+  BASELINE SCORE  : REVIEW  [retrieval]  8433ms
+
+L-T1-12 | Who is the defense expert retained in the Brightfield case, and where is he from?
+  EXPECTED        : Dr. Howard Belkin, nephrologist, Northwestern University School of Medicine
+  IDENTITY ANSWER : Dr. Howard Belkin, a nephrologist at Northwestern University School of Medicine, is the defense expert retained in the Brightfield case. He is from Northwestern University School of Medicine.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8950ms
+  BASELINE ANSWER : Dr. Howard Belkin, a nephrologist at Northwestern University School of Medicine, is the defense expert retained in the Brightfield case. He is from Northwestern University School of Medicine.
+  BASELINE SCORE  : REVIEW  [retrieval]  7806ms
+
+L-T1-13 | What is Duncan Farrow's role at Castellan & Briggs?
+  EXPECTED        : Investigator
+  IDENTITY ANSWER : Duncan Farrow is an Investigator at Castellan & Briggs. He has been assigned to investigate Terravast Holdings' financial condition in the NorthBridge Capital case and to locate communications regarding the December 1 deadline and zoning issues.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8725ms
+  BASELINE ANSWER : Duncan Farrow is an Investigator at Castellan & Briggs. He has been assigned to investigate Terravast's financial condition and locate communications regarding the December 1 deadline and zoning issues in the NorthBridge Capital case, and to conduct investigation for the Brightfield Pharmaceuticals product liability defense.
+  BASELINE SCORE  : REVIEW  [retrieval]  6999ms
+
+L-T1-14 | What was the amount Terravast was contractually obligated to contribute by December 1, 2024?
+  EXPECTED        : $4.2 million
+  IDENTITY ANSWER : Terravast was contractually obligated to contribute $4.2 million by December 1, 2024, as stated in Section 4.2 of the joint venture agreement dated March 14, 2023.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6761ms
+  BASELINE ANSWER : According to Section 4.2 of the joint venture agreement, Terravast was contractually obligated to contribute $4.2 million by December 1, 2024.
+  BASELINE SCORE  : REVIEW  [retrieval]  6585ms
+
+L-T1-15 | What mediation service was agreed upon for the Voss case?
+  EXPECTED        : JAMS Chicago, with mediator Hon. (ret.) Clara Whitmore
+  IDENTITY ANSWER : Based on the archived records, the mediation service agreed upon for the Voss case was **Hon. (ret.) Clara Whitmore of JAMS Chicago**, with a mediation date scheduled for April 8, 2025. This was proposed by Kellerman & Drape's counsel and accepted before their answer was filed.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9191ms
+  BASELINE ANSWER : For the **Voss case** (Voss v. Kellerman & Drape), the agreed-upon mediation service is **Hon. (ret.) Clara Whitmore of JAMS Chicago**, with mediation scheduled for **April 8, 2025**. This was proposed by Kellerman & Drape's counsel before the answer was filed.
+  BASELINE SCORE  : REVIEW  [retrieval]  8329ms
+
+L-T1-16 | What time did the salt truck treat North Michigan Avenue on the morning of Marchand's fall?
+  EXPECTED        : 5:45 AM (before the fall, which occurred at approximately 8:30 AM)
+  IDENTITY ANSWER : The salt truck treated North Michigan Avenue at 5:45 AM on January 9, 2025, which was 45 minutes before Marchand's fall at approximately 8:30 AM that same morning.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7779ms
+  BASELINE ANSWER : The salt truck treated North Michigan Avenue at 5:45 AM on January 9, 2025, the morning of Marchand's fall.
+  BASELINE SCORE  : REVIEW  [retrieval]  7979ms
+
+L-T1-17 | What is the EEOC charge number for the Voss case?
+  EXPECTED        : 440-2025-01923
+  IDENTITY ANSWER : The EEOC charge number for the Voss case is 440-2025-01923. This charge was submitted on February 6, 2025, with a right-to-sue letter expected in approximately 180 days if no resolution is reached.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8149ms
+  BASELINE ANSWER : The EEOC charge number for the Voss case is 440-2025-01923. This charge was filed on February 6, 2025, by Derek Briggs on behalf of Harlan Voss against Kellerman & Drape Consulting.
+  BASELINE SCORE  : REVIEW  [retrieval]  7737ms
+
+L-T1-18 | What was the demand amount in the Voss demand letter?
+  EXPECTED        : $560,000
+  IDENTITY ANSWER : The demand amount in the Voss demand letter was $560,000, which included approximately 2 years back pay, 1 year front pay, $50,000 for emotional distress, and attorney fees. The demand letter was sent via certified mail on February 6, 2025, with a 21-day response deadline.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8387ms
+  BASELINE ANSWER : The demand amount in the Voss demand letter was $560,000, which included approximately 2 years back pay, 1 year front pay, $50,000 for emotional distress, and attorney fees.
+  BASELINE SCORE  : REVIEW  [retrieval]  7968ms
+
+L-T1-19 | Who is the plaintiff's counsel in Solenne Marchand's case?
+  EXPECTED        : Janet Osorio of Osorio & Kim LLP
+  IDENTITY ANSWER : Based on the archived records, the plaintiff's counsel in Solenne Marchand's case is **Janet Osorio of Osorio & Kim LLP**. This is stated in the case note for Marchand v. City of Chicago (Defense) dated February 3, 2025, where Castellan & Briggs was retained to defend the City of Chicago against Marchand's personal injury claim.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8505ms
+  BASELINE ANSWER : Based on the archived records, the plaintiff's counsel in Solenne Marchand's case is **Janet Osorio of Osorio & Kim LLP**. This is stated in the case note for Marchand v. City of Chicago (Defense) dated February 3, 2025.
+  BASELINE SCORE  : REVIEW  [retrieval]  8087ms
+
+L-T1-20 | What are the three plaintiffs in the consolidated Brightfield case?
+  EXPECTED        : Gerald Ostrowski, Ruth Patel, and Anton Devereux
+  IDENTITY ANSWER : The three plaintiffs in the consolidated Brightfield case are: (1) Gerald Ostrowski, (2) Ruth Patel, and (3) Anton Devereux. All three allege that Brightfield Pharmaceuticals' medication Velantrix caused acute kidney injury, and the case was consolidated under Judge Diana Okonkwo in case number 2025-L-002841-CONS.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9479ms
+  BASELINE ANSWER : The three plaintiffs in the consolidated Brightfield case are: (1) Gerald Ostrowski, (2) Ruth Patel, and (3) Anton Devereux. All three have chronic kidney disease (CKD Stage 3 or 3B) and allege that Velantrix caused acute kidney injury.
+  BASELINE SCORE  : REVIEW  [retrieval]  9195ms
+
+
+--- TIER 2 — SINGLE HOP ---
+
+L-T2-01 | What problem did Renata Osei identify in the NorthBridge contract, and how was it resolved?
+  EXPECTED        : Section 14.3 required mandatory mediation before litigation. Resolved when Terravast refused to participate in mediation — this refusal itself waived the requirement under Illinois law (Rosenberg v. Feldman, 2019)
+  IDENTITY ANSWER : Renata Osei identified that the NorthBridge contract's Section 14.3 required mandatory mediation before filing suit, but this requirement was not being followed. The problem was resolved when Margaret Castellan contacted Terravast's general counsel Marcus Webb, who refused to participate in mediation; under Illinois law, this refusal to mediate itself constituted a breach of the dispute resolution clause and waived the mediation requirement, allowing the firm to proceed directly to filing the complaint.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8458ms
+  BASELINE ANSWER : Renata Osei identified that Section 14.3 of the NorthBridge contract required mandatory mediation before filing suit, which needed to be completed within 30 days before litigation could proceed. The problem was resolved when Terravast refused to participate in mediation, which itself constituted a breach of the dispute resolution clause and waived the mediation requirement under Illinois law, allowing NorthBridge to proceed directly to filing the complaint.
+  BASELINE SCORE  : REVIEW  [retrieval]  1880ms
+
+L-T2-02 | What three causes of action did NorthBridge file against Terravast?
+  EXPECTED        : Count I — Breach of Contract, Count II — Breach of Implied Covenant of Good Faith, Count III — Unjust Enrichment (pleaded in the alternative)
+  IDENTITY ANSWER : The three causes of action NorthBridge filed against Terravast were: (1) Breach of Contract, (2) Breach of Implied Covenant of Good Faith, and (3) Unjust Enrichment (pleaded in alternative).
+  IDENTITY SCORE  : REVIEW  [retrieval]  11913ms
+  BASELINE ANSWER : NorthBridge filed three causes of action against Terravast: (1) Breach of Contract, (2) Breach of Implied Covenant of Good Faith, and (3) Unjust Enrichment (pleaded in alternative).
+  BASELINE SCORE  : REVIEW  [retrieval]  7938ms
+
+L-T2-03 | What did Terravast's asset investigation reveal about their real estate holdings?
+  EXPECTED        : Three commercial properties in Cook County estimated at $8.4 million total, with mortgages totaling approximately $5.1 million — meaning equity worth pursuing
+  IDENTITY ANSWER : The asset investigation revealed that Terravast Holdings has three commercial properties in Cook County with an estimated total value of $8.4 million, against two active mortgages totaling approximately $5.1 million, leaving equity worth pursuing. Terravast also operates two active subsidiaries: Terravast Residential LLC and Terravast Commercial Management LLC, with no pending bankruptcy filings.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8536ms
+  BASELINE ANSWER : The asset investigation revealed that Terravast Holdings has three commercial properties in Cook County with an estimated total value of $8.4 million, against which there are two active mortgages totaling approximately $5.1 million. The investigator concluded that Terravast has sufficient assets to satisfy a judgment, with equity in the two commercial properties available for collection purposes.
+  BASELINE SCORE  : REVIEW  [retrieval]  2051ms
+
+L-T2-04 | What are the three counts filed in the Voss complaint, and who are the named defendants?
+  EXPECTED        : Count I — Retaliatory Discharge (Illinois Whistleblower Act), Count II — Breach of Implied Contract (employee handbook), Count III — Intentional Infliction of Emotional Distress. Named defendants: Kellerman & Drape Consulting LLC AND Robert Ashby individually (Voss's direct supervisor)
+  IDENTITY ANSWER : The three counts filed in the Voss complaint are: (1) Retaliatory Discharge under the Illinois Whistleblower Act, (2) Breach of Implied Contract based on the employee handbook, and (3) Intentional Infliction of Emotional Distress. The named defendants are Kellerman & Drape Consulting LLC and Robert Ashby individually (Voss's direct supervisor who executed the termination).
+  IDENTITY SCORE  : REVIEW  [retrieval]  12412ms
+  BASELINE ANSWER : The three counts filed in the Voss complaint are: (1) Retaliatory Discharge under the Illinois Whistleblower Act, (2) Breach of Implied Contract based on the employee handbook, and (3) Intentional Infliction of Emotional Distress. The named defendants are Kellerman & Drape Consulting LLC and Robert Ashby individually (Voss's direct supervisor who executed the termination).
+  BASELINE SCORE  : REVIEW  [retrieval]  8594ms
+
+L-T2-05 | How many days passed between Harlan Voss's whistleblower complaint and his termination, and why is that significant legally?
+  EXPECTED        : 65 days — temporal proximity supports an inference of retaliation under the Illinois Whistleblower Act
+  IDENTITY ANSWER : 65 days passed between Harlan Voss's whistleblower complaint (October 14, 2024) and his termination (December 18, 2024). This temporal proximity is legally significant because it supports an inference of retaliation under the Illinois Whistleblower Act—courts recognize that termination shortly after a protected complaint suggests the complaint was the motivating factor. Additionally, Voss's strong performance reviews ("Exceeds Expectations" in 2022 and 2023) undercut the employer's stated reason of "performance issues," further strengthening the retaliation claim.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7597ms
+  BASELINE ANSWER : Sixty-five days passed between Harlan Voss's whistleblower complaint (October 14, 2024) and his termination (December 18, 2024). This temporal proximity is legally significant because it supports an inference of retaliation under the Illinois Whistleblower Act—courts view termination occurring shortly after a protected complaint as evidence that the complaint motivated the adverse employment action. Additionally, Voss's prior performance reviews rated him "Exceeds Expectations," making the employer's stated reason of "performance issues" appear pretextual and further strengthening his retaliation claim.
+  BASELINE SCORE  : REVIEW  [retrieval]  7973ms
+
+L-T2-06 | What specific observations did witness Thomas Quayle make that helped the City's defense?
+  EXPECTED        : (1) Sidewalk had visible salt granules — had been treated. (2) Plaintiff was wearing dress shoes with no tread, not boots. (3) Plaintiff was looking at her phone when she fell. (4) No city vehicles visible at the time.
+  IDENTITY ANSWER : Thomas Quayle observed that the sidewalk had been treated with visible salt granules present, and that Ms. Marchand was wearing dress shoes with no tread (not boots) and was looking at her phone when she fell. These observations supported the City's defense by establishing that the sidewalk had been salted and that the plaintiff's own conduct (distraction and inappropriate footwear) contributed to the fall.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7801ms
+  BASELINE ANSWER : Thomas Quayle observed that the sidewalk had been treated with visible salt granules present, and that Ms. Marchand was wearing dress shoes with no tread (not boots) and was looking at her phone when she fell. These observations supported the City's defense by showing the sidewalk had been salted and that the plaintiff's own conduct (distraction and inappropriate footwear) contributed to the accident.
+  BASELINE SCORE  : REVIEW  [retrieval]  7526ms
+
+L-T2-07 | What counterclaim did Terravast file against NorthBridge, and for how much?
+  EXPECTED        : $650,000 counterclaim alleging NorthBridge's failure to obtain zoning approvals caused Terravast to lose a separate development opportunity
+  IDENTITY ANSWER : Terravast filed a counterclaim against NorthBridge for $650,000, alleging that NorthBridge's failure to obtain required zoning approvals caused Terravast to lose a separate development opportunity.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6495ms
+  BASELINE ANSWER : Terravast filed a counterclaim against NorthBridge for $650,000, alleging that NorthBridge's failure to obtain required zoning approvals caused Terravast to lose a separate development opportunity.
+  BASELINE SCORE  : REVIEW  [retrieval]  7743ms
+
+L-T2-08 | What is the expert fee structure for Dr. Belkin in the Brightfield case?
+  EXPECTED        : $650/hour for review, $950/hour for deposition/trial testimony, estimated 80 hours of review
+  IDENTITY ANSWER : Dr. Belkin's expert fee structure for the Brightfield case is $650/hour for review work and $950/hour for deposition and trial testimony, with an estimated engagement of 80 hours for review plus possible deposition time.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8792ms
+  BASELINE ANSWER : Dr. Belkin's expert fee structure in the Brightfield case is $650/hour for review work and $950/hour for deposition and trial testimony, with an estimated engagement of 80 hours for review plus possible deposition time.
+  BASELINE SCORE  : REVIEW  [retrieval]  8102ms
+
+L-T2-09 | What is the significance of Anton Devereux's case among the three Brightfield plaintiffs?
+  EXPECTED        : He has the most severe claimed injury — his CKD progressed from Stage 3B to Stage 4 during 22 months on Velantrix (the longest of the three patients on the drug). His case will be the bellwether trial.
+  IDENTITY ANSWER : Anton Devereux's case is the most severe among the three Brightfield plaintiffs—he progressed to Stage 4 chronic kidney disease during his 22 months on Velantrix, compared to the other plaintiffs' Stage 3 conditions with shorter treatment durations. Because of this severity, his case will likely serve as the bellwether trial for the consolidated litigation.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9497ms
+  BASELINE ANSWER : Anton Devereux's case is the most severe among the three Brightfield plaintiffs—he progressed to Stage 4 CKD during Velantrix use, compared to Stage 3 for the other two plaintiffs (Gerald Ostrowski and Ruth Patel). Because of this severity, his case will likely serve as the bellwether trial.
+  BASELINE SCORE  : REVIEW  [retrieval]  8805ms
+
+L-T2-10 | What is Kellerman & Drape's counter-offer to the demand letter, and why did Voss reject it?
+  EXPECTED        : $85,000 total, no admission of liability — rejected because it is far below actual damages (Voss's annual salary alone is $187,000; the offer doesn't even cover half a year of back pay)
+  IDENTITY ANSWER : Kellerman & Drape's counter-offer was $85,000 with no admission of liability. Voss rejected it because the amount was far below his actual damages—he had been unemployed for 8 weeks and the offer did not adequately compensate for his lost wages, front pay, and other harm from the wrongful termination.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8286ms
+  BASELINE ANSWER : Kellerman & Drape's counter-offer was $85,000 with no admission of liability, which Voss rejected because it was far below his actual damages and the firm authorized filing suit instead.
+  BASELINE SCORE  : REVIEW  [retrieval]  6869ms
+
+L-T2-11 | What was Leo Nakashima's settlement recommendation for the Marchand case, and under what condition would he recommend trial?
+  EXPECTED        : Offer $95,000. If plaintiff counters above $150,000, recommend trial given strength of witness testimony and salt log evidence. Estimated 25% risk of verdict over $200,000.
+  IDENTITY ANSWER : Leo Nakashima recommended offering the City of Chicago $95,000 to settle the Marchand case. He would recommend proceeding to trial if the plaintiff countered above $150,000, given the strength of the defense's witness testimony and salt truck evidence.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9110ms
+  BASELINE ANSWER : Leo Nakashima recommended a settlement offer of $95,000 for the Marchand case. He would recommend proceeding to trial if the plaintiff countered above $150,000, citing the strength of the defense's witness testimony and salt truck evidence, with an estimated 25% risk of a verdict exceeding $200,000.
+  BASELINE SCORE  : REVIEW  [retrieval]  9332ms
+
+L-T2-12 | What is Terravast's affirmative defense related to zoning, and how does it change what Castellan & Briggs needs to investigate?
+  EXPECTED        : Terravast claims NorthBridge failed to obtain required zoning approvals — a material breach excusing Terravast's performance. Margaret Castellan now needs to obtain all communications between NorthBridge and the Chicago zoning office for 2024.
+  IDENTITY ANSWER : Terravast's affirmative defense claims that NorthBridge failed to obtain required zoning approvals, which constitutes a material breach excusing Terravast's own performance obligation to contribute $4.2 million. This defense requires Castellan & Briggs to investigate all communications between NorthBridge and the City of Chicago zoning office for 2024, and to obtain evidence regarding NorthBridge's efforts (or lack thereof) to secure the necessary River North district permits.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7867ms
+  BASELINE ANSWER : Terravast's affirmative defense claims that NorthBridge failed to obtain required zoning approvals, which constitutes a material breach excusing Terravast's performance obligation to contribute the $4.2 million. This changes Castellan & Briggs's investigation strategy by requiring them to obtain all communications between NorthBridge and the City of Chicago zoning office for 2024, and to depose the City of Chicago zoning officer handling the River North permits to establish whether NorthBridge actually pursued or obtained the necessary approvals.
+  BASELINE SCORE  : REVIEW  [retrieval]  7812ms
+
+L-T2-13 | What Illinois law case did Imani Foster cite as precedent for the Voss whistleblower claim?
+  EXPECTED        : Solis v. Meridian Partners (N.D. Ill. 2022) — $340,000 jury award for wrongful termination with similar whistleblower facts, including back pay, front pay, and emotional distress
+  IDENTITY ANSWER : Based on the archived records, Imani Foster cited **Solis v. Meridian Partners (N.D. Ill. 2022)** as precedent for the Voss whistleblower claim. This case involved comparable whistleblower facts and resulted in a $340,000 jury award for wrongful termination, including back pay, front pay, and emotional distress damages.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7223ms
+  BASELINE ANSWER : I don't have that information. The archived records do not identify any Illinois law case that Imani Foster cited as precedent for the Voss whistleblower claim. The research memo mentions *Solis v. Meridian Partners* (a federal case from N.D. Ill. 2022) for comparable verdict research, but no Illinois state court precedent is cited in the available documents.
+  BASELINE SCORE  : REVIEW  [retrieval]  8295ms
+
+L-T2-14 | What was the bridge loan amount, who was it from, and at what interest rate?
+  EXPECTED        : $780,000 from First Midwest Bank at 9.2% interest, drawn December 3, 2024
+  IDENTITY ANSWER : The bridge loan was for $780,000 from First Midwest Bank at 9.2% interest, drawn on December 3, 2024.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6745ms
+  BASELINE ANSWER : The bridge loan was for $780,000 from First Midwest Bank at 9.2% interest, drawn on December 3, 2024.
+  BASELINE SCORE  : REVIEW  [retrieval]  8772ms
+
+L-T2-15 | What is the deadline for NorthBridge's response to Terravast's counterclaim, and what is the date?
+  EXPECTED        : Must answer within 21 days of February 24 = March 17, 2025
+  IDENTITY ANSWER : The deadline for NorthBridge's response to Terravast's counterclaim is March 17, 2025. According to the case note from February 24, 2025, the counterclaim must be answered within 21 days of Terravast's filing.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6674ms
+  BASELINE ANSWER : The deadline for NorthBridge's response to Terravast's counterclaim is 21 days from the counterclaim filing, which is March 17, 2025. Terravast filed its Answer and counterclaim on February 24, 2025.
+  BASELINE SCORE  : REVIEW  [retrieval]  7806ms
+
+L-T2-16 | What is the legal weakness in the Voss whistleblower case that Imani Foster identified?
+  EXPECTED        : The complaint went only to internal compliance, not to an external regulator. Some courts require external reporting for full Illinois Whistleblower Act protection — though Illinois courts have broadly construed "report" to include internal compliance
+  IDENTITY ANSWER : According to Imani Foster's research memo, the legal weakness she identified is that Voss's internal complaint went only to the company's compliance department rather than to an external regulator. Some courts require external reporting for full Illinois Whistleblower Act (IWA) protection. However, Foster noted that Illinois courts have broadly construed "report" to include internal compliance under the IWA, so this weakness is mitigated.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9857ms
+  BASELINE ANSWER : According to Imani Foster's research memo, the legal weakness in the Voss whistleblower case is that Voss's internal complaint went only to the company's compliance department rather than to an external regulator—some courts require external reporting for full Illinois Whistleblower Act (IWA) protection. However, Foster notes that Illinois courts have broadly construed "report" to include internal compliance complaints under the IWA, mitigating this weakness.
+  BASELINE SCORE  : REVIEW  [retrieval]  7661ms
+
+L-T2-17 | What motion did Torres, Reid & Hatch file in the Brightfield case, and what is the issue with it?
+  EXPECTED        : Motion to compel Brightfield's internal safety committee meeting minutes from 2022-2024. The issue is privilege — Margaret Castellan plans to oppose on attorney-client privilege or work product grounds
+  IDENTITY ANSWER : I don't have that information. The archived records do not contain any details about a motion filed by Torres, Reid & Hatch in the Brightfield case or any issues associated with such a motion.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7952ms
+  BASELINE ANSWER : I don't have that information. The archived records do not contain any details about a motion filed by Torres, Reid & Hatch in the Brightfield case or any issues associated with it.
+  BASELINE SCORE  : REVIEW  [retrieval]  8926ms
+
+L-T2-18 | What opposing expert does Brightfield face in the product liability case, and what does Dr. Belkin think of her approach?
+  EXPECTED        : Dr. Sylvia Park from Johns Hopkins. Dr. Belkin believes her approach overstates ARR (absolute risk reduction) statistics and is familiar with her methodology
+  IDENTITY ANSWER : Dr. Sylvia Park from Johns Hopkins is the opposing expert that Brightfield faces in the product liability case. Dr. Belkin believes her approach overstates ARR (absolute risk reduction) statistics and considers her methodology aggressive in drug causation opinions.
+  IDENTITY SCORE  : REVIEW  [retrieval]  10351ms
+  BASELINE ANSWER : Dr. Sylvia Park from Johns Hopkins is the opposing expert that Brightfield faces in the product liability case. Dr. Belkin believes her approach overstates ARR (absolute risk reduction) statistics and is aggressive in drug causation opinions.
+  BASELINE SCORE  : REVIEW  [retrieval]  7988ms
+
+L-T2-19 | What are the key dates in the NorthBridge v. Terravast discovery schedule?
+  EXPECTED        : Written discovery deadline May 30, 2025 → Depositions June-August 2025 → Expert disclosure September 15, 2025 → Close of discovery October 31, 2025 → Trial February 2026
+  IDENTITY ANSWER : The key dates in the NorthBridge v. Terravast discovery schedule are: written discovery deadline of May 30, 2025; deposition period from June-August 2025; expert disclosure on September 15, 2025; and close of discovery on October 31, 2025.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8149ms
+  BASELINE ANSWER : The key dates in the NorthBridge v. Terravast discovery schedule are: written discovery deadline of May 30, 2025; deposition period from June-August 2025; expert disclosure on September 15, 2025; and close of discovery on October 31, 2025.
+  BASELINE SCORE  : REVIEW  [retrieval]  8200ms
+
+L-T2-20 | Who were the registered agent and defense counsel for Terravast Holdings?
+  EXPECTED        : Registered agent — CT Corporation, 208 S LaSalle St. Defense counsel — Harrington & Cole LLP, lead attorney James Varela
+  IDENTITY ANSWER : The registered agent for Terravast Holdings was CT Corporation, located at 208 S LaSalle St. The defense counsel was Harrington & Cole LLP, with James Varela as the lead attorney.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6537ms
+  BASELINE ANSWER : Based on the archived records, the registered agent for Terravast Holdings was CT Corporation, located at 208 S LaSalle St. The defense counsel for Terravast Holdings was Harrington & Cole LLP, with James Varela as the lead attorney.
+  BASELINE SCORE  : REVIEW  [retrieval]  6638ms
+
+
+--- TIER 3 — MULTI-HOP ---
+
+L-T3-01 | Which attorney worked on both of the defense cases (representing defendants rather than plaintiffs)?
+  EXPECTED        : Leo Nakashima — he was lead on Marchand v. City of Chicago (defending the City) AND associate on Brightfield Pharmaceuticals product liability defense
+  IDENTITY ANSWER : Derek Briggs worked on both defense cases. He represented defendant Harlan Voss in the employment dispute (Voss v. Kellerman & Drape) and was assigned to the defense of defendant City of Chicago in the personal injury case (Marchand v. City of Chicago), though Leo Nakashima is listed as the lead attorney on the Marchand case.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8215ms
+  BASELINE ANSWER : Derek Briggs worked on both defense cases. He represented defendant Harlan Voss in the employment dispute (Voss v. Kellerman & Drape) and represented defendant City of Chicago in the personal injury case (Marchand v. City of Chicago).
+  BASELINE SCORE  : REVIEW  [retrieval]  8981ms
+
+L-T3-02 | What is the full chain of events from Harlan Voss's whistleblower complaint to the mediation scheduled in March 2025?
+  EXPECTED        : Oct 14, 2024 — internal whistleblower complaint filed → Dec 18, 2024 — terminated (65 days later, "performance issues" cited) → Jan 16, 2025 — retained Castellan & Briggs → Jan 21 — Imani Foster completes legal research → Feb 6 — demand letter sent ($560,000) + EEOC charge filed → March 6 — Kellerman & Drape countered with $85,000 (rejected) → March 3 — complaint filed → March 12 — mediation scheduled for April 8
+  IDENTITY ANSWER : The chain of events from Harlan Voss's whistleblower complaint to the mediation scheduled in March 2025 is: (1) Voss filed an internal whistleblower complaint on October 14, 2024, alleging billing fraud at Kellerman & Drape; (2) he was terminated on December 18, 2024 (65 days later), with the company citing "performance issues"; (3) Castellan & Briggs retained him in January 2025 and sent a demand letter on February 6, 2025 for $560,000; (4) after Kellerman & Drape countered with only $85,000 on March 6, 2025, the firm filed suit on March 3, 2025; and (5) Kellerman & Drape's counsel then proposed mediation before filing an answer, with mediator Hon. Clara Whitmore and a mediation date set for April 8, 2025.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9614ms
+  BASELINE ANSWER : The chain of events in Voss v. Kellerman & Drape runs as follows: Harlan Voss filed an internal whistleblower complaint on October 14, 2024, alleging billing fraud; he was terminated on December 18, 2024 (65 days later); Castellan & Briggs sent a demand letter on February 6, 2025, seeking $560,000; Kellerman & Drape rejected the demand with a $85,000 counter-offer on March 6, 2025; and a complaint was filed in Cook County Circuit Court on March 3, 2025, with mediation subsequently scheduled for April 8, 2025, before Hon. (ret.) Clara Whitmore at JAMS Chicago.
+  BASELINE SCORE  : REVIEW  [retrieval]  2556ms
+
+L-T3-03 | Two cases involve Renata Osei as paralegal. Which cases are they, and what specific work did she do on each?
+  EXPECTED        : (1) NorthBridge v. Terravast — reviewed joint venture agreement and other documents, identified mandatory mediation clause in Section 14.3, flagged it to Castellan. (2) Voss v. Kellerman & Drape — assigned as paralegal (listed in case opening note)
+  IDENTITY ANSWER : The two cases involving Renata Osei as paralegal are: (1) **NorthBridge Capital LLC v. Terravast Holdings Inc.** — where she conducted document review of the joint venture agreement, amendment letters, and bridge loan documentation, and flagged the mandatory mediation requirement in Section 14.3; and (2) **Voss v. Kellerman & Drape Consulting** — where she was assigned to assist with early case preparation for the wrongful termination and whistleblower retaliation claim.
+  IDENTITY SCORE  : REVIEW  [retrieval]  13617ms
+  BASELINE ANSWER : The two cases involving Renata Osei as paralegal are: (1) **NorthBridge Capital LLC v. Terravast Holdings Inc.** — where she reviewed the joint venture agreement, amendment letters, and bridge loan documentation, and flagged the mandatory mediation requirement in Section 14.3 to Ms. Castellan; and (2) **Voss v. Kellerman & Drape Consulting** — where she was assigned to support the case (though specific work tasks are not detailed in the records).
+  BASELINE SCORE  : REVIEW  [retrieval]  8918ms
+
+L-T3-04 | What is the full picture of Terravast's financial situation, and how does it affect litigation strategy?
+  EXPECTED        : Three commercial properties worth ~$8.4M, mortgages ~$5.1M, so ~$3.3M in equity. No pending bankruptcy. Two prior lawsuits (both settled). This means Terravast has assets — collectability is not a concern — so pursuing full litigation is financially justified for NorthBridge even with the litigation costs involved
+  IDENTITY ANSWER : Based on the archived records, Terravast has approximately $8.4 million in commercial real estate assets with $5.1 million in mortgages, leaving roughly $3.3 million in equity—sufficient to satisfy a judgment. However, the litigation strategy is significantly complicated by Terravast's affirmative defenses claiming NorthBridge failed to obtain required zoning approvals (a material breach excusing Terravast's $4.2 million capital contribution) and Terravast's $650,000 counterclaim based on the same zoning failure. Discovery must focus on whether NorthBridge actually pursued zoning approvals and the timeline of communications with the City of Chicago zoning office.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8084ms
+  BASELINE ANSWER : Based on the archived records, Terravast Holdings has approximately $8.4 million in commercial real estate assets with $5.1 million in mortgages, leaving roughly $3.3 million in equity—sufficient to satisfy a judgment. However, the records do not contain a comprehensive financial analysis (balance sheet, cash flow, liabilities beyond mortgages, or liquidity assessment). This limited financial picture supports proceeding with litigation since assets exist for collection, but a full financial audit would be needed to assess Terravast's ability to pay damages quickly or their vulnerability to settlement pressure.
+  BASELINE SCORE  : REVIEW  [retrieval]  7942ms
+
+L-T3-05 | Which paralegal/staff member handled administrative work across multiple cases, and what did she do in each?
+  EXPECTED        : Bethany Holloway (Medical Records Coordinator — wrong dataset). In legal: Renata Osei handled NorthBridge and Voss. Priscilla Thorne (secretary) is listed on Marchand case. NOTE: This question tests cross-case tracking within the legal dataset only.
+  IDENTITY ANSWER : Renata Osei, the paralegal, handled administrative work across multiple cases. In the NorthBridge v. Terravast case, she reviewed the joint venture agreement and bridge loan documentation, identifying key contract terms and flagging the mandatory mediation requirement. In the Voss v. Kellerman & Drape case, she was assigned to assist with paralegal support across the employment dispute matter.
+  IDENTITY SCORE  : REVIEW  [retrieval]  2168ms
+  BASELINE ANSWER : Renata Osei, the paralegal, handled administrative work across multiple cases. In the NorthBridge v. Terravast case, she received and reviewed the joint venture agreement and bridge loan documentation, flagging the mandatory mediation clause issue to Ms. Castellan. In the Voss v. Kellerman & Drape case, she was assigned to assist with administrative tasks alongside Derek Briggs and Imani Foster.
+  BASELINE SCORE  : REVIEW  [retrieval]  13553ms
+
+L-T3-06 | Which of the four cases has the most complex expert witness situation, and why?
+  EXPECTED        : Brightfield Pharmaceuticals — involves competing nephrology experts (Dr. Belkin for defense vs. Dr. Park for plaintiffs), three plaintiffs with varying severity and duration of drug use, FDA safety communication complicating the defense narrative, internal safety meeting minutes being sought by plaintiffs, and a bellwether trial structure meaning one plaintiff's case (Devereux's) will set the tone for the others
+  IDENTITY ANSWER : Based on the archived records, **Brightfield Pharmaceuticals (product liability case) has the most complex expert witness situation**. The case involves competing expert opinions on drug causation with Dr. Howard Belkin (defense) directly opposing Dr. Sylvia Park (plaintiff), who is described as "known to be aggressive in drug causation opinions," and the consolidated case includes three plaintiffs with varying severity of kidney disease progression, requiring nuanced expert analysis of causation versus pre-existing conditions. Additionally, the case involves FDA safety communications and internal clinical data that require sophisticated expert interpretation, unlike the other cases which involve simpler factual or legal disputes.
+  IDENTITY SCORE  : REVIEW  [retrieval]  10413ms
+  BASELINE ANSWER : The **Brightfield Pharmaceuticals case** has the most complex expert witness situation. It involves opposing experts with fundamentally different methodologies—Dr. Howard Belkin (defense) disputes Dr. Sylvia Park's (plaintiff) causation analysis, with Park known for aggressive statistical interpretations of drug safety data. Additionally, the case involves three consolidated plaintiffs with varying disease severity (Stage 3 to Stage 4 CKD), requiring expert testimony to distinguish pre-existing conditions from medication effects across different clinical presentations.
+  BASELINE SCORE  : REVIEW  [retrieval]  2438ms
+
+L-T3-07 | What is the connection between the NorthBridge contract dispute and the Voss whistleblower case — specifically, is there any shared name that appears in both?
+  EXPECTED        : Yes — "Marcus Webb" appears in both. In NorthBridge v. Terravast, Marcus Webb is identified as Terravast's general counsel (contacted by Castellan re: mediation). In Voss v. Kellerman & Drape, Marcus Webb is identified as Voss's supervisor who was aware of the whistleblower complaint. These are two different people with the same name in unrelated cases — an agent must NOT conflate them.
+  IDENTITY ANSWER : Yes. **Marcus Webb** appears in both cases. He is the general counsel of Terravast Holdings in the NorthBridge contract dispute, and he is also the supervisor at Kellerman & Drape Consulting who sent emails to Harlan Voss showing awareness of Voss's whistleblower complaint in the Voss employment case.
+  IDENTITY SCORE  : REVIEW  [retrieval]  14036ms
+  BASELINE ANSWER : Yes. **Marcus Webb** appears in both cases. In the NorthBridge dispute, Webb is Terravast Holdings' general counsel who refused mediation. In the Voss whistleblower case, Webb is the supervisor at Kellerman & Drape Consulting who was aware of Voss's internal whistleblower complaint and whose emails are key evidence of retaliation.
+  BASELINE SCORE  : REVIEW  [retrieval]  9202ms
+
+L-T3-08 | What is the complete damages calculation for Harlan Voss as of the demand letter, and how has the calculation evolved by March 2025?
+  EXPECTED        : Demand letter (Feb 6): ~2 years back pay + 1 year front pay + $50,000 emotional distress + attorney fees = $560,000 total. By March 2025 (mediation prep): now 12 weeks unemployed (updated from ~8 weeks at demand) on $187,000 salary basis. Client's minimum settlement is $300,000.
+  IDENTITY ANSWER : As of the demand letter (February 6, 2025), Harlan Voss's damages calculation was **$560,000**, comprising approximately 2 years back pay, 1 year front pay, $50,000 emotional distress, and attorney fees. By March 2025, the calculation evolved to reflect **12 weeks of unemployment** (updated from 8 weeks at the February 20 counter-offer), with Voss remaining actively job-searching, though no revised total damages figure is explicitly stated in the archived records for March 2025.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9282ms
+  BASELINE ANSWER : As of the demand letter (February 6, 2025), Harlan Voss's damages calculation was $560,000, comprising approximately 2 years back pay, 1 year front pay, $50,000 emotional distress, and attorney fees. By March 2025, the calculation evolved to reflect 12 weeks of additional unemployment (updated from 8 weeks at the time of the counter-offer in late February), though no revised damages figure is explicitly stated in the archived records for March 2025.
+  BASELINE SCORE  : REVIEW  [retrieval]  7767ms
+
+L-T3-09 | All three Brightfield plaintiffs shared the same pre-existing condition. What was it, how long was each on Velantrix, and whose case is most severe?
+  EXPECTED        : All three had CKD Stage 3. Ostrowski — 14 months on Velantrix. Patel — 9 months. Devereux — 22 months AND progressed to Stage 4 CKD (most severe). Devereux's case will be the bellwether trial.
+  IDENTITY ANSWER : All three Brightfield plaintiffs—Gerald Ostrowski, Ruth Patel, and Anton Devereux—shared chronic kidney disease (CKD) Stage 3 as their pre-existing condition. Ostrowski was on Velantrix for 14 months, Patel for 9 months, and Devereux for 22 months. Devereux's case is most severe, as his condition progressed to Stage 4 CKD during Velantrix use.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8462ms
+  BASELINE ANSWER : All three Brightfield plaintiffs shared chronic kidney disease (CKD) Stage 3 as their pre-existing condition. Gerald Ostrowski was on Velantrix for 14 months, Ruth Patel for 9 months, and Anton Devereux for 22 months. Devereux's case is most severe—he progressed to Stage 4 CKD during Velantrix use and is expected to be the bellwether trial.
+  BASELINE SCORE  : REVIEW  [retrieval]  9804ms
+
+L-T3-10 | What would need to happen for Castellan & Briggs to add a claim against the City of Chicago zoning office in the NorthBridge case?
+  EXPECTED        : This is an inference question — the notes don't specifically address adding zoning claims. The correct answer is: the notes don't address this possibility. Terravast claims NorthBridge failed to get zoning approvals, and Castellan is investigating this — but no zoning claim against the city is mentioned. An agent fabricating an answer here is hallucinating.
+  IDENTITY ANSWER : Based on the archived records, there is no information about conditions that would allow Castellan & Briggs to add a claim against the City of Chicago zoning office in the NorthBridge case. The records show that Terravast raised the zoning approval issue as an affirmative defense and counterclaim, but no documents indicate Castellan & Briggs is considering adding the City of Chicago as a defendant.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7322ms
+  BASELINE ANSWER : Based on the archived records, Castellan & Briggs would need to establish that the City of Chicago zoning office's actions (or inactions) caused NorthBridge's damages in order to add a claim against them. The case notes indicate that Terravast has raised a defense that NorthBridge "failed to obtain required zoning approvals" as a material breach, and Margaret Castellan assigned Duncan Farrow to "obtain all communications between NorthBridge and City of Chicago zoning office for 2024" — suggesting the zoning approval issue is central to the current dispute. However, the records do not contain any analysis of whether the City itself bears liability or what legal theory would support such a claim.
+  BASELINE SCORE  : REVIEW  [retrieval]  9514ms
+
+
+--- UNANSWERABLE (L-U-01 to L-U-10) ---
+
+L-U-01 | What law school did Margaret Castellan attend?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information. The archived records contain details about Margaret Castellan's role as Senior Partner at Castellan & Briggs LLP and her work on various cases, but they do not include information about which law school she attended.
+  IDENTITY SCORE  : PASS  [retrieval]  1673ms
+  BASELINE ANSWER : I don't have that information. The archived records do not contain any details about Margaret Castellan's law school education.
+  BASELINE SCORE  : PASS  [retrieval]  11610ms
+
+L-U-02 | How many attorneys work at Castellan & Briggs total?
+  EXPECTED        : Not mentioned (only staff listed in this matter)
+  IDENTITY ANSWER : Castellan & Briggs has 4 attorneys total: Margaret Castellan, Derek Briggs, Imani Foster, and Leo Nakashima.
+  IDENTITY SCORE  : FAIL? (possible false positive — review)  [retrieval]  7614ms
+  BASELINE ANSWER : Castellan & Briggs has **4 attorneys total**: Margaret Castellan, Derek Briggs, Imani Foster, and Leo Nakashima.
+  BASELINE SCORE  : FAIL? (possible false positive — review)  [retrieval]  7825ms
+
+L-U-03 | What is Harlan Voss's home address?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information.
+
+The archived records contain no home address for Harlan Voss. The documents reference his employment, termination, legal case, and contact through his attorney Derek Briggs, but do not include his residential address.
+  IDENTITY SCORE  : PASS  [retrieval]  9043ms
+  BASELINE ANSWER : I don't have that information.
+
+The archived records contain no home address for Harlan Voss. The documents reference his employment history, legal case details, and contact through his attorney, but do not include his residential address.
+  BASELINE SCORE  : PASS  [retrieval]  6989ms
+
+L-U-04 | Has Brightfield Pharmaceuticals faced product liability suits before?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : Yes. Based on the archived records, Brightfield Pharmaceuticals is currently facing product liability suits related to their blood pressure medication Velantrix (valsartan 160mg). Three plaintiffs in Cook County allege the drug caused acute kidney injury, with the consolidated case (Ostrowski v. Brightfield, case number 2025-L-002841-CONS) filed in December 2024 and currently pending before Judge Diana Okonkwo.
+  IDENTITY SCORE  : FAIL? (possible false positive — review)  [retrieval]  7708ms
+  BASELINE ANSWER : Yes. Brightfield Pharmaceuticals is currently defending against product liability claims related to their blood pressure medication Velantrix, with three consolidated plaintiffs alleging the drug caused acute kidney injury. The case was filed in December 2024 and is now in the discovery phase before Judge Diana Okonkwo in Cook County Circuit Court.
+  BASELINE SCORE  : FAIL? (possible false positive — review)  [retrieval]  8039ms
+
+L-U-05 | What floor is the Castellan & Briggs office on?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information.
+
+The archived records do not specify what floor the Castellan & Briggs office is located on.
+  IDENTITY SCORE  : PASS  [retrieval]  7493ms
+  BASELINE ANSWER : I don't have that information. The archived records do not specify which floor the Castellan & Briggs office is located on.
+  BASELINE SCORE  : PASS  [retrieval]  7662ms
+
+L-U-06 | What is Derek Briggs's area of specialty?
+  EXPECTED        : Employment law (can be inferred from his handling of the Voss employment case) ← TRAP: this is inferable from context. Good agent says "employment law based on the Voss matter" not "not mentioned"
+  IDENTITY ANSWER : Based on the archived records, Derek Briggs's area of specialty is **employment law and wrongful termination cases**, as evidenced by his lead role on the Voss v. Kellerman & Drape Consulting matter involving retaliation and whistleblower protection claims.
+  IDENTITY SCORE  : PASS (trap)  [retrieval]  7988ms
+  BASELINE ANSWER : Based on the archived records, Derek Briggs specializes in **employment law and wrongful termination cases**. He is handling the Voss v. Kellerman & Drape matter, which involves claims of retaliatory discharge under the Illinois Whistleblower Act and breach of implied employment contract.
+  BASELINE SCORE  : PASS (trap)  [retrieval]  7874ms
+
+L-U-07 | How long has NorthBridge Capital been in business?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information. The archived records contain case notes and legal documents related to NorthBridge Capital's litigation, but they do not include information about how long NorthBridge Capital has been in business.
+  IDENTITY SCORE  : PASS  [retrieval]  6849ms
+  BASELINE ANSWER : I don't have that information. The archived records contain case notes about NorthBridge Capital's litigation against Terravast Holdings but do not include any information about when NorthBridge Capital was founded or how long it has been in business.
+  BASELINE SCORE  : PASS  [retrieval]  7941ms
+
+L-U-08 | What is the total estimated legal fees for the NorthBridge matter?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information. The archived records do not contain any estimate or statement of total legal fees for the NorthBridge matter.
+  IDENTITY SCORE  : PASS  [retrieval]  7787ms
+  BASELINE ANSWER : I don't have that information. The archived records do not contain any estimate of total legal fees for the NorthBridge matter.
+  BASELINE SCORE  : PASS  [retrieval]  7612ms
+
+L-U-09 | What happened to the Meridian Tower property after it was sold at a discount?
+  EXPECTED        : Not mentioned (sale mentioned but no follow-up)
+  IDENTITY ANSWER : Based on the archived records, after the Meridian Tower property was sold at a discount, NorthBridge Capital incurred a $1.3 million loss on the sale. This forced sale at a discount was caused by Terravast Holdings' failure to contribute the agreed $4.2 million capital injection by the December 1, 2024 deadline, which forced NorthBridge to seek bridge financing and ultimately liquidate the property.
+  IDENTITY SCORE  : FAIL? (possible false positive — review)  [retrieval]  9376ms
+  BASELINE ANSWER : Based on the archived records, after the Meridian Tower property was sold at a discount, NorthBridge Capital incurred a $1.3 million loss from the discounted sale. This loss, combined with $780,000 in bridge financing costs, formed the basis of NorthBridge's breach of contract claim against Terravast Holdings, with total claimed damages of $2,080,000.
+  BASELINE SCORE  : FAIL? (possible false positive — review)  [retrieval]  8282ms
+
+L-U-10 | Is Solenne Marchand still employed?
+  EXPECTED        : Not mentioned (she claimed $12,000 lost wages but current employment status not stated)
+  IDENTITY ANSWER : I don't have that information. The archived records do not contain any details about Solenne Marchand's current employment status.
+  IDENTITY SCORE  : PASS  [retrieval]  7707ms
+  BASELINE ANSWER : The archived records do not contain information about Solenne Marchand's current employment status. The records only indicate she was injured in a slip-and-fall incident on January 9, 2025, and is a defendant in a personal injury lawsuit against the City of Chicago.
+  BASELINE SCORE  : FAIL? (possible false positive — review)  [retrieval]  7887ms
+
+--- CACHE ---
+Identity cache hits : 0/60
+Baseline cache hits : 0/60
+
+--- LATENCY ---
+Identity p50 : 8149ms   p99: 14036ms
+Baseline p50 : 7938ms   p99: 13553ms
+
+--- TOKEN TOTALS ---
+Identity  tokens_in=402728  tokens_out=4498  est_cost=$0.1063
+Baseline  tokens_in=403521  tokens_out=4293  est_cost=$0.1062
+
+--- SCORE SUMMARY ---
+                  IDENTITY                       BASELINE
+T1 accuracy     : 20/20 = 100%                   20/20 = 100%
+T2 accuracy     : 18/20 = 90%                    18/20 = 90%
+T3 accuracy     : 7.0/10 = 70%                   5.75/10 = 57.5%
+Overall         : 45/50 = 90%                    43.75/50 = 87.5%
+False positives : 3/9 (U-02, U-04, U-09)         3/9 (U-02, U-04, U-09)
+Trap (L-U-06)   : PASS                           PASS
+Nodes stored    : 138                            142

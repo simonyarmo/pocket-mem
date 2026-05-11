@@ -1,0 +1,22 @@
+{
+  "role": "Sales Representative",
+  "domain": "B2B enterprise sales",
+  "seed_topics": [
+    "Prospects and Leads",
+    "Active Deals",
+    "Competitors",
+    "Product Features",
+    "Objections and Responses",
+    "Pricing and Contracts",
+    "Customer Contacts",
+    "Follow-ups and Next Steps"
+  ],
+  "priority_entity_types": ["person", "company", "deal", "concept"],
+  "priority_relations": ["decision_maker", "champion", "budget_owner", "competing_with", "evaluating"],
+  "high_importance_signals": ["budget", "decision", "timeline", "contract", "competitor", "proposal", "close", "renewal"],
+  "low_importance_signals": ["small talk", "general news", "repeated context"],
+  "extraction_focus": "Pay close attention to named contacts and their roles in the buying process. Extract deal stages, budget figures, objections raised, competitor mentions, and explicit next steps with dates.",
+  "compaction_preserve": "All named contacts with titles and roles, pricing and budget numbers, objections and responses, next steps with dates, competitor names, contract terms.",
+  "compaction_compress": "General relationship building, repeated product feature explanations, industry background already captured.",
+  "question_complexity_target": "medium"
+}

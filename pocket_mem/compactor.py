@@ -1,16 +1,17 @@
 from __future__ import annotations
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from pocket_mem.config import MemoryConfig
 from pocket_mem.llm.client import LLMClient
-from pocket_mem.llm.prompts import SUMMARIZE_GROUP, SUMMARIZE_GROUP_SCHEMA
+from pocket_mem.llm.prompts import SUMMARIZE_GROUP_SCHEMA, build_compact_prompt
 from pocket_mem.models import Edge, MemoryChunk, Node
+from pocket_mem.questioner import run_question_loop
 from pocket_mem.store.base import StoreInterface
 
 
 def _now() -> str:
-    return datetime.utcnow().isoformat()
+    return datetime.now(timezone.utc).isoformat()
 
 
 def _find_topic_for_chunk(chunk: Node, store: StoreInterface) -> str | None:
@@ -43,13 +44,13 @@ def _group_by_topic(
 
 
 def _summarize_group(
-    chunks: list[Node], topic_label: str, llm: LLMClient
+    chunks: list[Node], topic_label: str, llm: LLMClient, identity=None
 ) -> str:
     """Call LLM to summarise a group of chunks. Returns summary string."""
     combined = "\n\n---\n\n".join(
         n.data.get("raw") or n.data.get("summary", "") for n in chunks
     )
-    prompt = SUMMARIZE_GROUP.format(topic=topic_label, content=combined)
+    prompt = build_compact_prompt(topic_label, combined, identity)
     result = llm.complete_json(
         [{"role": "user", "content": prompt}],
         schema=SUMMARIZE_GROUP_SCHEMA,
@@ -57,7 +58,7 @@ def _summarize_group(
     return result.get("summary", combined[:200])
 
 
-def compress(store: StoreInterface, llm: LLMClient) -> int:
+def compress(store: StoreInterface, llm: LLMClient, identity=None) -> int:
     """Compress unprocessed working chunks into topic-grouped episodic summaries.
 
     Steps:
@@ -87,7 +88,7 @@ def compress(store: StoreInterface, llm: LLMClient) -> int:
             _get_topic_label(topic_id, store) if topic_id else "General"
         ) or "General"
 
-        summary = _summarize_group(chunks, topic_label, llm)
+        summary = _summarize_group(chunks, topic_label, llm, identity)
 
         # Write episodic chunk
         episodic = MemoryChunk(
@@ -121,6 +122,9 @@ def compress(store: StoreInterface, llm: LLMClient) -> int:
 
         created += 1
 
+    if created:
+        run_question_loop(store, llm, identity)
+
     return created
 
 
@@ -136,7 +140,7 @@ def prune(store: StoreInterface, config: MemoryConfig) -> int:
     Returns number of nodes deleted.
     """
     cutoff = (
-        datetime.utcnow() - timedelta(days=config.prune_after_days)
+        datetime.now(timezone.utc) - timedelta(days=config.prune_after_days)
     ).isoformat()
     now = _now()
 

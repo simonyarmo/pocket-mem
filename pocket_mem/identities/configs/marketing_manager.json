@@ -1,0 +1,22 @@
+{
+  "role": "Marketing Manager",
+  "domain": "marketing strategy and campaign management",
+  "seed_topics": [
+    "Campaigns and Launches",
+    "Target Audiences",
+    "Channels and Budget",
+    "Competitors and Positioning",
+    "Content and Creative",
+    "Metrics and Performance",
+    "Partners and Agencies",
+    "Brand and Messaging"
+  ],
+  "priority_entity_types": ["person", "company", "concept", "project"],
+  "priority_relations": ["targets", "competes_with", "partners_with", "runs", "measures"],
+  "high_importance_signals": ["launch", "budget", "conversion", "cac", "roi", "deadline", "brand", "positioning", "competitor", "audience"],
+  "low_importance_signals": ["small talk", "general industry news", "internal logistics"],
+  "extraction_focus": "Pay close attention to campaign names and launch dates, budget figures, target audience definitions, competitor names and differentiators, channel performance metrics, and agency or partner names.",
+  "compaction_preserve": "Campaign names, dates, and budgets, target audience definitions, competitor positioning, performance metrics with numbers, partner and agency names.",
+  "compaction_compress": "General marketing theory, repeated brand background, logistics of past completed campaigns.",
+  "question_complexity_target": "medium"
+}

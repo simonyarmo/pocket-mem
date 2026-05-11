@@ -4,7 +4,7 @@ import re
 import sqlite3
 import tempfile
 import zipfile
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from pocket_mem.config import StorageConfig
@@ -126,6 +126,9 @@ class SQLiteStore(StoreInterface):
             (node.id, node.label, _fts_body(node)),
         )
         self._conn.commit()
+        # Invalidate any qa_cache entries that depend on this node
+        if node.node_type != "qa_cache":
+            self._expire_qa_cache_for_source(node.id)
         return node.id
 
     def write_edge(self, edge: Edge) -> str:
@@ -297,6 +300,37 @@ class SQLiteStore(StoreInterface):
             for r in rows
         ]
 
+    def increment_cache_hit(self, node_id: str) -> None:
+        """Increment hit_count and update last_hit_at on a qa_cache node."""
+        row = self._conn.execute(
+            "SELECT data FROM nodes WHERE id = ?", (node_id,)
+        ).fetchone()
+        if row is None:
+            return
+        data = json.loads(row["data"])
+        data["hit_count"] = data.get("hit_count", 0) + 1
+        data["last_hit_at"] = datetime.now(timezone.utc).isoformat()
+        self._conn.execute(
+            "UPDATE nodes SET data = ? WHERE id = ?",
+            (json.dumps(data), node_id),
+        )
+        self._conn.commit()
+
+    def _expire_qa_cache_for_source(self, source_node_id: str) -> None:
+        """Expire any qa_cache nodes that reference source_node_id."""
+        qa_nodes = self.get_nodes_by_type("qa_cache")
+        if not qa_nodes:
+            return
+        now = datetime.now(timezone.utc).isoformat()
+        for node in qa_nodes:
+            if source_node_id in node.data.get("source_node_ids", []):
+                node.data["expires_at"] = now
+                self._conn.execute(
+                    "UPDATE nodes SET data = ? WHERE id = ?",
+                    (json.dumps(node.data), node.id),
+                )
+        self._conn.commit()
+
     def export_pack(self, path: str) -> None:
         """Export all nodes, edges, and metadata to a .mempack zip file."""
         # Flush WAL to main DB file before copying
@@ -307,7 +341,7 @@ class SQLiteStore(StoreInterface):
         manifest = {
             "version": "1.0",
             "project": self.db_path.stem,
-            "exported_at": datetime.utcnow().isoformat(),
+            "exported_at": datetime.now(timezone.utc).isoformat(),
             "node_count": s["node_count"],
             "topics": self.list_topics(),
         }

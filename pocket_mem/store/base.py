@@ -56,6 +56,10 @@ class StoreInterface(ABC):
         """Return counts: node_count, entity_count, chunk_count, topic_count,
         tone_count, edge_count, session_count."""
 
+    def increment_cache_hit(self, node_id: str) -> None:
+        """Increment hit_count and update last_hit_at on a qa_cache node."""
+        raise NotImplementedError
+
     def export_pack(self, path: str) -> None:
         """Export memory to .mempack zip. Implemented in Phase 8."""
         raise NotImplementedError("Implemented in Phase 8")

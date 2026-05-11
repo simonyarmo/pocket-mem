@@ -1,12 +1,12 @@
 === VELORIS BENCHMARK — pocket-mem ===
-Run: 2026-04-14 09:25:40   Ingest model: qwen2.5:7b   Answer model: claude-haiku-4-5-20251001
+Run: 2026-05-07 19:25:57   Ingest model: qwen2.5:7b   Answer model: claude-haiku-4-5-20251001
 
 --- INGESTION ---
-Emails ingested : 20
+Emails ingested : 0
 Observe p50     : 0ms
-Observe p99     : 1ms
-Tokens (ingest) : in=18475  out=13003
-Nodes stored    : 156
+Observe p99     : 0ms
+Tokens (ingest) : in=1213  out=826
+Nodes stored    : 154
 
 --- SESSION PERSISTENCE ---
 PASS
@@ -15,121 +15,121 @@ PASS
 --- TIER 1 — DIRECT LOOKUP ---
 
 T1-01 | What is Marcus Webb's job title?
-  EXPECTED : CTO
+  EXPECTED : —
   ANSWER   : Marcus Webb is the CTO (Chief Technology Officer) of Veloris Technologies.
   SCORE    : REVIEW
   TOKENS   : 21 output tokens
 
 T1-02 | Who is Leo Reyes's manager?
-  EXPECTED : Marcus Webb
-  ANSWER   : Marcus Webb is Leo Reyes's manager. According to the company records, Leo Reyes is a DevOps Engineer who reports to Marcus Webb, the CTO.
+  EXPECTED : —
+  ANSWER   : Marcus Webb is Leo Reyes's manager. According to the company reference document, Leo Reyes is a DevOps Engineer who reports to Marcus, the CTO.
   SCORE    : REVIEW
   TOKENS   : 39 output tokens
 
 T1-03 | What is the name of Veloris's main product?
-  EXPECTED : Atlas
+  EXPECTED : —
   ANSWER   : Veloris's main product is **Atlas**, a project management SaaS platform.
   SCORE    : REVIEW
   TOKENS   : 22 output tokens
 
 T1-04 | How much was Veloris paying for Datadog per month?
-  EXPECTED : $14,000/month
-  ANSWER   : Veloris was paying $14,000 per month for Datadog. After migrating to a self-hosted stack (Grafana, Prometheus, Alertmanager, and Loki), they reduced costs to approximately $743 per month, saving $13,257 monthly.
+  EXPECTED : —
+  ANSWER   : Veloris was paying $14,000 per month for Datadog. After migrating to a self-hosted stack (Grafana, Prometheus, Alertmanager, and Loki), they reduced costs to approximately $743 per month.
   SCORE    : REVIEW
-  TOKENS   : 67 output tokens
+  TOKENS   : 59 output tokens
 
 T1-05 | What city is Veloris headquartered in?
-  EXPECTED : Austin, Texas
+  EXPECTED : —
   ANSWER   : Veloris is headquartered in Austin, Texas.
   SCORE    : REVIEW
   TOKENS   : 16 output tokens
 
 T1-06 | What message queue technology did Darnell propose for the Conduit rewrite?
-  EXPECTED : Kafka (Apache Kafka)
-  ANSWER   : Darnell proposed **Apache Kafka** for the message queue in the Conduit rewrite. In his stack proposal email, he confirmed Kafka as the right choice and explained he had also considered Pulsar but decided against it due to operational complexity.
+  EXPECTED : —
+  ANSWER   : Darnell proposed Apache Kafka for the message queue in the Conduit rewrite. He agreed with Priya's initial suggestion, stating "Kafka as suggested — agreed it's the right call" and noting he considered Pulsar as an alternative but found Kafka to be the better choice for their scale.
   SCORE    : REVIEW
-  TOKENS   : 57 output tokens
+  TOKENS   : 70 output tokens
 
 T1-07 | What analytics store did Priya originally suggest for Conduit?
-  EXPECTED : ClickHouse
-  ANSWER   : Priya originally suggested ClickHouse as the analytics store for Conduit. However, Darnell pushed back on this recommendation and proposed TimescaleDB instead, which Priya approved.
+  EXPECTED : —
+  ANSWER   : Priya originally suggested ClickHouse as the analytics store for Conduit. In her initial email to Darnell, she stated: "My gut says Apache Kafka for the message queue and ClickHouse for the analytics store, but make the case if you disagree."
   SCORE    : REVIEW
-  TOKENS   : 46 output tokens
+  TOKENS   : 64 output tokens
 
 T1-08 | What analytics store did Darnell propose instead, and why?
-  EXPECTED : TimescaleDB — because their query patterns are more relational than analytical, and the team already knows Postgres query language
-  ANSWER   : Darnell proposed **TimescaleDB** instead of ClickHouse for the analytics store. He reasoned that their query patterns are more relational than analytical, and TimescaleDB's Postgres-based foundation meant the team already knew the query language, plus its time-series compression was excellent for event data.
+  EXPECTED : —
+  ANSWER   : Darnell proposed **TimescaleDB** instead of ClickHouse because their query patterns are more relational than analytical, and TimescaleDB's Postgres-based approach with time-series compression is better suited for event data while being familiar to the team.
   SCORE    : REVIEW
-  TOKENS   : 71 output tokens
+  TOKENS   : 60 output tokens
 
 T1-09 | What is the test coverage percentage of the Atlas payments module?
-  EXPECTED : 34%
-  ANSWER   : The Atlas payments module has a test coverage percentage of 34%.
+  EXPECTED : —
+  ANSWER   : The Atlas payments module has a test coverage of 34%.
   SCORE    : REVIEW
-  TOKENS   : 16 output tokens
+  TOKENS   : 15 output tokens
 
 T1-10 | How much money does Veloris process monthly through the payments module?
-  EXPECTED : $2.1 million per month
-  ANSWER   : Veloris processes $2.1M per month through the payments module.
+  EXPECTED : —
+  ANSWER   : Veloris processes $2.1M/month through the payments module.
   SCORE    : REVIEW
   TOKENS   : 20 output tokens
 
 T1-11 | What build toolchain is Suki using for the React Native app?
-  EXPECTED : Expo
-  ANSWER   : Suki is using **Expo** as the build toolchain for the React Native app. She chose it to abstract away native iOS/Android configuration complexity, given the team has zero iOS/Android experience.
+  EXPECTED : —
+  ANSWER   : Suki is using **Expo** as the build toolchain for the React Native app. She made this decision to abstract away native iOS/Android configuration complexity, given that the team has zero iOS/Android experience.
   SCORE    : REVIEW
-  TOKENS   : 46 output tokens
+  TOKENS   : 48 output tokens
 
 T1-12 | What is the name of the internal monitoring project?
-  EXPECTED : Nightwatch
+  EXPECTED : —
   ANSWER   : The internal monitoring project is called **Nightwatch**. It was originally running on Datadog but has been migrated to a self-hosted stack using Grafana, Prometheus, Alertmanager, and Loki.
   SCORE    : REVIEW
   TOKENS   : 52 output tokens
 
 T1-13 | What security firm did Marcus choose for the audit?
-  EXPECTED : Halcyon Advisory
-  ANSWER   : Marcus chose **Halcyon Advisory** for the security audit. He selected them over Redpoint Security because Halcyon had completed three other SaaS payment audits that year and was familiar with their technology stack. The audit was scheduled to start February 24th.
+  EXPECTED : —
+  ANSWER   : Marcus chose **Halcyon Advisory** for the security audit. He selected them over Redpoint Security because Halcyon had completed three other SaaS payment audits that year and was familiar with their technology stack.
   SCORE    : REVIEW
-  TOKENS   : 61 output tokens
+  TOKENS   : 50 output tokens
 
 T1-14 | What was the other security firm Marcus considered?
-  EXPECTED : Redpoint Security
-  ANSWER   : Based on the archived records, Marcus considered **Redpoint Security** as the other security firm. He ultimately chose Halcyon Advisory because "Redpoint was cheaper but Halcyon has done three other SaaS payment audits this year and knows our stack."
+  EXPECTED : —
+  ANSWER   : Marcus considered Redpoint Security as the other security firm. According to his email, he was deciding between Redpoint Security and Halcyon Advisory, ultimately choosing Halcyon Advisory because it had done three other SaaS payment audits that year and knew their stack better, while Redpoint was cheaper.
   SCORE    : REVIEW
-  TOKENS   : 60 output tokens
+  TOKENS   : 69 output tokens
 
 T1-15 | When does the security audit start?
-  EXPECTED : February 24th
-  ANSWER   : The security audit starts February 24th.
+  EXPECTED : —
+  ANSWER   : The security audit starts February 24th. Halcyon Advisory was selected as the security consultant and will need access to the codebase and production logs.
   SCORE    : REVIEW
-  TOKENS   : 12 output tokens
+  TOKENS   : 36 output tokens
 
 T1-16 | What crash reporting tool does the Atlas mobile app use?
-  EXPECTED : Sentry
-  ANSWER   : The Atlas mobile app uses **Sentry** for crash reporting. Suki integrated the Sentry React Native SDK two weeks before the beta launch on March 7th.
+  EXPECTED : —
+  ANSWER   : The Atlas mobile app uses Sentry as its crash reporting tool. Sentry was already integrated into the app two weeks before the beta launch, and the React Native SDK integration was confirmed to be straightforward.
   SCORE    : REVIEW
-  TOKENS   : 40 output tokens
+  TOKENS   : 46 output tokens
 
 T1-17 | How many enterprise customers' users signed up for the Atlas mobile beta?
-  EXPECTED : 6 enterprise customers, 47 users total
-  ANSWER   : 47 users from 6 enterprise customers signed up for the Atlas mobile beta, which launched on March 7th.
+  EXPECTED : —
+  ANSWER   : 47 users from 6 enterprise customers signed up for the Atlas mobile beta.
   SCORE    : REVIEW
-  TOKENS   : 29 output tokens
+  TOKENS   : 21 output tokens
 
 T1-18 | What is the actual monthly cost of the self-hosted Nightwatch stack?
-  EXPECTED : $743/month (February actual — better than the $800 estimate)
-  ANSWER   : The actual monthly cost of the self-hosted Nightwatch stack is $743/month, as reported by Leo Reyes in the final migration update for February.
+  EXPECTED : —
+  ANSWER   : The actual monthly cost of the self-hosted Nightwatch stack is $743/month. This was reported by Leo Reyes in his final migration update, which was better than his initial $800/month estimate.
   SCORE    : REVIEW
-  TOKENS   : 37 output tokens
+  TOKENS   : 48 output tokens
 
 T1-19 | Who is Tobias Hunt's direct manager?
-  EXPECTED : Darnell Okafor
-  ANSWER   : Darnell Okafor is Tobias Hunt's direct manager. According to the archived records, Tobias Hunt is a Junior Backend Engineer who reports to Darnell.
+  EXPECTED : —
+  ANSWER   : Tobias Hunt's direct manager is Darnell Okafor. According to the company records, Tobias is a Junior Backend Engineer who reports to Darnell, who is a Senior Backend Engineer.
   SCORE    : REVIEW
-  TOKENS   : 43 output tokens
+  TOKENS   : 49 output tokens
 
 T1-20 | What training did Marcus require all engineers to complete by end of February?
-  EXPECTED : OWASP Top 10 training
+  EXPECTED : —
   ANSWER   : Marcus required all engineers to complete the OWASP Top 10 training by end of February.
   SCORE    : REVIEW
   TOKENS   : 24 output tokens
@@ -138,121 +138,121 @@ T1-20 | What training did Marcus require all engineers to complete by end of Feb
 --- TIER 2 — SINGLE HOP ---
 
 T2-01 | Who did Marcus assign to lead the Conduit rewrite?
-  EXPECTED : Darnell Okafor (Marcus → Priya email, then Priya → Darnell assignment)
-  ANSWER   : Marcus assigned Darnell Okafor to lead the Conduit rewrite. In his Q1 priorities email, Marcus stated: "Darnell should own this — he built the original and knows where the bodies are buried."
+  EXPECTED : —
+  ANSWER   : Marcus assigned Darnell Okafor to lead the Conduit rewrite. In his email to Priya Nair about Q1 priorities, Marcus stated "Darnell should own this — he built the original and knows where the bodies are buried," and Priya subsequently confirmed this assignment to Darnell directly.
   SCORE    : REVIEW
-  TOKENS   : 54 output tokens
+  TOKENS   : 76 output tokens
 
 T2-02 | What specific part of the Conduit system is Tobias responsible for?
-  EXPECTED : The Kafka consumer workers / ingestion layer
-  ANSWER   : Tobias is responsible for the Kafka consumer workers in the Conduit system. According to Darnell's email, Tobias was given ownership of the ingestion layer, specifically the Kafka consumer workers that process events from the message queue.
+  EXPECTED : —
+  ANSWER   : Tobias is responsible for the Kafka consumer workers in the Conduit pipeline rewrite—specifically the ingestion layer that processes events from Kafka into TimescaleDB. According to Darnell's email, Tobias was given this work to own as part of the broader Conduit rewrite project.
   SCORE    : REVIEW
-  TOKENS   : 56 output tokens
+  TOKENS   : 70 output tokens
 
 T2-03 | What technology did Priya explicitly ban from the Conduit rewrite, and why?
-  EXPECTED : RabbitMQ — she had a catastrophic queue loss with it at her previous company
+  EXPECTED : —
   ANSWER   : Priya explicitly banned RabbitMQ from the Conduit rewrite because she had a catastrophic queue loss experience with it at her previous company. She stated in her email to Darnell: "One thing to avoid: do not use RabbitMQ. We had a catastrophic queue loss with it at my last company and I've blacklisted it."
   SCORE    : REVIEW
   TOKENS   : 83 output tokens
 
 T2-04 | What was Darnell's preferred timeline for Conduit if the backfill feature was dropped?
-  EXPECTED : 6 weeks (vs 8 weeks with backfill included)
-  ANSWER   : Based on the archived records, Darnell stated he could complete the Conduit rewrite in 6 weeks if the backfill feature was dropped, compared to his standard 8-week timeline. However, Priya explicitly rejected this option, instructing him: "Don't cut the backfill feature — Camille will never forgive us."
+  EXPECTED : —
+  ANSWER   : Based on the archived records, Darnell stated he could complete the Conduit rewrite in 6 weeks if the backfill feature was dropped. However, Priya instructed him to "Go with 8 weeks. Don't cut the backfill feature," so the 6-week timeline was not pursued.
   SCORE    : REVIEW
-  TOKENS   : 80 output tokens
+  TOKENS   : 74 output tokens
 
 T2-05 | Why did Priya insist on keeping the backfill feature?
-  EXPECTED : Because Camille would "never forgive" them if it was dropped
-  ANSWER   : Based on the archived records, Priya insisted on keeping the backfill feature because "Camille will never forgive us" if it was cut. In her email to Darnell, she rejected his proposal to drop the backfill feature to reduce the timeline from 8 weeks to 6 weeks, prioritizing the feature to maintain the relationship with the product manager.
+  EXPECTED : —
+  ANSWER   : Priya insisted on keeping the backfill feature because Camille would not forgive them if it was cut. In her email to Darnell, Priya stated: "Don't cut the backfill feature — Camille will never forgive us," indicating the feature was important to the product team.
   SCORE    : REVIEW
-  TOKENS   : 84 output tokens
+  TOKENS   : 71 output tokens
 
 T2-06 | What log aggregation tool is part of the new Nightwatch stack?
-  EXPECTED : Loki (part of the Grafana + Prometheus + Alertmanager + Loki stack)
-  ANSWER   : Loki is the log aggregation tool that is part of the new Nightwatch stack. According to Leo Reyes' migration plan email, the new stack includes Grafana for dashboards, Prometheus for metrics collection, Alertmanager for routing alerts, and Loki for log aggregation.
+  EXPECTED : —
+  ANSWER   : Loki is the log aggregation tool part of the new Nightwatch stack. According to Leo Reyes's migration plan, Loki was selected for log aggregation and is running at 2.3GB/day ingestion in the final deployment.
   SCORE    : REVIEW
-  TOKENS   : 68 output tokens
+  TOKENS   : 58 output tokens
 
 T2-07 | What is the projected annual saving from the Datadog migration?
-  EXPECTED : $158,400/year (Leo's estimate: $13,200/month saving)
-  ANSWER   : The projected annual saving from the Datadog migration is $158,400/year (approximately $13,200/month). The final actual cost was $743/month for the new self-hosted stack versus $14,000/month for Datadog, resulting in a monthly saving of $13,257.
+  EXPECTED : —
+  ANSWER   : The projected annual saving from the Datadog migration is $158,400/year (approximately $13,200/month). The actual cost after migration completion was $743/month, resulting in a monthly saving of $13,257.
   SCORE    : REVIEW
-  TOKENS   : 68 output tokens
+  TOKENS   : 52 output tokens
 
 T2-08 | What was Leo's fallback option if Loki had problems?
-  EXPECTED : ElasticSearch
+  EXPECTED : —
   ANSWER   : Leo's fallback option if Loki had problems was ElasticSearch. In his migration plan email, Leo stated: "If we hit issues, fallback is ElasticSearch — more expensive to run but well-understood."
   SCORE    : REVIEW
   TOKENS   : 52 output tokens
 
 T2-09 | What phase of the Atlas mobile app includes offline sync?
-  EXPECTED : Phase 3 (Q3)
-  ANSWER   : Offline sync is included in Phase 3 (Q3) of the Atlas mobile app. According to Suki Tanaka's initial proposal, she budgeted 6 weeks specifically for offline sync, describing it as "the hard one."
+  EXPECTED : —
+  ANSWER   : Offline sync is included in Phase 3 (Q3) of the Atlas mobile app. According to Suki Tanaka's proposal, this phase is budgeted for 6 weeks and requires backend API changes that cannot be implemented until after Q1 due to Marcus's constraint on not touching the Atlas backend until after the Q1 release.
   SCORE    : REVIEW
-  TOKENS   : 56 output tokens
+  TOKENS   : 78 output tokens
 
 T2-10 | Why is the Atlas backend off-limits for mobile development in Phase 1?
-  EXPECTED : Marcus restricted it until after the Q1 release — too much risk
-  ANSWER   : Marcus imposed a hard constraint that the Atlas backend cannot be touched until after the Q1 release due to risk concerns. This restriction means Phase 1 of the mobile app must be designed as fully read-only to avoid requiring any backend changes during Q1.
+  EXPECTED : —
+  ANSWER   : According to Marcus Webb's email, the Atlas backend is off-limits for mobile development in Phase 1 because of risk concerns—he stated "we do not touch the Atlas backend until after the Q1 release. Too much risk." Camille Russo reinforced this constraint by designing Phase 1 to be fully read-only so backend changes wouldn't be needed.
   SCORE    : REVIEW
-  TOKENS   : 56 output tokens
+  TOKENS   : 81 output tokens
 
 T2-11 | What compliance issue did Leo discover in the payment logging?
-  EXPECTED : PCI compliance issue — the app was logging the full Stripe payload including card last-four digits
-  ANSWER   : Leo discovered that the payment logging system was logging the full Stripe payload including card last-four data, which is a PCI compliance issue. He flagged this directly to Marcus Webb while setting up the Stripe sandbox environment.
+  EXPECTED : —
+  ANSWER   : Leo discovered that the payment logging system was logging the full Stripe payload including card last-four in the application logs, which is a PCI compliance issue. This violated payment card industry compliance standards by storing sensitive card data that should not be logged.
   SCORE    : REVIEW
-  TOKENS   : 49 output tokens
+  TOKENS   : 53 output tokens
 
 T2-12 | Who discovered the race condition in the payment refund logic?
-  EXPECTED : Darnell Okafor (found it while writing integration tests for payments)
-  ANSWER   : Darnell Okafor discovered the race condition in the refund processing logic while reviewing the payments module. He flagged it to Priya Nair in an email, noting it was "probably not exploitable but it's ugly" and that he planned to fix it while working on the payments integration tests.
+  EXPECTED : —
+  ANSWER   : Darnell Okafor discovered the race condition in the payment refund logic while reviewing the payments module during his work on the integration tests.
   SCORE    : REVIEW
-  TOKENS   : 70 output tokens
+  TOKENS   : 34 output tokens
 
 T2-13 | Where are the Stripe test credentials stored?
-  EXPECTED : 1Password, under "stripe-test-veloris"
+  EXPECTED : —
   ANSWER   : The Stripe test credentials are stored in 1Password under "stripe-test-veloris".
   SCORE    : REVIEW
   TOKENS   : 24 output tokens
 
 T2-14 | What problem did Suki encounter with Expo related to Meridian Group's requirements?
-  EXPECTED : Meridian Group requires biometric authentication, and Expo's biometric module has a known bug with Android 14 that is unpatched
-  ANSWER   : Suki encountered a problem where Expo's biometric module had a known bug with Android 14 that hadn't been patched, which prevented Meridian Group's requirement for biometric authentication from working properly. She presented three options: ejecting from Expo (3 weeks), waiting for the patch (4-6 weeks), or using a third-party React Native biometric library as a workaround (3 days), and recommended the third option.
+  EXPECTED : —
+  ANSWER   : Suki encountered a bug in Expo's biometric module with Android 14 that Meridian Group required for their deployment. The Expo team hadn't patched the bug yet, with an estimated fix timeline of 4-6 weeks, which would have missed the Q1 deadline. Suki recommended using a third-party React Native biometric library (react-native-biometrics) as a workaround instead.
   SCORE    : REVIEW
-  TOKENS   : 101 output tokens
+  TOKENS   : 96 output tokens
 
 T2-15 | What solution did Suki recommend for the Expo biometric bug?
-  EXPECTED : Option 3 — use react-native-biometrics, a third-party React Native library that works around the Expo limitation (estimated 3 days)
-  ANSWER   : Suki recommended using a third-party React Native biometric library called react-native-biometrics (option 3) to work around the Expo biometric bug with Android 14. This solution was estimated to take 3 days and was approved by Priya as a clean, well-maintained workaround that avoided the complexity and timeline costs of the other options.
+  EXPECTED : —
+  ANSWER   : Suki recommended using a third-party React Native biometric library called react-native-biometrics as a workaround for the Expo biometric bug with Android 14. This option was estimated to take 3 days and was approved by Priya Nair as the preferred solution over ejecting from Expo or waiting for the Expo patch.
   SCORE    : REVIEW
-  TOKENS   : 83 output tokens
+  TOKENS   : 80 output tokens
 
 T2-16 | What Conduit throughput did Darnell achieve in load testing, and how did it compare to the target?
-  EXPECTED : 220k events/hour — exceeded the 200k target
-  ANSWER   : Darnell achieved 220k events/hour sustained throughput in load testing, exceeding the target of 200k events/hour. His p99 latency was 87ms, also meeting the sub-100ms target, with zero data loss on simulated service restarts.
+  EXPECTED : —
+  ANSWER   : Darnell achieved 220k events/hour sustained throughput in load testing, exceeding the target of 200k events/hour. His p99 latency was 87ms, also meeting the sub-100ms target.
   SCORE    : REVIEW
-  TOKENS   : 64 output tokens
+  TOKENS   : 53 output tokens
 
 T2-17 | What p99 latency did Conduit achieve in load testing?
-  EXPECTED : 87ms (target was sub-100ms — passed)
+  EXPECTED : —
   ANSWER   : Conduit achieved a p99 latency of 87ms in load testing, which met the target of sub-100ms.
   SCORE    : REVIEW
   TOKENS   : 31 output tokens
 
 T2-18 | Where did Leo document the LogQL learning guide?
-  EXPECTED : Notion, under Engineering/Runbooks
-  ANSWER   : Leo documented the LogQL learning guide in Notion under Engineering/Runbooks. He noted that Loki's query language has a steeper learning curve than Datadog's and created this guide as a reference for the team.
+  EXPECTED : —
+  ANSWER   : Leo documented the LogQL learning guide in Notion under Engineering/Runbooks, as stated in his email to Marcus Webb about the Nightwatch migration completion.
   SCORE    : REVIEW
-  TOKENS   : 51 output tokens
+  TOKENS   : 36 output tokens
 
 T2-19 | What is the mobile beta launch date?
-  EXPECTED : March 7th
+  EXPECTED : —
   ANSWER   : The mobile beta launch date is March 7th.
   SCORE    : REVIEW
   TOKENS   : 14 output tokens
 
 T2-20 | What known issue does Sentry's React Native SDK have?
-  EXPECTED : It can miss crashes that happen during app initialization, before Sentry itself has initialized
+  EXPECTED : —
   ANSWER   : Sentry's React Native SDK has a known issue where it can miss crashes that happen during app initialization, before Sentry itself initializes.
   SCORE    : REVIEW
   TOKENS   : 33 output tokens
@@ -261,141 +261,141 @@ T2-20 | What known issue does Sentry's React Native SDK have?
 --- TIER 3 — MULTI-HOP ---
 
 T3-01 | Which engineer was originally assigned to write tests for the payments module but was pulled away, and what were they pulled onto?
-  EXPECTED : Tobias Hunt — pulled from payments test coverage to work on the Conduit rewrite (Kafka consumer workers)
-  ANSWER   : Tobias was originally assigned to write integration tests for the payments module but was pulled onto the Conduit project by Marcus. According to the archived records, Tobias is now supporting Darnell Okafor on the Conduit pipeline rewrite, where he's been given ownership of the Kafka consumer workers ingestion layer.
+  EXPECTED : —
+  ANSWER   : Tobias was originally assigned to write integration tests for the payments module but was pulled away by Marcus onto the Conduit project. He is now working on the Kafka consumer workers for the Conduit pipeline rewrite.
   SCORE    : REVIEW
-  TOKENS   : 74 output tokens
+  TOKENS   : 49 output tokens
 
 T3-02 | Who flagged the PCI compliance issue, and what three actions did Marcus take as a result?
-  EXPECTED : Leo Reyes flagged it. Marcus decided to: (1) fix it before end of week, (2) hire a fractional security consultant, (3) require all engineers to complete OWASP Top 10 training by end of February
-  ANSWER   : Leo flagged the PCI compliance issue. Marcus took three actions: (1) decided to hire a fractional security consultant and chose Halcyon Advisory to conduct a proper audit starting February 24th, (2) required all engineers to complete OWASP Top 10 training by end of February, and (3) instructed Priya to enforce the training requirement.
+  EXPECTED : —
+  ANSWER   : Leo flagged the PCI compliance issue (he discovered that the application was logging the full Stripe payload including card data). Marcus took three actions: (1) decided to hire a fractional security consultant and chose Halcyon Advisory to conduct a proper audit, (2) required all engineers to complete OWASP Top 10 training by end of February, and (3) prioritized fixing the PCI compliance issue to be completed by end of that week rather than the next sprint.
   SCORE    : REVIEW
-  TOKENS   : 83 output tokens
+  TOKENS   : 105 output tokens
 
 T3-03 | What technology stack replaced Datadog, and which team member was involved in both the replacement and the Conduit rewrite?
-  EXPECTED : Grafana + Prometheus + Alertmanager + Loki replaced Datadog. Leo Reyes needed to be involved in both — he led the Nightwatch migration AND was needed for Kubernetes deployment on Conduit
-  ANSWER   : Grafana + Prometheus stack replaced Datadog, and Leo Reyes was involved in both the replacement and the Conduit rewrite (he was looped in on the Kafka/Kubernetes infrastructure side for Conduit while leading the Nightwatch migration).
+  EXPECTED : —
+  ANSWER   : Grafana + Prometheus replaced Datadog, and Leo Reyes was involved in both the Nightwatch migration (replacing Datadog) and the Conduit rewrite (he was looped in on the Kubernetes infrastructure side for the Conduit pipeline's deployment).
   SCORE    : REVIEW
-  TOKENS   : 60 output tokens
+  TOKENS   : 62 output tokens
 
 T3-04 | The mobile beta includes a customer with special authentication requirements. What is that customer, what was their requirement, and how was it solved?
-  EXPECTED : Meridian Group required biometric authentication. Solved by using react-native-biometrics (option 3) instead of Expo's built-in biometric module, which had an unpatched Android 14 bug
-  ANSWER   : The customer is Meridian Group, which required biometric authentication for their deployment. The requirement was solved by using the third-party React Native library react-native-biometrics, which worked around Expo's known bug with Android 14's biometric module.
+  EXPECTED : —
+  ANSWER   : The customer is Meridian Group, which required biometric authentication for their deployment. The requirement was solved by using the third-party React Native library react-native-biometrics, which worked around Expo's known bug with Android 14 biometric modules.
   SCORE    : REVIEW
   TOKENS   : 58 output tokens
 
 T3-05 | How many dashboards did the new monitoring system have after migration, and how does that compare to before?
-  EXPECTED : 47 migrated + 3 new ones = 50 total. Datadog had 47. The new system has more dashboards because Grafana could support things Datadog couldn't.
-  ANSWER   : After migration, the new monitoring system had 50 dashboards total (47 migrated from Datadog plus 3 new ones built that Datadog couldn't support). The archived records do not specify how many dashboards existed before the migration, so a direct comparison cannot be made.
+  EXPECTED : —
+  ANSWER   : After migration, the new monitoring system had 50 dashboards total: 47 migrated from Datadog plus 3 new ones built in Grafana that Datadog couldn't support. The context does not specify how many dashboards existed before migration, so a direct comparison cannot be made.
   SCORE    : REVIEW
-  TOKENS   : 64 output tokens
+  TOKENS   : 67 output tokens
 
 T3-06 | Who reported a concern to Priya about test coverage, what module was the concern about, and who was ultimately assigned to fix it?
-  EXPECTED : Hana Bergström reported the concern about the payments module (34% coverage). Darnell Okafor was assigned to fix it (write the integration tests).
-  ANSWER   : Hana Bergström reported a concern to Priya about test coverage in the payments module, which was sitting at 34% coverage despite processing $2.1M/month. Darnell Okafor was ultimately assigned to write the integration tests for the payments module.
+  EXPECTED : —
+  ANSWER   : Hana Bergström reported a concern to Priya about test coverage in the payments module, which was sitting at 34% coverage. Darnell Okafor was ultimately assigned to write the integration tests for the payments module.
   SCORE    : REVIEW
-  TOKENS   : 63 output tokens
+  TOKENS   : 54 output tokens
 
 T3-07 | Which project involves both Suki Tanaka and Camille Russo, and what did Camille change about Suki's original scope?
-  EXPECTED : Atlas mobile app. Camille added push notifications for task assignments to Phase 1 — Suki had originally kept push notifications in Phase 2.
-  ANSWER   : The **Atlas mobile** project involves both Suki Tanaka and Camille Russo. Camille changed Suki's original scope by adding a hard requirement for push notifications for task assignments in Phase 1, even though Suki had proposed Phase 1 to be read-only with push notifications deferred to Phase 2.
+  EXPECTED : —
+  ANSWER   : The **Atlas mobile** project involves both Suki Tanaka and Camille Russo. Camille changed Suki's original scope by adding push notifications for task assignments as a hard requirement for Phase 1, even though Suki had proposed Phase 1 be read-only with no editing.
   SCORE    : REVIEW
-  TOKENS   : 76 output tokens
+  TOKENS   : 69 output tokens
 
 T3-08 | Tobias Hunt worked on two separate things in Q1. What were they, and on which one did his manager say he deserved a performance note?
-  EXPECTED : (1) Kafka consumer workers for Conduit, (2) he was originally assigned to payments test coverage (before being pulled). Darnell recommended a performance note for his Kafka/Conduit work.
-  ANSWER   : Based on the archived records, Tobias Hunt worked on two separate things in Q1: the **Conduit pipeline rewrite** (specifically the Kafka consumer workers/ingestion layer) and the **payments module integration tests**. His manager Darnell Okafor said he deserved a performance note for his work on **Conduit**, stating "Tobias deserves credit here. He picked up Kafka faster than I expected and his consumer worker implementation is clean."
+  EXPECTED : —
+  ANSWER   : In Q1, Tobias Hunt worked on two separate things: the **Conduit pipeline rewrite** (specifically the Kafka consumer workers for the ingestion layer) and the **payments module integration tests**. His manager Darnell Okafor said he deserved a performance note for his work on **Conduit**, noting that "Tobias deserves credit here. He picked up Kafka faster than I expected and his consumer worker implementation is clean."
   SCORE    : REVIEW
-  TOKENS   : 105 output tokens
+  TOKENS   : 102 output tokens
 
 T3-09 | What was the actual monthly cost saving from the Nightwatch migration, and how did it compare to Leo's original estimate?
-  EXPECTED : Actual saving: $13,257/month ($14,000 - $743). Leo estimated $13,200/month. The actual saving was $57/month more than estimated (infrastructure came in at $743 vs $800 estimate).
-  ANSWER   : The actual monthly cost saving from the Nightwatch migration was $13,257/month, compared to Leo's original estimate of $13,200/month—a difference of $57 more in savings than projected. The actual infrastructure cost came in at $743/month in February, which was better than Leo's estimated $800/month.
+  EXPECTED : —
+  ANSWER   : The actual monthly cost saving from the Nightwatch migration was $13,257/month, compared to Leo's original estimate of $13,200/month. Leo's actual infrastructure cost was $743/month versus his projected $800/month, making the savings slightly better than anticipated.
   SCORE    : REVIEW
-  TOKENS   : 74 output tokens
+  TOKENS   : 62 output tokens
 
 T3-10 | Which engineer discovered a bug while doing a different task, what was the task, and what was the bug?
-  EXPECTED : Darnell Okafor — he was writing integration tests for the payments module (assigned by Priya) and discovered a race condition in the refund processing logic while doing so.
-  ANSWER   : Darnell Okafor discovered a race condition in the refund processing logic while working on writing payments integration tests. The bug was in the refund processing logic of the payments module, which he found while setting up the Stripe sandbox environment for testing.
+  EXPECTED : —
+  ANSWER   : Darnell Okafor discovered a race condition in the refund processing logic while writing integration tests for the payments module. The bug was a race condition in the refund processing logic that he found while working on the payments integration tests and decided to fix while already in that code.
   SCORE    : REVIEW
-  TOKENS   : 57 output tokens
+  TOKENS   : 62 output tokens
 
 
 --- UNANSWERABLE (U-01 to U-10) ---
 
 U-01 | What is Priya Nair's salary?
-  EXPECTED : Not mentioned
+  EXPECTED : —
   ANSWER   : I don't have that information.
   SCORE    : PASS
   TOKENS   : 10 output tokens
 
 U-02 | What programming language is the Atlas backend written in?
-  EXPECTED : Not mentioned
+  EXPECTED : —
   ANSWER   : I don't have that information. The archived records do not specify what programming language the Atlas backend is written in.
   SCORE    : PASS
   TOKENS   : 26 output tokens
 
 U-03 | How many total employees does Veloris have?
-  EXPECTED : Not mentioned
-  ANSWER   : Based on the archived records provided, I don't have that information. The context lists 8 named employees at Veloris (Marcus Webb, Priya Nair, Darnell Okafor, Suki Tanaka, Leo Reyes, Camille Russo, Hana Bergström, and Tobias Hunt), but does not state the total employee count for the company.
-  SCORE    : PASS
-  TOKENS   : 93 output tokens
+  EXPECTED : —
+  ANSWER   : Based on the archived records, Veloris has 8 total employees: Marcus Webb (CTO), Priya Nair (VP of Engineering), Darnell Okafor (Senior Backend Engineer), Suki Tanaka (Senior Frontend Engineer), Leo Reyes (DevOps Engineer), Camille Russo (Product Manager), Hana Bergström (QA Lead), and Tobias Hunt (Junior Backend Engineer).
+  SCORE    : FAIL? (possible false positive — review)
+  TOKENS   : 101 output tokens
 
 U-04 | What did Marcus think about Python as a language?
-  EXPECTED : Not mentioned — Marcus never discussed Python
-  ANSWER   : I don't have that information. The archived records contain no statements from Marcus about his views on Python as a programming language.
+  EXPECTED : —
+  ANSWER   : I don't have that information. The archived records contain no statements from Marcus about Python as a programming language.
   SCORE    : PASS
-  TOKENS   : 28 output tokens
+  TOKENS   : 25 output tokens
 
 U-05 | Which cloud provider does Veloris use?
-  EXPECTED : AWS (mentioned in email 003 — "existing AWS infrastructure") ← NOTE: this is a trap question, it IS answerable
-  ANSWER   : Based on the archived records, Veloris uses AWS as their cloud provider. This is mentioned in Priya Nair's email about the Conduit rewrite, where she states the new stack "needs to run on our existing AWS infrastructure."
+  EXPECTED : —
+  ANSWER   : Based on the archived records, Veloris uses AWS as their cloud provider. This is mentioned in Priya Nair's email to Darnell Okafor about the Conduit rewrite, where she states "it needs to run on our existing AWS infrastructure."
   SCORE    : PASS (trap)
-  TOKENS   : 56 output tokens
+  TOKENS   : 63 output tokens
 
 U-06 | What is Hana Bergström's salary?
-  EXPECTED : Not mentioned
-  ANSWER   : I don't have that information. The archived records contain no salary information for Hana Bergström.
+  EXPECTED : —
+  ANSWER   : I don't have that information. The archived records contain no salary data for Hana Bergström.
   SCORE    : PASS
   TOKENS   : 25 output tokens
 
 U-07 | Has Veloris ever had a data breach?
-  EXPECTED : Not mentioned
-  ANSWER   : Based on the archived records, there is no mention of Veloris having experienced a data breach. The records discuss security audits being planned (with Halcyon Advisory starting February 24th) and a PCI compliance issue with payment logging that was discovered and flagged for fixing, but no actual data breach is documented.
+  EXPECTED : —
+  ANSWER   : Based on the archived records, there is no mention of Veloris having experienced a data breach. The records show that Veloris is planning a security audit with Halcyon Advisory and has identified a PCI compliance issue with payment logging, but no actual breach is documented.
   SCORE    : FAIL? (possible false positive — review)
-  TOKENS   : 71 output tokens
+  TOKENS   : 62 output tokens
 
 U-08 | What is Tobias Hunt's favorite programming language?
-  EXPECTED : Not mentioned
-  ANSWER   : I don't have that information. The archived records do not mention Tobias Hunt's favorite programming language.
+  EXPECTED : —
+  ANSWER   : I don't have that information. The archived records do not contain any statement about Tobias Hunt's favorite programming language.
   SCORE    : PASS
-  TOKENS   : 25 output tokens
+  TOKENS   : 28 output tokens
 
 U-09 | Does Veloris have offices outside Austin?
-  EXPECTED : Not mentioned
-  ANSWER   : Based on the archived records, there is no information about Veloris having offices outside Austin. The company is identified as headquartered in Austin, Texas, but no other office locations are mentioned in the available documents.
-  SCORE    : PASS
-  TOKENS   : 48 output tokens
+  EXPECTED : —
+  ANSWER   : Based on the archived records, Veloris Technologies' headquarters is in Austin, Texas, but there is no mention of any offices outside Austin in the available documentation.
+  SCORE    : FAIL? (possible false positive — review)
+  TOKENS   : 37 output tokens
 
 U-10 | What database does the Atlas backend use?
-  EXPECTED : Not mentioned (TimescaleDB and ClickHouse are for Conduit, not Atlas)
-  ANSWER   : I don't have that information. The archived records do not specify which database the Atlas backend uses.
-  SCORE    : PASS
-  TOKENS   : 23 output tokens
+  EXPECTED : —
+  ANSWER   : The context does not specify which database the Atlas backend uses. The archived records discuss the Atlas mobile experience, Conduit pipeline, and test coverage for the Atlas backend, but do not mention the backend's database technology.
+  SCORE    : FAIL? (possible false positive — review)
+  TOKENS   : 47 output tokens
 
 
 --- LATENCY ---
-Recall p50 : 7973ms
-Recall p99 : 13729ms
+Recall p50 : 6864ms
+Recall p99 : 11238ms
 
 --- TOKEN TOTALS ---
-tokens_in  : 398262
-tokens_out : 3075
-Est. cost (Haiku pricing) : $0.1034
+tokens_in  : 355181
+tokens_out : 3092
+Est. cost (Haiku pricing) : $0.0927
 
 --- SCORE SUMMARY (fill in manually) ---
 T1 accuracy : __/20
 T2 accuracy : __/20
 T3 accuracy : __/10
-U  auto-scored: 9/9 pass (excl. trap)
+U  auto-scored: 6/9 pass (excl. trap)
 Trap (U-05) : PASS (trap)

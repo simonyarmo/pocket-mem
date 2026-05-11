@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import dataclasses
+from datetime import datetime, timezone
 
-from pocket_mem.embedding import embed
+from pocket_mem.embedding import cosine_similarity, embed
 from pocket_mem.llm.client import LLMClient
 from pocket_mem.llm.prompts import ANSWER, ANSWER_SYSTEM
 from pocket_mem.models import Edge, Node
@@ -105,6 +106,37 @@ def synthesize_answer(query: str, context: str, llm: LLMClient) -> str:
     )
 
 
+def check_qa_cache(query: str, store: StoreInterface) -> str | None:
+    """Return cached answer if a verified, non-expired QA pair matches query closely enough."""
+    q_embedding = embed(query)
+    cache_nodes = store.get_nodes_by_type("qa_cache")
+    best_score = 0.0
+    best_node: Node | None = None
+
+    for node in cache_nodes:
+        expires = node.data.get("expires_at")
+        if expires:
+            dt = datetime.fromisoformat(expires)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            if dt < datetime.now(timezone.utc):
+                continue
+        if not node.data.get("verified"):
+            continue
+        if node.embedding is None:
+            continue
+        score = cosine_similarity(q_embedding, node.embedding)
+        if score > best_score:
+            best_score = score
+            best_node = node
+
+    if best_score >= 0.88 and best_node is not None:
+        store.increment_cache_hit(best_node.id)
+        return best_node.data["answer"]
+
+    return None
+
+
 def recall(
     query: str,
     store: StoreInterface,
@@ -120,6 +152,12 @@ def recall(
       "context"   → str         — formatted context string (full retrieved nodes)
       "answer"    → str         — LLM synthesizes an answer from retrieved context (requires llm=)
     """
+    # Cache check for context and answer modes (raw always queries live graph)
+    if mode != "raw":
+        cached = check_qa_cache(query, store)
+        if cached is not None:
+            return cached
+
     nodes = search(query, store, limit=limit)
     nodes = traverse(nodes, store, hops=hops)
 

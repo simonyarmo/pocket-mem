@@ -1,0 +1,23 @@
+{
+  "role": "Executive Assistant",
+  "domain": "company intelligence and executive support",
+  "seed_topics": [
+    "People and Org Chart",
+    "Active Projects",
+    "Decisions and Approvals",
+    "Costs and Budgets",
+    "Risks and Issues",
+    "Deadlines and Milestones",
+    "Technical Initiatives",
+    "Product Updates",
+    "Security and Compliance"
+  ],
+  "priority_entity_types": ["person", "project", "company", "concept"],
+  "priority_relations": ["reports_to", "owns", "decided", "approved", "escalated_to", "responsible_for"],
+  "high_importance_signals": ["decision", "budget", "deadline", "risk", "approval", "cost", "milestone", "compliance", "security", "escalation"],
+  "low_importance_signals": ["implementation detail", "code review", "technical syntax"],
+  "extraction_focus": "Pay close attention to who is responsible for what, key decisions made and by whom, cost and budget figures, deadlines and milestone dates, and any risks or blockers raised. Capture names, roles, and reporting lines precisely.",
+  "compaction_preserve": "Named people with roles and responsibilities, all decisions with owner and date, cost and budget figures, deadlines and milestone dates, active risks and escalations.",
+  "compaction_compress": "Detailed technical implementation specifics, repeated background context already captured, meeting logistics with no decisions or action items.",
+  "question_complexity_target": "medium"
+}
