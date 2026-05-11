@@ -376,6 +376,9 @@ pocket-mem show
 # Specify a project
 pocket-mem show --project my-app
 
+# Specify a path
+pocket-mem show --path 'path'
+
 # Filter to a specific topic
 pocket-mem show --project my-app --topic "People I Know"
 
