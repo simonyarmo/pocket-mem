@@ -1,0 +1,1094 @@
+FICTIONAL COMPANY: Veloris Technologies
+Industry: B2B SaaS (project management software)
+Headquarters: Austin, Texas
+
+PEOPLE:
+- Marcus Webb — CTO
+- Priya Nair — VP of Engineering
+- Darnell Okafor — Senior Backend Engineer (reports to Priya)
+- Suki Tanaka — Senior Frontend Engineer (reports to Priya)
+- Leo Reyes — DevOps Engineer (reports to Marcus)
+- Camille Russo — Product Manager
+- Hana Bergström — QA Lead
+- Tobias Hunt — Junior Backend Engineer (reports to Darnell)
+
+PROJECTS:
+- Atlas — main product (project management SaaS)
+- Conduit — internal data pipeline
+- Nightwatch — monitoring/alerting system
+
+---
+
+EMAIL 001
+From: Marcus Webb <marcus@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: January 6, 2025
+Subject: Q1 priorities
+
+Priya,
+
+Happy new year. I want to lock in our Q1 priorities before the all-hands on Friday.
+
+Top of the list is the Conduit pipeline rewrite. The current system is choking on anything over 50k events/hour and we had three incidents in December. Darnell should own this — he built the original and knows where the bodies are buried.
+
+Second priority: get Nightwatch off Datadog. We're paying $14,000/month for it and half the features we use are things Leo built on top of it anyway. Leo has been pitching a self-hosted Grafana + Prometheus stack for six months. Let's give him the greenlight.
+
+Third: Atlas needs a proper mobile experience. Suki has been asking for React Native since last year. I'm finally convinced. Let's scope it out with Camille.
+
+One hard constraint: we do not touch the Atlas backend until after the Q1 release. Too much risk.
+
+Marcus
+
+---
+
+EMAIL 002
+From: Priya Nair <priya@veloris.io>
+To: Darnell Okafor <darnell@veloris.io>
+Date: January 7, 2025
+Subject: Conduit rewrite — you're leading this
+
+Darnell,
+
+You're the lead on the Conduit rewrite. Marcus, our CTO, wants it done by end of Q1.
+
+The brief: handle 200k events/hour sustained, sub-100ms p99 latency, no data loss on service restart. Current system fails all three.
+
+For the new stack I want a proposal from you by Jan 17. My gut says Apache Kafka for the message queue and ClickHouse for the analytics store, but make the case if you disagree. Whatever you choose, it needs to run on our existing AWS infrastructure.
+
+Tobias will be your support on this. He's junior but sharp — give him the ingestion layer to own.
+
+One thing to avoid: do not use RabbitMQ. We had a catastrophic queue loss with it at my last company and I've blacklisted it.
+
+Priya
+
+---
+
+EMAIL 003
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: January 14, 2025
+Subject: RE: Conduit rewrite — stack proposal
+
+Priya,
+
+Proposal attached. Summary:
+
+Message queue: Kafka as suggested — agreed it's the right call. I looked at Pulsar as an alternative but the operational complexity isn't worth it for our scale. Kafka it is.
+
+Analytics store: I'm pushing back on ClickHouse. Our query patterns are more relational than analytical. I want to use TimescaleDB instead — it's Postgres-based so our team knows the query language, and the time-series compression is excellent for event data.
+
+Ingestion layer: I'm giving Tobias the Kafka consumer workers. He's been asking for more ownership and this is well-scoped.
+
+Deployment: everything containerized with Docker Compose for local dev, Kubernetes in prod. Leo will need to be looped in on the K8s side.
+
+Estimated timeline: 8 weeks to production-ready. I can do 6 if we drop the backfill feature to v2.
+
+One risk I want to flag: Tobias has never worked with Kafka before. I'm building in two weeks of ramp-up time for him.
+
+Darnell
+
+---
+
+EMAIL 004
+From: Priya Nair <priya@veloris.io>
+To: Darnell Okafor <darnell@veloris.io>
+Date: January 15, 2025
+Subject: RE: RE: Conduit rewrite — stack proposal
+
+Darnell,
+
+TimescaleDB approved. Good reasoning.
+
+Go with 8 weeks. Don't cut the backfill feature — Camille will never forgive us.
+
+Loop Leo in this week.
+
+Priya
+
+---
+
+EMAIL 005
+From: Leo Reyes <leo@veloris.io>
+To: Marcus Webb <marcus@veloris.io>
+Date: January 16, 2025
+Subject: Nightwatch migration plan
+
+Marcus,
+
+Thanks for greenlighting the Datadog migration. Here's the plan:
+
+New stack: Grafana for dashboards, Prometheus for metrics collection, Alertmanager for routing alerts, Loki for log aggregation. All self-hosted on our existing EC2 fleet.
+
+Cost projection: ~$800/month in infrastructure vs $14,000/month Datadog. Saving $13,200/month, $158,400/year.
+
+Timeline: 6 weeks. I can run both systems in parallel for the last two weeks to make sure nothing falls through the cracks.
+
+One ask: I need Hana to allocate 20% of QA time to testing the new alert rules. The current Datadog alerts have a lot of undocumented logic that I need to reverse-engineer.
+
+Risks: Loki is less mature than Datadog's log search. If we hit issues, fallback is ElasticSearch — more expensive to run but well-understood.
+
+Leo
+
+---
+
+EMAIL 006
+From: Marcus Webb <marcus@veloris.io>
+To: Leo Reyes <leo@veloris.io>, Hana Bergström <hana@veloris.io>
+Date: January 17, 2025
+Subject: RE: Nightwatch migration plan
+
+Leo, Hana,
+
+Approved. Leo, proceed.
+
+Hana — please allocate the 20% Leo needs. This migration saves us more per month than your entire team's tooling budget for the year.
+
+One addition: I want weekly status emails from you Leo, every Friday, until the migration is complete.
+
+Marcus
+
+---
+
+EMAIL 007
+From: Suki Tanaka <suki@veloris.io>
+To: Camille Russo <camille@veloris.io>
+Date: January 20, 2025
+Subject: Atlas mobile — let's scope this properly
+
+Camille,
+
+Finally got the greenlight from Marcus on React Native for the mobile app. I've been waiting 14 months for this.
+
+Before we write a single line of code I want us aligned on scope. My proposal:
+
+Phase 1 (Q1): read-only experience — users can view projects, tasks, and comments. No editing. This is 80% of what users actually do on mobile based on our analytics.
+
+Phase 2 (Q2): editing — create/update tasks and projects. Push notifications.
+
+Phase 3 (Q3): offline mode. This is the hard one. I'm budgeting 6 weeks just for offline sync.
+
+One technical decision I've already made: we're using Expo for the React Native build toolchain. It abstracts away a lot of the native config headaches and our team has zero iOS/Android experience.
+
+Two risks I need product sign-off on:
+1. Phase 1 read-only might frustrate users who expect full functionality. Do we soft-launch to beta users only?
+2. The offline sync in Phase 3 will require backend API changes. That touches the Atlas backend which Marcus has restricted until after Q1.
+
+Suki
+
+---
+
+EMAIL 008
+From: Camille Russo <camille@veloris.io>
+To: Suki Tanaka <suki@veloris.io>
+Date: January 21, 2025
+Subject: RE: Atlas mobile — let's scope this properly
+
+Suki,
+
+Scope approved with one change: Phase 1 needs push notifications for task assignments, even if editing is locked. This is a hard requirement from three enterprise customers we're trying to retain. I've already promised it for Q2 and would love to pull it into Q1 if you can manage it.
+
+On your risks:
+1. Yes, soft-launch to beta. I'll handle customer comms.
+2. Agreed the backend is off-limits until Q2. Let's design Phase 1 to be fully read-only so we don't need backend changes.
+
+One thing I'd add to your risk list: Expo has limitations with certain native modules. If we ever need Bluetooth or advanced camera features, we might need to eject. Not a concern for Phase 1 but worth knowing.
+
+Camille
+
+---
+
+EMAIL 009
+From: Hana Bergström <hana@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: January 28, 2025
+Subject: Test coverage report — Atlas backend
+
+Priya,
+
+Monthly test coverage report for the Atlas backend.
+
+Current coverage: 61%. Target was 80% by end of Q1.
+
+Honestly we're not going to hit 80% by March unless someone helps me. Tobias was on track to write integration tests for the payments module but Marcus pulled him onto Conduit. That work is now unassigned.
+
+The payments module specifically worries me. It's sitting at 34% coverage and we're processing $2.1M/month through it. I'd feel a lot better about that number.
+
+I flagged this to Darnell last week and he said he'd look at it after the Conduit proposal was done. I haven't heard back.
+
+Can you prioritize this? I don't need much — even one engineer for two weeks would get payments to a safe place.
+
+Hana
+
+---
+
+EMAIL 010
+From: Priya Nair <priya@veloris.io>
+To: Darnell Okafor <darnell@veloris.io>
+Date: January 29, 2025
+Subject: Payments test coverage — urgent
+
+Darnell,
+
+Hana flagged the payments module sitting at 34% coverage. We're processing $2.1M/month through that code. This is not okay.
+
+I know you're deep in Conduit but I need you to personally write the integration tests for payments this week. Tobias is not available (he's ramping on Kafka) and I don't want to hand this to someone who doesn't know the codebase.
+
+This takes priority over everything except the Conduit Kafka setup.
+
+Priya
+
+---
+
+EMAIL 011
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: January 30, 2025
+Subject: RE: Payments test coverage — urgent
+
+Priya,
+
+Understood. I'll have the payments integration tests done by Friday.
+
+One issue: the payments module uses Stripe's webhook system and our test environment doesn't have a proper Stripe sandbox configured. I'll need DevOps to set that up. Looping in Leo.
+
+Also flagging: while I was looking at payments I found what looks like a race condition in the refund processing logic. It's probably not exploitable but it's ugly. I'm going to fix it while I'm in there — don't want to leave a known bug in payment code.
+
+Darnell
+
+---
+
+EMAIL 012
+From: Leo Reyes <leo@veloris.io>
+To: Darnell Okafor <darnell@veloris.io>
+Date: January 31, 2025
+Subject: RE: RE: Payments test coverage — urgent
+
+Darnell,
+
+Stripe sandbox is configured. Credentials in 1Password under "stripe-test-veloris". Test webhook endpoint is at dev-api.veloris.io/webhooks/stripe-test.
+
+One thing I noticed while setting it up: we're logging the full Stripe payload including card last-four in our application logs. That's probably a PCI compliance issue. I've flagged it to Marcus directly.
+
+Leo
+
+---
+
+EMAIL 013
+From: Marcus Webb <marcus@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: February 3, 2025
+Subject: PCI compliance issue
+
+Priya,
+
+Leo found a PCI compliance issue in our payment logging. We're logging card data we shouldn't be. This needs to be fixed before end of week — not next sprint, this week.
+
+Also, I've decided to hire a fractional security consultant to do a proper audit. I'm talking to two firms: Redpoint Security and Halcyon Advisory. I'll make a decision by Friday.
+
+On a related note: I want all engineers to complete the OWASP Top 10 training by end of February. Please enforce this.
+
+Marcus
+
+---
+
+EMAIL 014
+From: Marcus Webb <marcus@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: February 7, 2025
+Subject: Security consultant decision
+
+Priya,
+
+We're going with Halcyon Advisory for the security audit. Redpoint was cheaper but Halcyon has done three other SaaS payment audits this year and knows our stack.
+
+Audit starts February 24th. Expect them to need access to the codebase and production logs.
+
+Marcus
+
+---
+
+EMAIL 015
+From: Suki Tanaka <suki@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: February 10, 2025
+Subject: Atlas mobile — Expo issue
+
+Priya,
+
+Hit a snag. One of our enterprise customers (Meridian Group) requires biometric authentication for their deployment. Expo's biometric module has a known bug with Android 14 that the Expo team hasn't patched yet.
+
+Options:
+1. Eject from Expo and handle native modules ourselves. Estimated cost: 3 extra weeks, significant complexity increase.
+2. Wait for the Expo patch. ETA from their GitHub: 4-6 weeks, which blows our Q1 deadline.
+3. Use a third-party React Native biometric library (react-native-biometrics) that works around the Expo limitation. Estimated cost: 3 days.
+
+I'm recommending option 3. It's a workaround but it's clean and well-maintained.
+
+Awaiting your call.
+
+Suki
+
+---
+
+EMAIL 016
+From: Priya Nair <priya@veloris.io>
+To: Suki Tanaka <suki@veloris.io>
+Date: February 10, 2025
+Subject: RE: Atlas mobile — Expo issue
+
+Suki,
+
+Go with option 3. Don't eject from Expo — the cost isn't worth it for one customer's requirement. We can revisit if more customers need it.
+
+Priya
+
+---
+
+EMAIL 017
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: February 14, 2025
+Subject: Conduit milestone 1 complete
+
+Priya,
+
+Milestone 1 done: Kafka cluster is running in dev, Tobias has the consumer workers processing test events, and TimescaleDB is ingesting correctly.
+
+Numbers from load testing:
+- Sustained throughput: 220k events/hour (target was 200k — we're ahead)
+- p99 latency: 87ms (target was sub-100ms — we're good)
+- Zero data loss on simulated service restarts
+
+Tobias deserves credit here. He picked up Kafka faster than I expected and his consumer worker implementation is clean. I'd recommend giving him a performance note.
+
+Next milestone: backfill system. Estimated 2 weeks.
+
+Darnell
+
+---
+
+EMAIL 018
+From: Leo Reyes <leo@veloris.io>
+To: Marcus Webb <marcus@veloris.io>
+Date: February 21, 2025
+Subject: Nightwatch migration — week 6 update (final)
+
+Marcus,
+
+Migration complete. Datadog is decommissioned as of this morning.
+
+Final numbers:
+- Grafana: 47 dashboards migrated, 3 new ones built that Datadog couldn't support
+- Prometheus: all 23 services instrumented
+- Loki: log ingestion running at 2.3GB/day
+- Alertmanager: 89 alert rules configured, all tested by Hana
+
+Actual cost in February: $743/month. Better than my $800 estimate.
+
+One thing I want to flag for future reference: Loki's query language (LogQL) has a steeper learning curve than Datadog's. I've written a team guide and put it in Notion under Engineering/Runbooks.
+
+The $13,257/month saving starts now.
+
+Leo
+
+---
+
+EMAIL 019
+From: Camille Russo <camille@veloris.io>
+To: Suki Tanaka <suki@veloris.io>, Priya Nair <priya@veloris.io>
+Date: February 25, 2025
+Subject: Atlas mobile — beta launch confirmed
+
+Suki, Priya,
+
+Beta launch confirmed for March 7th. 47 users from 6 enterprise customers signed up.
+
+Meridian Group is included — they've confirmed the biometric auth works on their devices (good call on option 3).
+
+One last thing: I need a crash reporting tool integrated before launch. My recommendation is Sentry — we already use it for the web app so there's no new vendor to evaluate. Suki, can you confirm this is straightforward with React Native?
+
+Camille
+
+---
+
+EMAIL 020
+From: Suki Tanaka <suki@veloris.io>
+To: Camille Russo <camille@veloris.io>
+Date: February 25, 2025
+Subject: RE: Atlas mobile — beta launch confirmed
+
+Camille,
+
+Sentry is already integrated — I added it two weeks ago in anticipation. React Native SDK is straightforward.
+
+One heads up: Sentry's React Native SDK has a known issue where it can miss crashes that happen during app initialization (before Sentry itself initializes). I've documented a workaround in our internal runbook. It's not common but worth knowing.
+
+Ready for March 7th.
+
+Suki
+
+---
+
+EMAIL 021
+From: Rebecca Kwon <rkwon@halcyonadvisory.com>
+To: Marcus Webb <marcus@veloris.io>
+Date: March 6, 2025
+Subject: Halcyon Advisory — Security Audit Report (Veloris Technologies)
+
+Marcus,
+
+Please find attached the full report from our two-week engagement (February 24 – March 5). Summary below.
+
+Critical findings (3):
+1. PCI DSS violation — application logs containing card data (already in remediation per your team)
+2. API rate limiting absent on 3 endpoints: /api/webhooks/stripe, /api/exports/bulk, /api/admin/users — these are exploitable for credential stuffing and data exfiltration
+3. JWT token expiry set to 30 days — industry standard for session tokens is 24 hours maximum; long-lived tokens expand the blast radius of a compromised token
+
+Medium findings (7): Full details in the report. Highlights: missing CSRF protection on 2 form endpoints, outdated npm dependencies with known CVEs (4 packages), S3 bucket with overly permissive ACLs on dev environment.
+
+Low findings (12): Minor issues including verbose error messages in production, missing security headers on 3 API routes.
+
+Recommended remediation priority: Fix the 3 critical items within 30 days. The rate limiting and JWT expiry are straightforward changes.
+
+Rebecca Kwon
+Lead Auditor, Halcyon Advisory
+
+---
+
+EMAIL 022
+From: Marcus Webb <marcus@veloris.io>
+To: Priya Nair <priya@veloris.io>, Darnell Okafor <darnell@veloris.io>, Leo Reyes <leo@veloris.io>
+Date: March 7, 2025
+Subject: Halcyon audit — action items
+
+Team,
+
+Got the Halcyon report. Three critical items to close immediately:
+
+1. PCI logging fix — Darnell, you said this was done. Please confirm in writing by end of day.
+
+2. Rate limiting — Leo, this is yours. Three endpoints need it: /api/webhooks/stripe, /api/exports/bulk, /api/admin/users. I want this done in 2 weeks. Use our existing nginx config if possible.
+
+3. JWT expiry — Darnell, change the token expiry from 30 days to 24 hours. Coordinate with Priya on the user experience impact (users will need to log in more often). I want this done within 1 week.
+
+Also: I want a weekly security standup starting next Monday. Priya to run it.
+
+We have a Series B term sheet on the table and investors will ask about this audit. We need clean answers.
+
+Marcus
+
+---
+
+EMAIL 023
+From: Suki Tanaka <suki@veloris.io>
+To: Priya Nair <priya@veloris.io>, Camille Russo <camille@veloris.io>
+Date: March 7, 2025
+Subject: Atlas mobile beta — launch day update
+
+Priya, Camille,
+
+Beta launched this morning. 47 users active as of 2 PM.
+
+Performance: the app is fast — initial load under 1.2 seconds on average across devices. No major issues in the first 4 hours.
+
+Bug reports so far: 3 crash reports, all on iOS 16. The crash happens when opening a task with a due date — looks like a date picker rendering bug specific to iOS 16. Not iOS 17 or Android.
+
+I've already isolated the issue to a third-party date formatting library. I'll have a fix ready tomorrow morning. Users affected: likely any enterprise customer with employees still on iOS 16. Camille — do we know if Meridian Group has iOS 16 devices?
+
+Everything else is working correctly. Push notifications are delivering, biometric auth on Android is clean.
+
+Suki
+
+---
+
+EMAIL 024
+From: Suki Tanaka <suki@veloris.io>
+To: Priya Nair <priya@veloris.io>, Camille Russo <camille@veloris.io>
+Date: March 8, 2025
+Subject: iOS 16 date picker bug — fixed
+
+Priya, Camille,
+
+Fix deployed at 10:15 AM. Root cause: react-native-date-picker version 4.2.1 has an incompatibility with iOS 16's UIDatePicker API. Pinned to version 4.1.8 which doesn't have the issue.
+
+All 3 affected users have been notified. No new crash reports since the fix.
+
+Crash count day 1: 3. Crash count since fix: 0. I'll monitor for the next 48 hours.
+
+One thing I want to note: Sentry caught all 3 crashes within 30 seconds of occurrence. The initialization workaround I documented is working correctly.
+
+Suki
+
+---
+
+EMAIL 025
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: March 10, 2025
+Subject: Conduit — backfill milestone complete
+
+Priya,
+
+Backfill system is done. Historical event processing tested against a full production data snapshot.
+
+Numbers:
+- 3 years of historical data (January 2022 – December 2024) processed in 4 hours 12 minutes
+- Zero data integrity errors in validation checks
+- Backfill runs at ~850k events/hour — faster than the live system because it bypasses the validation layer
+
+The system is now feature-complete. I want 2 more days of soak testing before we call it production-ready.
+
+Separately: PCI logging fix has been live since March 1. Confirmed in writing as requested by Marcus.
+
+Darnell
+
+---
+
+EMAIL 026
+From: Priya Nair <priya@veloris.io>
+To: Marcus Webb <marcus@veloris.io>
+Date: March 11, 2025
+Subject: Q2 headcount request
+
+Marcus,
+
+Based on Q1 output and the security audit findings, I'm requesting one additional hire for Q2:
+
+Security Engineer — dedicated to security hardening, audit remediation, and SOC 2 readiness. The Halcyon findings have made it clear we need someone in this role full time, not just fractional consultants. Budget target: $165,000–$185,000 base. I'd want them reporting to you directly given the cross-cutting nature of the role.
+
+Secondary request: I'd also like to headcount a mid-level backend engineer to support Conduit scaling as we add customers. But if we can only do one, security engineer first.
+
+Priya
+
+---
+
+EMAIL 027
+From: Leo Reyes <leo@veloris.io>
+To: Priya Nair <priya@veloris.io>, Marcus Webb <marcus@veloris.io>
+Date: March 13, 2025
+Subject: First Nightwatch incident — postmortem
+
+Priya, Marcus,
+
+We had our first real incident on the new Nightwatch stack last night. Full postmortem below.
+
+Timeline:
+- 11:43 PM — Alertmanager fired disk space alert on the TimescaleDB node (85% full)
+- 11:51 PM — I received the page and acknowledged
+- 11:58 PM — Root cause identified: Conduit test data from the backfill validation runs wasn't being pruned
+- 12:30 AM — Pruning job run manually, disk space back to 41%, alert resolved
+
+Root cause: the Conduit backfill testing on March 10 wrote ~180GB of test events to TimescaleDB that were never cleaned up. We have a pruning schedule that runs weekly but it wasn't triggered because the data was written outside the normal ingestion path.
+
+Fix applied: updated the pruning job to run daily instead of weekly, and added a post-backfill cleanup step to the runbook.
+
+Incident metrics:
+- Time to page: 8 minutes (within our 15-minute SLA)
+- Time to resolution: 47 minutes total
+- Impact to users: none (disk never reached 95% threshold that would affect writes)
+
+Leo
+
+---
+
+EMAIL 028
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>, Marcus Webb <marcus@veloris.io>
+Date: March 14, 2025
+Subject: Conduit — production launch
+
+Priya, Marcus,
+
+Conduit is live in production as of 9:00 AM today. The old pipeline is decommissioned.
+
+48-hour metrics:
+- Average throughput: 180,000 events/hour
+- Peak throughput: 310,000 events/hour (midday Thursday)
+- p99 latency: 84ms
+- Data loss events: 0
+- Service restarts: 1 (planned maintenance), 0 data loss on restart
+
+The system is meeting every target we set in January. Tobias's consumer workers have been flawless — no issues in 48 hours under real load.
+
+I'll send weekly metrics for the first month to confirm stability.
+
+Darnell
+
+---
+
+EMAIL 029
+From: Camille Russo <camille@veloris.io>
+To: Priya Nair <priya@veloris.io>, Marcus Webb <marcus@veloris.io>
+Date: March 14, 2025
+Subject: Atlas mobile beta — week 1 summary
+
+Priya, Marcus,
+
+One week of beta feedback. Results are strong.
+
+Usage stats:
+- 47/47 users active (100% activation, excellent for a beta)
+- Average sessions per user per day: 2.3
+- Average session length: 4 minutes 40 seconds
+
+Satisfaction survey (n=31 responses, 66% response rate):
+- Overall: 4.1/5
+- NPS: 67
+
+Most requested feature (as expected): task creation and editing. We knew this was coming — Phase 2 will address it.
+
+Unexpected finding: 60% of users are opening the app on iPad, not iPhone. We designed for phone-first. May need to revisit layout for the iPad form factor — there's a lot of whitespace on larger screens.
+
+Push notifications: working correctly. Task assignment notifications have a 94% open rate.
+
+Camille
+
+---
+
+EMAIL 030
+From: Marcus Webb <marcus@veloris.io>
+To: All Engineering <engineering@veloris.io>
+Date: March 17, 2025
+Subject: Q2 planning — priorities
+
+Team,
+
+Q1 is in the books. Conduit shipped. Nightwatch migrated. Mobile beta launched. Good quarter.
+
+Q2 priorities:
+
+1. Phase 2 mobile (Suki leads) — task editing, push notifications, comment threads. Target: June 30.
+2. Security hardening (Darnell + Leo + incoming hire) — close all Halcyon critical/medium findings. SOC 2 readiness track begins.
+3. Conduit scaling — we need to get to 500k events/hour sustained by end of Q3 as we add enterprise customers. Leo and Darnell to propose architecture changes.
+4. Hire security engineer (Priya recruiting) — first-priority open role.
+
+One personal note: Tobias, you crushed it on Conduit. I'm recommending you for a formal performance review and compensation adjustment. Well deserved.
+
+Marcus
+
+---
+
+EMAIL 031
+From: Priya Nair <priya@veloris.io>
+To: Suki Tanaka <suki@veloris.io>
+Date: March 19, 2025
+Subject: Phase 2 scope — confirmed
+
+Suki,
+
+Phase 2 scope locked:
+- Task creation and editing (full CRUD)
+- Comment threads on tasks
+- Push notifications via Firebase Cloud Messaging (FCM)
+- iPad layout fixes (respond to Camille's feedback)
+
+Out of scope for Phase 2: offline mode (still Phase 3).
+
+Hard deadline: June 30. I'm not moving it. The three enterprise customers asking for task creation have been patient but we've pushed them twice already.
+
+One resource note: Tobias is available to help with the backend push notification service (FCM integration on the server side). Use him.
+
+Priya
+
+---
+
+EMAIL 032
+From: Suki Tanaka <suki@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: March 21, 2025
+Subject: Phase 2 — FCM implementation plan
+
+Priya,
+
+FCM integration plan:
+
+Frontend (my work): FCM SDK integration, push notification permission flow, notification tray UI. Estimated: 3 weeks.
+
+Backend (Tobias): notification service that listens for task assignment events from Conduit and sends FCM messages. The Conduit pipeline is the right place to trigger these — events are already flowing through it. Estimated: 2 weeks for Tobias. He'll need Darnell to review the Conduit integration.
+
+Total estimate: 3 weeks (frontend is the bottleneck). Targeting completion by April 11.
+
+Devices supported: iOS and Android. FCM handles both platforms via APNs for iOS and direct FCM for Android.
+
+One note: we'll need to store FCM device tokens in the Atlas user table. I've scoped the backend schema change — it's a single column addition to the users table, should take Tobias half a day.
+
+Suki
+
+---
+
+EMAIL 033
+From: Priya Nair <priya@veloris.io>
+To: All Engineering <engineering@veloris.io>
+Date: April 1, 2025
+Subject: New team member — Omar Khalil
+
+Team,
+
+Excited to welcome Omar Khalil, who joins us as Security Engineer starting April 7. Omar is coming from Stripe's security team where he spent 3 years working on payment infrastructure security and compliance. He brings hands-on SOC 2 and PCI DSS experience that we need given where we're headed.
+
+Omar will report directly to Marcus and focus initially on closing the Halcyon audit findings and getting us on track for SOC 2 Type II.
+
+Please make him feel welcome. Omar — see you Monday.
+
+Priya
+
+---
+
+EMAIL 034
+From: Leo Reyes <leo@veloris.io>
+To: Marcus Webb <marcus@veloris.io>, Priya Nair <priya@veloris.io>
+Date: April 8, 2025
+Subject: AWS cost report — April
+
+Marcus, Priya,
+
+April AWS bill came in at $18,400. For context: January bill was $12,200. The $6,200 increase is almost entirely from Conduit (TimescaleDB storage + Kafka brokers scaling up).
+
+This is within expected range but I want to flag it before it becomes a surprise in the budget review.
+
+Recommendation: move to Reserved Instances for the Conduit infrastructure. We're committed to these workloads for at least 12 months. 1-year reserved pricing would save approximately $4,200/month compared to on-demand.
+
+I can make this change in an afternoon. Needs your approval.
+
+Leo
+
+---
+
+EMAIL 035
+From: Hana Bergström <hana@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: April 9, 2025
+Subject: Q1 final test coverage report
+
+Priya,
+
+Final Q1 coverage numbers:
+
+Overall Atlas backend coverage: 74% (up from 61% in January — target was 80%)
+Payments module: 78% (up from 34%)
+Conduit codebase: 82% (Tobias and Darnell both wrote strong test suites)
+Atlas frontend (React): 55% (no change — we haven't touched it)
+
+We didn't hit 80% overall but the payments jump from 34% to 78% is the one I care about most. That module is the highest risk and it's now in a much healthier place.
+
+I'm setting a new target: 80% overall by end of Q2, with the focus on the frontend.
+
+Priya
+
+---
+
+EMAIL 036
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: April 15, 2025
+Subject: TimescaleDB performance — proposal
+
+Priya,
+
+We're seeing query performance degradation on TimescaleDB above 400 million rows. At current ingestion rates we'll hit that threshold in about 6 weeks. Queries that take 12ms today will take 40-50ms at that scale without changes.
+
+Proposed fix:
+1. Partition the events table by month (replacing the current single-chunk structure)
+2. Add a composite index on (tenant_id, event_type, created_at) — most of our queries filter on all three
+
+I've benchmarked this on a data copy: 40% query time improvement at 600M rows, with the partition structure scaling well beyond that.
+
+Estimated work: 4 days. Hana will need 3 days for regression testing.
+
+Risk: the schema migration requires a maintenance window of approximately 90 minutes.
+
+Darnell
+
+---
+
+EMAIL 037
+From: Priya Nair <priya@veloris.io>
+To: Darnell Okafor <darnell@veloris.io>, Hana Bergström <hana@veloris.io>
+Date: April 16, 2025
+Subject: RE: TimescaleDB performance — proposal
+
+Darnell, Hana,
+
+Approved.
+
+Hana — please do a full regression suite on the payments and Conduit query paths before Darnell cuts over. We cannot have another coverage gap in payments.
+
+Darnell — schedule the 90-minute maintenance window for a Saturday morning. Communicate it to the team a week in advance.
+
+Priya
+
+---
+
+EMAIL 038
+From: Camille Russo <camille@veloris.io>
+To: Marcus Webb <marcus@veloris.io>, Priya Nair <priya@veloris.io>
+Date: April 22, 2025
+Subject: New enterprise customer — Axiom Financial
+
+Marcus, Priya,
+
+We just signed Axiom Financial — an investment bank based in New York. 2,400 employees, $480,000 ARR (our largest deal to date). They'll go live on Atlas in May.
+
+Requirements I need engineering to be aware of:
+
+1. Volume: Axiom will add significant event load. Their estimated event volume is 150,000 events/day — we should make sure Conduit is ready.
+2. Compliance: Axiom requires SOC 2 Type II by September 2025. Omar's work on our security posture is now directly tied to a customer commitment.
+3. SSO: Axiom requires SAML 2.0 single sign-on. We don't currently have SSO in Atlas. This is a blocker for their full rollout — they can't onboard all 2,400 employees without it.
+
+The SSO requirement is the most urgent gap. Priya, can we scope this?
+
+Camille
+
+---
+
+EMAIL 039
+From: Marcus Webb <marcus@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: April 24, 2025
+Subject: Confidential — Series B term sheet
+
+Priya,
+
+Keep this tight for now — not sharing with the broader team until we're closer to close.
+
+We have a term sheet from Andreessen Horowitz (lead) + participation from Sequoia. $28 million at a $180 million post-money valuation. Close expected May 15.
+
+This changes our hiring plan significantly. I want to backfill 5 engineering positions in Q3: 2 backend, 1 frontend, 1 DevOps, 1 QA. That would bring us to 14 engineers total.
+
+Also: Axiom's SOC 2 requirement is now a board-level concern. We'll have a 6-month runway to get it done before investors' first board review.
+
+Marcus
+
+---
+
+EMAIL 040
+From: Tobias Hunt <tobias@veloris.io>
+To: Darnell Okafor <darnell@veloris.io>
+Date: April 28, 2025
+Subject: Conduit — edge case bug found
+
+Darnell,
+
+Found something while writing additional test coverage for the consumer workers.
+
+When a Kafka consumer rebalances (consumer group membership changes — e.g., a pod restarts), there's a window where the same batch of events can be processed twice. The consumer workers don't have idempotency keys, so duplicate events can be written to TimescaleDB.
+
+I ran some numbers: based on the rebalance frequency in production logs, this probably affects less than 0.01% of events. But at 180k events/hour, that's potentially ~180 duplicate events per hour.
+
+Proposed fix: add an idempotency key column to the events table and check for duplicates on insert. I've drafted the implementation — can you review?
+
+Tobias
+
+---
+
+EMAIL 041
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>
+Date: May 5, 2025
+Subject: Conduit — scaling concern with Axiom onboarding
+
+Priya,
+
+Good news and a warning.
+
+Good news: Axiom went live on May 1. Onboarding went smoothly from a UX perspective.
+
+Warning: Axiom is generating more events than projected. We're currently hitting 480,000 events/hour peak load (Axiom plus our existing customers). Our architecture starts showing stress above ~550,000 events/hour.
+
+I want to get ahead of this before it becomes an incident. Quick fixes (1 week to implement):
+- Add 2 more Kafka partitions (currently 12, increase to 14)
+- Increase TimescaleDB connection pool from 50 to 150 connections
+
+This should get us comfortably to 700,000 events/hour. Then we need the bigger EKS migration Leo has been proposing for the longer term.
+
+Darnell
+
+---
+
+EMAIL 042
+From: Leo Reyes <leo@veloris.io>
+To: Marcus Webb <marcus@veloris.io>, Priya Nair <priya@veloris.io>
+Date: May 7, 2025
+Subject: EKS migration proposal
+
+Marcus, Priya,
+
+Darnell and I have been talking about the infrastructure path forward. I'm proposing we migrate Conduit from our existing EC2 setup to Amazon EKS (Elastic Kubernetes Service).
+
+Benefits:
+- Auto-scaling: EKS will automatically spin up/down Kafka consumers based on queue depth, which is exactly what we need for variable Axiom load
+- Deployment rollbacks: 30-second rollback vs the current ~15-minute manual process
+- Multi-region readiness: EKS makes it easier to add a second region if needed for Axiom (they have a DR requirement)
+
+Cost: EKS control plane is $0.10/hour (~$72/month). Better instance utilization from auto-scaling should offset most of this. Net additional cost: approximately $3,200/month when including managed node groups.
+
+Timeline: 6 weeks. Can proceed in parallel with Darnell's short-term Kafka partition fixes.
+
+Leo
+
+---
+
+EMAIL 043
+From: Suki Tanaka <suki@veloris.io>
+To: Camille Russo <camille@veloris.io>, Priya Nair <priya@veloris.io>
+Date: May 8, 2025
+Subject: Phase 2 update — on track
+
+Camille, Priya,
+
+Phase 2 status update:
+
+Completed:
+- FCM integration (frontend done, Tobias backend service done)
+- Task creation and editing — fully functional in staging
+- iPad layout fixes — 100% done
+
+In progress:
+- Comment threads: 80% complete, targeting May 15 to finish
+
+Overall: on track for June 30. The June deadline is comfortable given current pace.
+
+One note from QA: Hana found 3 edge cases in the task creation flow that I'm fixing this week. Minor — all related to empty/null state handling.
+
+Suki
+
+---
+
+EMAIL 044
+From: Marcus Webb <marcus@veloris.io>
+To: All Engineering <engineering@veloris.io>
+Date: May 9, 2025
+Subject: Team promotions
+
+Team,
+
+Two promotions effective immediately:
+
+Leo Reyes — promoted to Senior DevOps Engineer and Infrastructure Lead. Leo built and owns our entire infrastructure. The Nightwatch migration and the Conduit deployment are two of the most impactful technical projects we've had. Long overdue.
+
+Tobias Hunt — promoted to Mid-Level Backend Engineer. Tobias came in as junior and ran with a senior-level project in Q1. He also found a bug that could have become a real problem if left undetected.
+
+These will be reflected in the next payroll cycle.
+
+Marcus
+
+---
+
+EMAIL 045
+From: Priya Nair <priya@veloris.io>
+To: Tobias Hunt <tobias@veloris.io>
+Date: May 9, 2025
+Subject: Promotion and compensation
+
+Tobias,
+
+Congratulations. As Marcus announced, you're being promoted to Mid-Level Backend Engineer.
+
+Your new base salary is $135,000, up from $115,000. The raise is effective May 1 (retroactive to start of the month).
+
+It's been a strong 6 months. The Kafka ramp, the consumer workers, the idempotency bug — you've consistently delivered. Keep it up.
+
+Priya
+
+---
+
+EMAIL 046
+From: Hana Bergström <hana@veloris.io>
+To: Priya Nair <priya@veloris.io>, Darnell Okafor <darnell@veloris.io>
+Date: May 10, 2025
+Subject: URGENT — payments regression found
+
+Priya, Darnell,
+
+Found a regression in the payments module. Refund calculations are returning incorrect amounts — off by exactly $0.01 for transactions with an original value greater than $1,000.
+
+Example: a $1,200 refund is being processed as $1,199.99.
+
+I believe this was introduced by the TimescaleDB schema migration on May 3 (the maintenance window). The ORDER BY clause in the refund calculation query was accidentally dropped during the index migration script.
+
+Impact: approximately 200 transactions processed since May 3 are affected. We need to audit them.
+
+This needs a hotfix immediately. I've already notified Stripe.
+
+Hana
+
+---
+
+EMAIL 047
+From: Darnell Okafor <darnell@veloris.io>
+To: Priya Nair <priya@veloris.io>, Hana Bergström <hana@veloris.io>
+Date: May 12, 2025
+Subject: Payments regression — hotfix deployed
+
+Priya, Hana,
+
+Hotfix deployed at 2:15 PM. Root cause confirmed: the ORDER BY created_at ASC clause was missing from the refund_calculation CTE in the payment processing query. It was accidentally dropped during the migration script for the TimescaleDB schema change on May 3.
+
+The fix was reviewed by Priya and Leo before deployment (per our payment change policy). No further incorrect calculations since 2:15 PM.
+
+Manual audit: I've exported the 203 affected transactions. Stripe can process the $0.01 correction as a batch adjustment. I'm coordinating with Patricia in finance to get this done this week. None of the amounts are large enough to trigger customer complaints but we should correct them proactively.
+
+Root cause / lesson learned: the migration script was not run through the full regression test suite before the maintenance window. We'll add payments query regression to the required pre-migration checklist going forward.
+
+Darnell
+
+---
+
+EMAIL 048
+From: Marcus Webb <marcus@veloris.io>
+To: Leo Reyes <leo@veloris.io>, Priya Nair <priya@veloris.io>
+Date: May 13, 2025
+Subject: RE: EKS migration proposal — approved
+
+Leo,
+
+EKS migration approved. Budget confirmed: $3,200/month additional for managed node groups.
+
+Start date: May 15. Confirm your 6-week timeline.
+
+One requirement: I want the migration to include a documented rollback plan. Given what just happened with the payments regression, I'm not comfortable with any infrastructure change that doesn't have a clear revert path.
+
+Marcus
+
+---
+
+EMAIL 049
+From: Camille Russo <camille@veloris.io>
+To: Omar Khalil <omar@veloris.io>, Priya Nair <priya@veloris.io>
+Date: May 15, 2025
+Subject: Axiom Financial — SSO requirement
+
+Omar, Priya,
+
+Following up on the Axiom SSO requirement I flagged in April. Axiom has confirmed they require SAML 2.0 for all 2,400 employees to use Atlas. Without it, they can only roll out to the IT department (about 80 people).
+
+Omar — you have the most relevant experience here. What's your recommendation for implementing SAML 2.0 in Atlas?
+
+Camille
+
+---
+
+EMAIL 050
+From: Omar Khalil <omar@veloris.io>
+To: Camille Russo <camille@veloris.io>, Priya Nair <priya@veloris.io>
+Date: May 16, 2025
+Subject: RE: Axiom Financial — SSO recommendation
+
+Camille, Priya,
+
+Recommendation: integrate Auth0 as our identity provider with SAML 2.0 support. This is the fastest path to SAML compliance that doesn't require us to build our own identity infrastructure.
+
+Why Auth0:
+- Pre-built SAML 2.0 connectors for enterprise IdPs (Axiom uses Okta, which Auth0 supports natively)
+- SOC 2 Type II certified — this counts toward our own SOC 2 audit evidence
+- We can extend it for future customers' SSO needs without additional dev work
+
+Estimated implementation: 4 weeks. I'll own the Auth0 setup; backend team (Darnell or Tobias) needs to implement the Auth0 middleware in the Atlas API.
+
+Cost: Auth0 B2B plan is $23/month per connection (approximately $276/month for the first year, scaling with customers).
+
+One risk: we'd be adding a new external dependency. I recommend we treat Auth0 as a vendor and do a security review before signing up.
+
+Omar
+
+---

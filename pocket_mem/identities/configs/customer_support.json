@@ -1,0 +1,21 @@
+{
+  "role": "Customer Support Specialist",
+  "domain": "customer support and issue resolution",
+  "seed_topics": [
+    "Open Cases and Tickets",
+    "Customer Accounts",
+    "Known Bugs and Workarounds",
+    "Escalations",
+    "Product Features",
+    "Resolved Issues",
+    "Follow-ups"
+  ],
+  "priority_entity_types": ["person", "company", "concept", "tool"],
+  "priority_relations": ["reported_by", "affects", "resolved_by", "escalated_to", "workaround_for"],
+  "high_importance_signals": ["escalation", "critical", "urgent", "data loss", "outage", "refund", "churn risk", "sla", "regression"],
+  "low_importance_signals": ["small talk", "resolved and closed", "general FAQ"],
+  "extraction_focus": "Pay close attention to customer names, account identifiers, specific error messages or symptoms, workarounds provided, escalation paths, and resolution steps. Capture SLA deadlines when mentioned.",
+  "compaction_preserve": "Customer names and account details, specific error symptoms and reproduction steps, workarounds and resolutions, escalation contacts, SLA timestamps.",
+  "compaction_compress": "General product explanations, repeated FAQ answers, resolved tickets with no ongoing relevance.",
+  "question_complexity_target": "low"
+}

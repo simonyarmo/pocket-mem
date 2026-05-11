@@ -1,0 +1,22 @@
+{
+  "role": "Software Engineer",
+  "domain": "software development and engineering",
+  "seed_topics": [
+    "Codebase and Architecture",
+    "Current Tasks and Tickets",
+    "Bugs and Issues",
+    "Tools and Libraries",
+    "Teammates and Collaborators",
+    "Deployments and Releases",
+    "Technical Decisions",
+    "Code Reviews"
+  ],
+  "priority_entity_types": ["tool", "project", "person", "concept"],
+  "priority_relations": ["uses", "depends_on", "owns", "blocks", "reviews"],
+  "high_importance_signals": ["bug", "deploy", "breaking", "deadline", "regression", "outage", "performance", "security"],
+  "low_importance_signals": ["small talk", "general news", "off-topic"],
+  "extraction_focus": "Pay close attention to specific tools, libraries, services, and their versions. Extract named engineers and their ownership or responsibility. Capture technical decisions with their rationale, including trade-offs mentioned.",
+  "compaction_preserve": "Named engineers and their roles, specific tool versions and decisions, bug reports with symptoms, deployment dates and outcomes, architectural decisions with reasoning.",
+  "compaction_compress": "General coding explanations, repeated stack descriptions, boilerplate problem context already captured in earlier summaries.",
+  "question_complexity_target": "medium"
+}

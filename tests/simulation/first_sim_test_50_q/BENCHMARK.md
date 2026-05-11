@@ -1341,3 +1341,99 @@ Because the entire observation (email) was discarded on these failures, none of 
 
 ---
 
+### Run 25 — 2026-05-05 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer · v2 code (hallucination defence)
+
+**First run under v2 codebase.** Hallucination defence active: strict EXTRACT prompt, `verify_extraction()` grounding check, `relationship_min_weight=0.6` threshold. Identity not configured — generic mode, v1 behaviour for extraction and synthesis.
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 20/20 = **100%** |
+| T2 accuracy | 20/20 = **100%** |
+| T3 accuracy | 9.5/10 = **95%** |
+| Overall accuracy | 49.5/50 = **99%** |
+| False positive rate | 1/9 ⚠️ (U-03 — enumerated 8 named employees as definitive total count) |
+| Trap question (U-05) | **PASS** |
+| Session persistence | PASS |
+| Tokens — ingestion | in=21,068  out=10,291 |
+| Tokens — total (recall phase) | in=346,257  out=3,115 |
+| Estimated API cost | $0.0905 (Haiku pricing) |
+| Nodes stored | 141 |
+| Recall p50 | 6,724ms |
+| Recall p99 | 11,229ms |
+
+**T1:** All 20 correct. T1-17 (47 users / 6 enterprise customers) answered cleanly with no hedge — resolved from the self-contradictory pattern seen in Runs 17, 19, 20, 23.
+
+**T2:** All 20 correct. T2-18 (Notion/LogQL) answered cleanly with no hedge. T2-13 (1Password) correct.
+
+**T3 wrong (0.5):**
+- T3-05 (0.5) — correctly states "50 total (47 migrated + 3 new)" but says "archived records do not specify how many dashboards existed before the migration, so a direct comparison cannot be made." Model uses the 47 figure for the migration count but won't infer Datadog had 47 before migration. Same structural inference gap as all prior runs.
+
+**T3 notable improvements vs prior runs:**
+- T3-02 ✅ — all three Marcus actions correctly identified (fix before end of week; hire fractional security consultant; OWASP training). Previously scored 0.5 in Runs 14, 23, 24 due to missing one action.
+- T3-03 ✅ — **full stack including Alertmanager and Loki named for the first time across all runs.** Every prior run in this series (Runs 14, 16, 17, 23, 24) listed only "Grafana + Prometheus." The v2 strict extraction prompt appears to have captured the full tool list as distinct entities.
+
+**U-tier:**
+- U-03: FALSE POSITIVE — enumerates all 8 named employees as "Veloris has 8 total employees." Persistent across nearly all runs.
+- U-07: PASS on manual review. Answer says "no mention of Veloris having experienced a data breach" and correctly distinguishes the PCI compliance incident from an actual breach. Auto-scored as "possible false positive" but does not assert a breach occurred.
+- All other unanswerable questions correctly declined. Trap (U-05) PASS — correctly identified AWS from email body context.
+
+**Key findings:**
+
+- **99% overall — matches Run 24's best result, first time under v2 code.** Hallucination defence did not degrade accuracy. 141 nodes vs 156 in Run 24 — the stricter extraction filtered ~15 nodes, consistent with the grounding check removing entities not present in the raw text.
+- **T3-03 structural weakness finally resolved.** The strict extraction prompt (v2 Phase 12.5) required "Do NOT infer entities that are not named in the text" — this appears to have forced the model to extract Alertmanager and Loki as separate explicit entities rather than collapsing the stack into a summary. All five prior runs in this series missed this.
+- **T3-02 three-action enumeration correct for the first time since Run 2.** Likely explains the slightly higher token count during ingestion (out=10,291 vs ~11,000-13,000 in prior runs) — the v2 extraction produced different entity distributions but still captured the key facts.
+- **Fewer nodes, same accuracy.** 141 vs 153 average for Runs 23+24. The v2 grounding check filtered fabricated entities without removing real ones — quality maintained at lower volume.
+- **T3-05 inference gap persists.** The only remaining structural failure. The model has the "47 migrated from Datadog" fact in its answer but refuses to apply it as a comparison baseline. This is a reasoning failure in Claude Haiku, not a retrieval gap.
+- **U-03 false positive persists.** Structural — 8 employees listed in the ingested company header. Would require either filtering the header at ingest time or a stronger ANSWER_SYSTEM distinction between "people mentioned" and "total headcount stated."
+
+---
+
+
+### Run 26 — 2026-05-07 · qwen2.5:7b ingest + claude-haiku-4-5-20251001 answer · existing DB
+
+| Metric | Score |
+|--------|-------|
+| T1 accuracy | 20/20 = **100%** |
+| T2 accuracy | 20/20 = **100%** |
+| T3 accuracy | 9/10 = **90%** |
+| Overall accuracy | 49/50 = **98%** |
+| False positive rate | 1/9 ⚠️ (U-03 — persistent headcount) |
+| Trap question (U-05) | **PASS** |
+| Nodes stored | 154 |
+| Tokens — recall in | 355,181 |
+| Tokens — recall out | 3,092 |
+| Estimated API cost | $0.0927 (Haiku pricing) |
+| Recall p50 | 6,864ms |
+| Recall p99 | 11,238ms |
+
+**Mode: existing DB — 0 emails ingested (in=1,213 out=826 confirm no real ingestion)**
+
+**T3 wrong (1.0):**
+- T3-03 (0.5) — "Grafana + Prometheus replaced Datadog" — Alertmanager and Loki missing.
+  Regression from Run 25 which was the only run to ever name the full stack correctly. The
+  154-node DB is not from Run 25 (141 nodes); likely from Run 24 (156 nodes) which also missed
+  Alertmanager+Loki. Stochastic extraction rather than a systematic improvement.
+- T3-05 (0.5) — persistent inference gap: has the "47 migrated from Datadog" fact but won't
+  apply it as comparison baseline. Unchanged across all 26 runs. Reasoning failure in Haiku,
+  not a retrieval problem.
+
+**U-tier:**
+- U-03: FALSE POSITIVE — enumerates all 8 named employees as definitive total headcount.
+  Persistent across nearly all runs.
+- U-07, U-09, U-10: auto-scored as "possible false positive" but PASS on manual review.
+  Answers correctly say "no mention" / "does not specify" without asserting false facts.
+
+**Comparison vs Run 25 (fresh ingest, v2 code):**
+
+| | Run 25 (fresh, v2) | Run 26 (existing DB) |
+|--|--|--|
+| Overall | 49.5/50 — 99% | 49/50 — 98% |
+| T3-03 (full stack) | ✅ PASS | ❌ 0.5 (Alertmanager+Loki missing) |
+| T3-05 (dashboard compare) | ❌ 0.5 | ❌ 0.5 |
+| Nodes | 141 | 154 |
+| Cost | ~$0.09 | $0.0927 |
+
+T3-03 regression confirms the Run 25 fix was extraction-run-dependent, not structural. The
+strict v2 extraction prompt improves the odds but doesn't guarantee the full stack on every run.
+
+---

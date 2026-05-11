@@ -131,11 +131,12 @@ def test_compress_episodic_chunk_has_embedding(tmp_store, mock_llm):
 
 
 def test_compress_calls_llm_once_per_group(tmp_store, mock_llm):
-    """Two chunks in same topic → one LLM call."""
+    """Two chunks in same topic → one summarisation call + one question-loop call."""
     _write_working_chunk(tmp_store, "c1", "Chunk one")
     _write_working_chunk(tmp_store, "c2", "Chunk two")
     compress(tmp_store, mock_llm)
-    assert mock_llm.complete_json.call_count == 1
+    # 1 call for topic summarisation + 1 call for question loop generation
+    assert mock_llm.complete_json.call_count == 2
 
 
 def test_compress_episodic_source_is_compaction(tmp_store, mock_llm):

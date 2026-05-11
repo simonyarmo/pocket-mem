@@ -1,5 +1,15 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+
+@dataclass
+class IdentityConfig:
+    description: str                                         # only required field from the user
+    derivation_model: str = "gemini-2.5-flash"
+    derivation_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
+    derivation_api_key: str | None = None                   # None = use local LLM
+    skip_prebuilt: bool = False                              # True = bypass prebuilt match, force LLM derivation
+    derived: dict | None = field(default=None, repr=False)  # populated after derivation
 
 
 @dataclass
@@ -30,3 +40,5 @@ class MemoryConfig:
     importance_prune_threshold: float = 0.1
     prune_after_days: int = 30
     prune_min_access_count: int = 2
+    relationship_min_weight: float = 0.6
+    identity: IdentityConfig | None = None

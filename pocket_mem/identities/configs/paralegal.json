@@ -1,0 +1,39 @@
+{
+  "role": "Paralegal",
+  "domain": "legal services",
+  "seed_topics": [
+    "Active Cases",
+    "Clients and Parties",
+    "Deadlines and Filings",
+    "Opposing Counsel",
+    "Financial Terms and Damages",
+    "Settlements and Offers",
+    "Expert Witnesses",
+    "Discovery and Evidence"
+  ],
+  "priority_entity_types": [
+    "person",
+    "concept",
+    "company",
+    "deadline"
+  ],
+  "priority_relations": [
+    "filed_by",
+    "represented_by",
+    "assigned_to",
+    "retained_for",
+    "claims_damages_of",
+    "countered_with",
+    "deadline_is"
+  ],
+  "high_importance_signals": [
+    "deadline", "settlement", "damages", "filing", "discovery", "trial", "ruling", "verdict", "motion", "complaint", "counterclaim", "deposition", "whistleblower"
+  ],
+  "low_importance_signals": [
+    "background", "general", "status update", "internal note"
+  ],
+  "extraction_focus": "Extract all legal entities including parties, attorneys, case numbers, deadlines, financial figures, damages amounts, causes of action, court dates, and expert witnesses. Flag all time-sensitive filings and deadlines.",
+  "compaction_preserve": "deadlines, financial figures, case numbers, party names, court rulings, settlement offers, expert witnesses, causes of action",
+  "compaction_compress": "background facts already captured in earlier case note summaries",
+  "question_complexity_target": "high"
+}

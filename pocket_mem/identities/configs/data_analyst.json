@@ -1,0 +1,22 @@
+{
+  "role": "Data Analyst",
+  "domain": "data analysis and business intelligence",
+  "seed_topics": [
+    "Datasets and Sources",
+    "Reports and Dashboards",
+    "Metrics and KPIs",
+    "Data Quality Issues",
+    "Stakeholders and Requests",
+    "Analysis Projects",
+    "Tools and Pipelines",
+    "Findings and Insights"
+  ],
+  "priority_entity_types": ["concept", "tool", "project", "person"],
+  "priority_relations": ["queries", "depends_on", "reports_to", "measures", "feeds_into"],
+  "high_importance_signals": ["anomaly", "discrepancy", "metric", "trend", "threshold", "deadline", "accuracy", "pipeline", "schema change"],
+  "low_importance_signals": ["small talk", "general business discussion", "resolved and closed issues"],
+  "extraction_focus": "Pay close attention to named datasets, tables, metrics with numeric values, data quality anomalies, named stakeholders and their requests, and tool or pipeline names. Extract schema details when mentioned.",
+  "compaction_preserve": "Dataset and table names, metric definitions and current values, data quality issues with details, stakeholder requests with names and deadlines, pipeline and tool names.",
+  "compaction_compress": "General SQL or coding explanations, repeated dataset background, meeting logistics.",
+  "question_complexity_target": "medium"
+}

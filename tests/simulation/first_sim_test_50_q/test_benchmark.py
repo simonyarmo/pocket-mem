@@ -26,8 +26,8 @@ from pocket_mem import MemoryAgent, LLMConfig
 # ---------------------------------------------------------------------------
 SIM_DIR = Path(__file__).parent
 _DATA_DIR = SIM_DIR.parent / "test_data"
-EMAILS_FILE = _DATA_DIR / "test_emails.txt"
-ANSWER_KEY_FILE = _DATA_DIR / "answer_key.txt"
+EMAILS_FILE = _DATA_DIR / "legal_notes.txt"
+ANSWER_KEY_FILE = _DATA_DIR / "legal_answer_key.txt"
 RESULTS_FILE = SIM_DIR / "last_run_results.txt"
 MEMORY_DIR = SIM_DIR / "memory"   # persistent SQLite store — inspect after the run
 

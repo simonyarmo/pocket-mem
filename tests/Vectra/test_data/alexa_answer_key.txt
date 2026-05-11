@@ -1,0 +1,191 @@
+ANSWER KEY — Alexa Conversations (Jordan Mercer)
+
+=== TIER 1 — DIRECT LOOKUP (20 questions) ===
+
+A-T1-01: What is Jordan's current monthly rent?
+ANSWER: $1,850/month
+
+A-T1-02: What would the new monthly rent be if Jordan renews the lease?
+ANSWER: $1,950/month
+
+A-T1-03: What is the confirmation code for Jordan's Denver flight?
+ANSWER: HXMT72
+
+A-T1-04: What time does Jordan's flight to Denver depart Austin?
+ANSWER: 6:15 AM on March 14th
+
+A-T1-05: What is the name of Jordan's doctor?
+ANSWER: Dr. Sandra Okafor
+
+A-T1-06: Where is Jordan's doctor's appointment?
+ANSWER: Lakeline Medical Center
+
+A-T1-07: What is Jordan's Chase credit card balance?
+ANSWER: $347.82
+
+A-T1-08: What item was Jordan's Amazon package?
+ANSWER: Anker USB-C charging hub
+
+A-T1-09: What is the name of Jordan's landlord?
+ANSWER: Paul Whitfield
+
+A-T1-10: What day and time is the Q1 review meeting?
+ANSWER: Thursday March 6th at 10 AM
+
+A-T1-11: What is the team name for Wednesday trivia night?
+ANSWER: The Trivia Newtons
+
+A-T1-12: Where is trivia night held?
+ANSWER: Buzz Mill
+
+A-T1-13: What time is Jordan's grandmother's birthday dinner?
+ANSWER: 6 PM
+
+A-T1-14: What is Jordan's gym called?
+ANSWER: Austin Fitness Club
+
+A-T1-15: How much is Jordan's annual gym membership?
+ANSWER: $420
+
+A-T1-16: What flight number is Jordan's Denver flight?
+ANSWER: DL 447
+
+A-T1-17: What is Jordan's mother's name?
+ANSWER: Carol Mercer
+
+A-T1-18: What is Jordan's coworker's name who sent the Henderson slides?
+ANSWER: Ryan Patel
+
+A-T1-19: What Chase bank account is Jordan's credit card payment coming from?
+ANSWER: Chase checking account ending in 8823
+
+A-T1-20: What is the deadline to respond to the landlord about the lease?
+ANSWER: March 15th
+
+=== TIER 2 — SINGLE HOP (20 questions) ===
+
+A-T2-01: What did Jordan's mom ask Jordan to bring to the birthday dinner, and what did Jordan add to the shopping list as a result?
+ANSWER: Carol asked Jordan to bring dessert — something chocolate. Jordan added chocolate cake or brownies to the shopping list.
+
+A-T2-02: What happened to Jordan's Chase credit card payment — did Jordan pay the minimum or the full balance, and how much was actually paid?
+ANSWER: Jordan initially set up the minimum payment of $35.00, then changed it to the full balance of $347.82. Full balance was paid.
+
+A-T2-03: What slides is Jordan responsible for in the Henderson presentation, and what should Jordan focus on according to Ryan?
+ANSWER: Slides 8 through 14 (product roadmap and pricing tiers). Ryan said the client is most interested in enterprise pricing and asked Jordan to focus there.
+
+A-T2-04: Why was the Q1 review meeting rescheduled, and what did Marcus ask Jordan to bring?
+ANSWER: Marcus moved it from Friday to Thursday March 6th at 10 AM. He asked Jordan to bring sales numbers for January and February.
+
+A-T2-05: What pre-appointment instructions did Dr. Okafor's office send Jordan?
+ANSWER: Fast for 4 hours before the appointment, bring insurance card, and bring a list of current medications.
+
+A-T2-06: What does Paul Whitfield require in addition to the lease renewal decision?
+ANSWER: First month at the new rate ($1,950) due upfront on April 1st along with signing the new lease.
+
+A-T2-07: What happened to Jordan's Saturday spin class, and when is the next available one?
+ANSWER: Saturday spin class at 9 AM was cancelled due to instructor illness. Next available is Monday March 10th at 6 PM.
+
+A-T2-08: What did Ryan text Jordan about the Henderson call on Thursday morning, and what did Jordan reply?
+ANSWER: Ryan said the Henderson call is confirmed for Monday 10 AM, the client wants to focus on enterprise pricing, and asked Jordan to kick off the Q1 review with January numbers first. Jordan replied that the review went well, Henderson slides will be polished by Sunday night, and the enterprise pricing section is ready.
+
+A-T2-09: What did Jordan's grocery shopping list contain by the end of the week?
+ANSWER: Milk, eggs, sourdough bread, coffee (added Monday), laundry detergent, dish soap (added Tuesday), chocolate cake or brownies (added Wednesday) — 7 items total.
+
+A-T2-10: What does Marcus want to discuss in his Q1 review follow-up email, and when does he want to meet?
+ANSWER: Expanding the Henderson account into a larger enterprise deal. He wants to meet on March 17th at 2 PM with Jordan and the VP.
+
+A-T2-11: What did Jordan respond to Marcus's follow-up email?
+ANSWER: Jordan said March 17th at 2 PM works, is looking forward to discussing the Henderson expansion, and will prepare thoughts on the enterprise deal structure beforehand.
+
+A-T2-12: What reminder did Jordan set related to the lease renewal, and on what date?
+ANSWER: Reminder set for Saturday March 15th to respond to the landlord about the lease.
+
+A-T2-13: Who are the members of the trivia team on Wednesday night?
+ANSWER: Jordan, Dani Torres, Ryan, and Keisha — four people total.
+
+A-T2-14: What was the weather forecast for Jordan's grandmother's birthday on Saturday March 8th?
+ANSWER: Sunny, high of 79, low of 61, no rain expected.
+
+A-T2-15: What gym membership event is coming up on March 20th and how much will it cost?
+ANSWER: Jordan's annual gym membership auto-renews on March 20th and will auto-charge $420 to the card on file.
+
+A-T2-16: What reminder did Jordan set related to the Henderson presentation?
+ANSWER: Reminder set for Sunday March 9th at 6 PM to finish and send the Henderson presentation slides.
+
+A-T2-17: What device did Jordan use for nighttime interactions vs daytime?
+ANSWER: Echo Dot in the bedroom for nighttime (alarm on Monday night, text to mom on Tuesday night). Echo in the living room for daytime interactions.
+
+A-T2-18: What did Dani Torres say about trivia night when she confirmed Jordan was coming?
+ANSWER: The team name is The Trivia Newtons, Ryan and Keisha are also coming, it starts at 7, and they needed Jordan as the fourth member.
+
+A-T2-19: What is the lease expiry date on Jordan's current apartment?
+ANSWER: April 30th
+
+A-T2-20: What was the weather forecast for Monday March 3rd when Jordan asked in the morning?
+ANSWER: 58 degrees and partly cloudy, high of 74, 20% chance of rain in the afternoon, low of 52 at night.
+
+=== TIER 3 — MULTI-HOP (10 questions) ===
+
+A-T3-01: What is the full chain of events related to the Henderson account from Monday to Friday?
+ANSWER: Monday — Ryan texts Jordan saying the Henderson presentation is moved to Monday March 10th and asks Jordan to cover slides 8-14. Tuesday — Ryan emails the PowerPoint, says slides 8-14 cover product roadmap and pricing, client wants enterprise pricing focus. Thursday morning — Ryan texts that Henderson call is confirmed for Monday 10 AM and client wants enterprise tier focus. Thursday afternoon — Jordan texts Ryan that slides will be polished by Sunday night and enterprise pricing section is ready. Jordan sets a reminder for Sunday 6 PM to finish slides. Friday — Marcus emails saying Q1 numbers looked strong and he wants to discuss expanding Henderson into a larger enterprise deal, asks Jordan to join a call March 17th at 2 PM with the VP. Jordan replies accepting the March 17th meeting and promising to prepare thoughts on enterprise deal structure.
+
+A-T3-02: What is Jordan's complete schedule and commitments for the weekend of March 8-9?
+ANSWER: Saturday March 8th: reminder at 4 PM to pick up chocolate dessert, grandmother's birthday dinner at 6 PM at Carol Mercer's house. Sunday March 9th: reminder at 6 PM to finish and send Henderson presentation slides to Ryan. Weather both days: sunny, 79 Saturday / 82 Sunday, no rain.
+
+A-T3-03: Trace everything Jordan needs to do to prepare for the Denver trip on March 14th.
+ANSWER: Flight DL 447 departs Austin 6:15 AM March 14th, arrives Denver 8:40 AM, confirmation code HXMT72. Check-in opened Friday March 7th (Alexa suggested checking in after the email arrived). Doctor's appointment is March 12th at 2:30 PM — two days before the flight. Lease renewal response due March 15th — the day after the flight. No other specific trip preparation mentioned.
+
+A-T3-04: What is the full picture of Jordan's financial obligations and transactions this week?
+ANSWER: Chase credit card $347.82 full balance paid on March 7th from checking account ending in 8823. Gym membership $420 auto-charges March 20th. Lease renewal would require $1,950 upfront April 1st (up from $1,850 current rent). Credit card ends in 4471, checking ends in 8823.
+
+A-T3-05: Which person appears in both Jordan's work life and social life, and what is their connection to each context?
+ANSWER: Ryan Patel — at work he is Jordan's coworker coordinating the Henderson account presentation (assigned Jordan slides 8-14, confirmed Monday client call, discussed enterprise pricing). Socially he is part of the Wednesday trivia team (The Trivia Newtons) along with Jordan, Dani Torres, and Keisha.
+
+A-T3-06: What is the complete thread of communication between Jordan and their mother Carol Mercer?
+ANSWER: Monday morning — Carol texts Jordan: Grandma's birthday Saturday March 8th, asking if Jordan is coming to dinner, making lasagna, needs answer by Wednesday. Tuesday night — Jordan texts Carol via Alexa saying yes to the dinner and asking what to bring. Wednesday morning — Carol replies asking Jordan to bring chocolate dessert, dinner at 6 PM at Carol's house. Jordan adds chocolate cake or brownies to shopping list and sets a 4 PM Saturday reminder to pick up dessert.
+
+A-T3-07: What are all the reminders Jordan set across the week and what are they each for?
+ANSWER: (1) March 15th — respond to landlord about lease renewal. (2) Thursday March 6th at 9 AM — prepare January and February sales numbers for Q1 review. (3) Saturday March 8th at 4 PM — pick up dessert before grandma's birthday dinner. (4) Wednesday March 5th at 6:30 PM — leave for trivia at Buzz Mill. (5) Sunday March 9th at 6 PM — finish and send Henderson presentation slides.
+
+A-T3-08: What medical-related tasks does Jordan have coming up and what preparation is required for each?
+ANSWER: Doctor's appointment March 12th at 2:30 PM with Dr. Sandra Okafor at Lakeline Medical Center. Preparation required: fast for 4 hours beforehand (so no food after 10:30 AM), bring insurance card, bring list of current medications. No other medical items mentioned.
+
+A-T3-09: What is the full picture of Jordan's work situation heading into next week (March 10 onwards)?
+ANSWER: Monday March 10th — Henderson account presentation with the client at 10 AM (Jordan responsible for slides 8-14, enterprise pricing focus). Slides need to be finished and sent Sunday night by 6 PM per Jordan's reminder. March 17th at 2 PM — call with Marcus and the VP about expanding Henderson into a larger enterprise deal. Jordan plans to prepare thoughts on enterprise deal structure beforehand.
+
+A-T3-10: Jordan set a reminder but then Alexa questioned the timing. What happened and what was the final outcome?
+ANSWER: Jordan initially asked Alexa to set a reminder for 10 PM to leave for trivia. Alexa pointed out trivia starts at 7 PM so a 10 PM reminder to leave would be too late. Jordan corrected to 6:30 PM. Final reminder: Wednesday March 5th at 6:30 PM to leave for trivia at Buzz Mill.
+
+=== UNANSWERABLE QUESTIONS (10 questions) ===
+
+A-U-01: What is Jordan's home address?
+ANSWER: Not mentioned (Austin, Texas is known but no street address)
+
+A-U-02: What is Jordan's job title?
+ANSWER: Not mentioned (works in sales based on context but title not stated)
+
+A-U-03: What airline lounge does Jordan use at Austin airport?
+ANSWER: Not mentioned
+
+A-U-04: What is Jordan's Chase credit card interest rate?
+ANSWER: Not mentioned
+
+A-U-05: Who is Jordan flying to Denver to visit or meet?
+ANSWER: Not mentioned ← TRAP: the flight is confirmed but purpose is never stated. Agent must say "not mentioned" not guess it is work-related.
+
+A-U-06: What is Jordan's grandmother's name?
+ANSWER: Not mentioned (referred to only as "grandma")
+
+A-U-07: How long has Jordan lived in the current apartment?
+ANSWER: Not mentioned
+
+A-U-08: What medications is Jordan currently taking?
+ANSWER: Not mentioned (Dr. Okafor's office asked Jordan to bring a list, but the list itself is never mentioned)
+
+A-U-09: Does Jordan have a car?
+ANSWER: Not mentioned
+
+A-U-10: What is Marcus's last name?
+ANSWER: Not mentioned (referred to only as "Marcus at work")
+
+NOTE ON A-U-05: Trap question. The Denver flight details are well-documented (flight number, time, confirmation code) but the PURPOSE of the trip is never stated. An agent that answers "for work" or "to visit family" is hallucinating. Correct answer is that the purpose is not mentioned.

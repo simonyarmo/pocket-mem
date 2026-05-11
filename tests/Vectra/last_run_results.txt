@@ -1,0 +1,472 @@
+=== VECTRA BENCHMARK — identity vs baseline ===
+Run: 2026-05-08 21:04:08   Ingest: qwen2.5:7b   Answer: claude-haiku-4-5-20251001   Identity derivation: prebuilt
+
+--- IDENTITY ---
+Description : Personal AI assistant named Vectra managing Jordan's daily life in Austin, Texas. I listen to all voice interactions, emails, and text messages to track Jordan's schedule, reminders, appointments, shopping lists, financial tasks, contacts, and anything that needs to be remembered or acted on.
+Derived role: Personal AI Assistant
+Seed topics : Schedule and Reminders, Contacts and People, Shopping List, Financial Tasks, Health and Appointments, Work and Meetings, Travel, Home and Household
+Complexity  : medium
+
+--- INGESTION ---
+Interactions ingested : 30
+Identity    : nodes=125  in=26165  out=8239
+Baseline    : nodes=134  in=25772  out=8245
+
+--- SESSION PERSISTENCE ---
+Identity: PASS   Baseline: PASS
+
+
+--- TIER 1 — DIRECT LOOKUP ---
+
+A-T1-01 | What is Jordan's current monthly rent?
+  EXPECTED        : $1,850/month
+  IDENTITY ANSWER : Jordan's current monthly rent is $1,850. According to the landlord's email, if Jordan renews the lease, the rent will increase to $1,950 starting with the new lease term.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1531ms
+  BASELINE ANSWER : Jordan's current monthly rent is $1,850. According to the landlord's email, if Jordan renews the lease, the rent would increase to $1,950 starting with the new lease term.
+  BASELINE SCORE  : REVIEW  [retrieval]  1332ms
+
+A-T1-02 | What would the new monthly rent be if Jordan renews the lease?
+  EXPECTED        : $1,950/month
+  IDENTITY ANSWER : If Jordan renews the lease, the new monthly rent would be $1,950, an increase from the current $1,850.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1214ms
+  BASELINE ANSWER : If Jordan renews the lease, the new monthly rent would be $1,950, an increase from the current $1,850.
+  BASELINE SCORE  : REVIEW  [retrieval]  1113ms
+
+A-T1-03 | What is the confirmation code for Jordan's Denver flight?
+  EXPECTED        : HXMT72
+  IDENTITY ANSWER : The confirmation code for Jordan's Denver flight is HXMT72.
+  IDENTITY SCORE  : REVIEW  [retrieval]  991ms
+  BASELINE ANSWER : The confirmation code for Jordan's Denver flight is HXMT72. This is for Delta Airlines flight DL 447 departing Austin on March 14th at 6:15 AM.
+  BASELINE SCORE  : REVIEW  [retrieval]  1486ms
+
+A-T1-04 | What time does Jordan's flight to Denver depart Austin?
+  EXPECTED        : 6:15 AM on March 14th
+  IDENTITY ANSWER : Jordan's flight to Denver departs Austin at 6:15 AM on March 14th. The flight is Delta Airlines DL 447 with confirmation code HXMT72.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1562ms
+  BASELINE ANSWER : Jordan's flight to Denver departs Austin at 6:15 AM on March 14th. The confirmation code is HXMT72.
+  BASELINE SCORE  : REVIEW  [retrieval]  1205ms
+
+A-T1-05 | What is the name of Jordan's doctor?
+  EXPECTED        : Dr. Sandra Okafor
+  IDENTITY ANSWER : Jordan's doctor is Dr. Sandra Okafor, who practices at Lakeline Medical Center.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1070ms
+  BASELINE ANSWER : Jordan's doctor is Dr. Sandra Okafor. She practices at Lakeline Medical Center, and Jordan has a follow-up appointment scheduled with her on March 12th at 2:30 PM.
+  BASELINE SCORE  : REVIEW  [retrieval]  1329ms
+
+A-T1-06 | Where is Jordan's doctor's appointment?
+  EXPECTED        : Lakeline Medical Center
+  IDENTITY ANSWER : Jordan's doctor's appointment is at Lakeline Medical Center on March 12th at 2:30 PM with Dr. Sandra Okafor.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1157ms
+  BASELINE ANSWER : Jordan's doctor's appointment is at Lakeline Medical Center on March 12th at 2:30 PM with Dr. Sandra Okafor.
+  BASELINE SCORE  : REVIEW  [retrieval]  1143ms
+
+A-T1-07 | What is Jordan's Chase credit card balance?
+  EXPECTED        : $347.82
+  IDENTITY ANSWER : Jordan's Chase credit card balance is $347.82, which was scheduled to be paid in full on March 7th, 2025.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1135ms
+  BASELINE ANSWER : Based on the archived records, Jordan's Chase credit card balance is $347.82, which was due on March 7th, 2025. This full balance was scheduled to be paid from the Chase checking account ending in 8823.
+  BASELINE SCORE  : REVIEW  [retrieval]  1213ms
+
+A-T1-08 | What item was Jordan's Amazon package?
+  EXPECTED        : Anker USB-C charging hub
+  IDENTITY ANSWER : Jordan's Amazon package contained an Anker USB-C charging hub, which was out for delivery on Tuesday, March 4th between 2 PM and 6 PM.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1351ms
+  BASELINE ANSWER : Jordan's Amazon package contained an Anker USB-C charging hub, which was out for delivery on Tuesday, March 4th, 2025, with an estimated delivery window between 2 PM and 6 PM.
+  BASELINE SCORE  : REVIEW  [retrieval]  1302ms
+
+A-T1-09 | What is the name of Jordan's landlord?
+  EXPECTED        : Paul Whitfield
+  IDENTITY ANSWER : Jordan's landlord is Paul Whitfield.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1087ms
+  BASELINE ANSWER : Jordan's landlord is Paul Whitfield. He sent an email about the lease renewal, which expires April 30th, with the monthly rent increasing from $1,850 to $1,950 if renewed.
+  BASELINE SCORE  : REVIEW  [retrieval]  1384ms
+
+A-T1-10 | What day and time is the Q1 review meeting?
+  EXPECTED        : Thursday March 6th at 10 AM
+  IDENTITY ANSWER : The Q1 review meeting is Thursday, March 6th at 10 AM.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1041ms
+  BASELINE ANSWER : The Q1 review meeting is Thursday March 6th at 10 AM with Marcus.
+  BASELINE SCORE  : REVIEW  [retrieval]  1030ms
+
+A-T1-11 | What is the team name for Wednesday trivia night?
+  EXPECTED        : The Trivia Newtons
+  IDENTITY ANSWER : The team name for Wednesday trivia night is The Trivia Newtons.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1105ms
+  BASELINE ANSWER : The Trivia Newtons.
+  BASELINE SCORE  : REVIEW  [retrieval]  6213ms
+
+A-T1-12 | Where is trivia night held?
+  EXPECTED        : Buzz Mill
+  IDENTITY ANSWER : Trivia night is held at Buzz Mill. It starts at 7 PM on Wednesday nights.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1182ms
+  BASELINE ANSWER : Trivia night is held at Buzz Mill. It starts at 7 PM on Wednesday nights.
+  BASELINE SCORE  : REVIEW  [retrieval]  6542ms
+
+A-T1-13 | What time is Jordan's grandmother's birthday dinner?
+  EXPECTED        : 6 PM
+  IDENTITY ANSWER : Jordan's grandmother's birthday dinner is at 6 PM on Saturday, March 8th at Carol Mercer's house.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1010ms
+  BASELINE ANSWER : Jordan's grandmother's birthday dinner is at 6 PM on Saturday, March 8th at Carol Mercer's house.
+  BASELINE SCORE  : REVIEW  [retrieval]  8356ms
+
+A-T1-14 | What is Jordan's gym called?
+  EXPECTED        : Austin Fitness Club
+  IDENTITY ANSWER : Jordan's gym is called Austin Fitness Club.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4296ms
+  BASELINE ANSWER : Jordan's gym is called Austin Fitness Club.
+  BASELINE SCORE  : REVIEW  [retrieval]  4207ms
+
+A-T1-15 | How much is Jordan's annual gym membership?
+  EXPECTED        : $420
+  IDENTITY ANSWER : Jordan's annual gym membership at Austin Fitness Club is $420, which auto-renews on March 20th.
+  IDENTITY SCORE  : REVIEW  [retrieval]  5334ms
+  BASELINE ANSWER : Jordan's annual gym membership at Austin Fitness Club is $420, which auto-renews on March 20th.
+  BASELINE SCORE  : REVIEW  [retrieval]  973ms
+
+A-T1-16 | What flight number is Jordan's Denver flight?
+  EXPECTED        : DL 447
+  IDENTITY ANSWER : Jordan's Denver flight number is DL 447, departing Austin at 6:15 AM on March 14th with confirmation code HXMT72.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7908ms
+  BASELINE ANSWER : Jordan's Denver flight is DL 447, departing Austin at 6:15 AM on March 14th with confirmation code HXMT72.
+  BASELINE SCORE  : REVIEW  [retrieval]  4673ms
+
+A-T1-17 | What is Jordan's mother's name?
+  EXPECTED        : Carol Mercer
+  IDENTITY ANSWER : Jordan's mother's name is Carol Mercer.
+  IDENTITY SCORE  : REVIEW  [retrieval]  3195ms
+  BASELINE ANSWER : Jordan's mother's name is Carol Mercer.
+  BASELINE SCORE  : REVIEW  [retrieval]  877ms
+
+A-T1-18 | What is Jordan's coworker's name who sent the Henderson slides?
+  EXPECTED        : Ryan Patel
+  IDENTITY ANSWER : Ryan Patel sent the Henderson slides to Jordan. According to the email from Tuesday March 4th, Ryan said he had sent the PowerPoint file with slides 8 through 14 about the product roadmap and pricing tiers.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6903ms
+  BASELINE ANSWER : Ryan Patel sent the Henderson slides to Jordan Mercer. According to the email from Tuesday March 4th, Ryan Patel sent the PowerPoint file with slides 8 through 14 for Jordan to cover.
+  BASELINE SCORE  : REVIEW  [retrieval]  1498ms
+
+A-T1-19 | What Chase bank account is Jordan's credit card payment coming from?
+  EXPECTED        : Chase checking account ending in 8823
+  IDENTITY ANSWER : Jordan's Chase credit card payment is coming from the Chase checking account ending in 8823.
+  IDENTITY SCORE  : REVIEW  [retrieval]  5341ms
+  BASELINE ANSWER : The Chase credit card payment is coming from Jordan's Chase checking account ending in 8823.
+  BASELINE SCORE  : REVIEW  [retrieval]  1551ms
+
+A-T1-20 | What is the deadline to respond to the landlord about the lease?
+  EXPECTED        : March 15th
+  IDENTITY ANSWER : The deadline to respond to your landlord about the lease is March 15th. Your landlord Paul Whitfield stated in his email that you need to respond by that date whether you plan to renew your lease, which expires April 30th.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4701ms
+  BASELINE ANSWER : The deadline to respond to the landlord about the lease is March 15th. Your landlord Paul Whitfield stated in his email that your current lease expires April 30th and you need to respond by that date whether you plan to renew.
+  BASELINE SCORE  : REVIEW  [retrieval]  4767ms
+
+
+--- TIER 2 — SINGLE HOP ---
+
+A-T2-01 | What did Jordan's mom ask Jordan to bring to the birthday dinner, and what did Jordan add to the shopping list as a result?
+  EXPECTED        : Carol asked Jordan to bring dessert — something chocolate. Jordan added chocolate cake or brownies to the shopping list.
+  IDENTITY ANSWER : Jordan's mom, Carol Mercer, asked Jordan to bring dessert—specifically something chocolate—to the grandmother's birthday dinner. As a result, Jordan added "chocolate cake or brownies" to the shopping list.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4743ms
+  BASELINE ANSWER : Jordan's mom, Carol Mercer, asked Jordan to bring dessert—specifically something chocolate—to the birthday dinner. As a result, Jordan added "chocolate cake or brownies" to the shopping list.
+  BASELINE SCORE  : REVIEW  [retrieval]  4726ms
+
+A-T2-02 | What happened to Jordan's Chase credit card payment — did Jordan pay the minimum or the full balance, and how much was actually paid?
+  EXPECTED        : Jordan initially set up the minimum payment of $35.00, then changed it to the full balance of $347.82. Full balance was paid.
+  IDENTITY ANSWER : Jordan paid the full balance of $347.82 on March 7th, not the minimum payment. Initially Jordan requested the minimum payment of $35.00, but then changed the instruction to pay the full balance instead.
+  IDENTITY SCORE  : REVIEW  [retrieval]  2241ms
+  BASELINE ANSWER : Jordan initially requested a minimum payment of $35.00 on March 5th, but then changed the instruction to pay the full balance of $347.82 instead. The full balance payment was confirmed to process on March 7th from the Chase checking account ending in 8823.
+  BASELINE SCORE  : REVIEW  [retrieval]  3716ms
+
+A-T2-03 | What slides is Jordan responsible for in the Henderson presentation, and what should Jordan focus on according to Ryan?
+  EXPECTED        : Slides 8 through 14 (product roadmap and pricing tiers). Ryan said the client is most interested in enterprise pricing and asked Jordan to focus there.
+  IDENTITY ANSWER : Jordan is responsible for slides 8 through 14 of the Henderson presentation, which cover the product roadmap and pricing tiers. According to Ryan, Jordan should focus on the enterprise pricing tier, as the client is most interested in that area.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1552ms
+  BASELINE ANSWER : Jordan is responsible for slides 8 through 14 of the Henderson presentation, which cover the product roadmap and pricing tiers. According to Ryan, Jordan should focus on the enterprise pricing section, as the client is most interested in that area.
+  BASELINE SCORE  : REVIEW  [retrieval]  6879ms
+
+A-T2-04 | Why was the Q1 review meeting rescheduled, and what did Marcus ask Jordan to bring?
+  EXPECTED        : Marcus moved it from Friday to Thursday March 6th at 10 AM. He asked Jordan to bring sales numbers for January and February.
+  IDENTITY ANSWER : The Q1 review meeting was rescheduled from Friday to Thursday March 6th at 10 AM. Marcus asked Jordan to bring sales numbers for January and February.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1394ms
+  BASELINE ANSWER : The Q1 review meeting was rescheduled to Thursday March 6th at 10 AM instead of Friday. Marcus asked Jordan to bring sales numbers for January and February.
+  BASELINE SCORE  : REVIEW  [retrieval]  5720ms
+
+A-T2-05 | What pre-appointment instructions did Dr. Okafor's office send Jordan?
+  EXPECTED        : Fast for 4 hours before the appointment, bring insurance card, and bring a list of current medications.
+  IDENTITY ANSWER : Dr. Okafor's office sent Jordan instructions to fast for 4 hours before the appointment on March 12th at 2:30 PM and to bring an insurance card and a list of current medications.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4786ms
+  BASELINE ANSWER : Dr. Okafor's office instructed Jordan to fast for 4 hours before the appointment on March 12th at 2:30 PM and to bring an insurance card and a list of current medications.
+  BASELINE SCORE  : REVIEW  [retrieval]  4690ms
+
+A-T2-06 | What does Paul Whitfield require in addition to the lease renewal decision?
+  EXPECTED        : First month at the new rate ($1,950) due upfront on April 1st along with signing the new lease.
+  IDENTITY ANSWER : In addition to the lease renewal decision, Paul Whitfield requires first month's rent at the new rate ($1,950) due April 1st and a signed new lease.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4715ms
+  BASELINE ANSWER : In addition to the lease renewal decision, Paul Whitfield requires the first month's rent at the new rate ($1,950) due April 1st and a signed new lease.
+  BASELINE SCORE  : REVIEW  [retrieval]  1471ms
+
+A-T2-07 | What happened to Jordan's Saturday spin class, and when is the next available one?
+  EXPECTED        : Saturday spin class at 9 AM was cancelled due to instructor illness. Next available is Monday March 10th at 6 PM.
+  IDENTITY ANSWER : Jordan's Saturday spin class at 9 AM was cancelled this week due to instructor illness. The next available spin class is Monday March 10th at 6 PM.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7578ms
+  BASELINE ANSWER : Saturday's 9 AM spin class at Austin Fitness Club was cancelled due to instructor illness. The next available spin class is Monday March 10th at 6 PM.
+  BASELINE SCORE  : REVIEW  [retrieval]  5412ms
+
+A-T2-08 | What did Ryan text Jordan about the Henderson call on Thursday morning, and what did Jordan reply?
+  EXPECTED        : Ryan said the Henderson call is confirmed for Monday 10 AM, the client wants to focus on enterprise pricing, and asked Jordan to kick off the Q1 review with January numbers first. Jordan replied that the review went well, Henderson slides will be polished by Sunday night, and the enterprise pricing section is ready.
+  IDENTITY ANSWER : I don't have that information. The archived records show Ryan texted Jordan on Thursday morning about the Henderson call being confirmed for Monday at 10 AM and the client wanting to focus on enterprise tier pricing, but there is no record of Jordan's reply to that specific message.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4991ms
+  BASELINE ANSWER : I don't have that information. The archived records show that on Thursday March 6th at 8:55 AM, Ryan texted Jordan about the Henderson call being confirmed for Monday 10 AM and the client wanting to focus on enterprise tier pricing, and at 11:45 AM Jordan replied about having the Henderson slides polished by Sunday night. However, there is no record of any text exchange between Ryan and Jordan specifically about the Henderson call on Thursday morning.
+  BASELINE SCORE  : REVIEW  [retrieval]  2100ms
+
+A-T2-09 | What did Jordan's grocery shopping list contain by the end of the week?
+  EXPECTED        : Milk, eggs, sourdough bread, coffee (added Monday), laundry detergent, dish soap (added Tuesday), chocolate cake or brownies (added Wednesday) — 7 items total.
+  IDENTITY ANSWER : By the end of the week, Jordan's shopping list contained milk, eggs, sourdough bread, coffee, laundry detergent, dish soap, and chocolate cake or brownies.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6468ms
+  BASELINE ANSWER : By the end of the week, Jordan's shopping list contained milk, eggs, sourdough bread, coffee, laundry detergent, dish soap, and chocolate cake or brownies.
+  BASELINE SCORE  : REVIEW  [retrieval]  5590ms
+
+A-T2-10 | What does Marcus want to discuss in his Q1 review follow-up email, and when does he want to meet?
+  EXPECTED        : Expanding the Henderson account into a larger enterprise deal. He wants to meet on March 17th at 2 PM with Jordan and the VP.
+  IDENTITY ANSWER : Marcus wants to discuss expanding the Henderson account into a larger enterprise deal, and he wants to meet on March 17th at 2 PM with him and the VP.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1323ms
+  BASELINE ANSWER : Marcus wants to discuss expanding the Henderson account into a larger enterprise deal, and he wants to meet on March 17th at 2 PM for a call with him and the VP.
+  BASELINE SCORE  : REVIEW  [retrieval]  6636ms
+
+A-T2-11 | What did Jordan respond to Marcus's follow-up email?
+  EXPECTED        : Jordan said March 17th at 2 PM works, is looking forward to discussing the Henderson expansion, and will prepare thoughts on the enterprise deal structure beforehand.
+  IDENTITY ANSWER : Jordan responded to Marcus's follow-up email by saying "March 17th at 2 PM works for me. Looking forward to discussing the Henderson expansion. I'll prepare some thoughts on the enterprise deal structure beforehand."
+  IDENTITY SCORE  : REVIEW  [retrieval]  4773ms
+  BASELINE ANSWER : Jordan responded to Marcus's follow-up email by saying "Hi Marcus, March 17th at 2 PM works for me. Looking forward to discussing the Henderson expansion. I'll prepare some thoughts on the enterprise deal structure beforehand."
+  BASELINE SCORE  : REVIEW  [retrieval]  1413ms
+
+A-T2-12 | What reminder did Jordan set related to the lease renewal, and on what date?
+  EXPECTED        : Reminder set for Saturday March 15th to respond to the landlord about the lease.
+  IDENTITY ANSWER : Jordan set a reminder for March 15th to respond to the landlord about the lease renewal.
+  IDENTITY SCORE  : REVIEW  [retrieval]  7216ms
+  BASELINE ANSWER : Jordan set a reminder for Saturday, March 15th to respond to the landlord about the lease renewal.
+  BASELINE SCORE  : REVIEW  [retrieval]  4289ms
+
+A-T2-13 | Who are the members of the trivia team on Wednesday night?
+  EXPECTED        : Jordan, Dani Torres, Ryan, and Keisha — four people total.
+  IDENTITY ANSWER : The trivia team members on Wednesday night are you, Dani Torres, Ryan, and Keisha. The team name is "The Trivia Newtons."
+  IDENTITY SCORE  : REVIEW  [retrieval]  4761ms
+  BASELINE ANSWER : The trivia team on Wednesday night consists of you, Dani Torres, Ryan, and Keisha. The team name is "The Trivia Newtons."
+  BASELINE SCORE  : REVIEW  [retrieval]  4681ms
+
+A-T2-14 | What was the weather forecast for Jordan's grandmother's birthday on Saturday March 8th?
+  EXPECTED        : Sunny, high of 79, low of 61, no rain expected.
+  IDENTITY ANSWER : The weather forecast for Saturday March 8th was sunny with a high of 79 and a low of 61.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1011ms
+  BASELINE ANSWER : The weather forecast for Saturday March 8th was sunny with a high of 79 and a low of 61.
+  BASELINE SCORE  : REVIEW  [retrieval]  6506ms
+
+A-T2-15 | What gym membership event is coming up on March 20th and how much will it cost?
+  EXPECTED        : Jordan's annual gym membership auto-renews on March 20th and will auto-charge $420 to the card on file.
+  IDENTITY ANSWER : On March 20th, your Austin Fitness Club annual membership will renew and auto-charge $420 to your card on file. This is a membership renewal event, not a special event or promotion.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4940ms
+  BASELINE ANSWER : On March 20th, Austin Fitness Club's membership renewal event will auto-charge $420 to your card on file. This is your annual membership renewal.
+  BASELINE SCORE  : REVIEW  [retrieval]  5766ms
+
+A-T2-16 | What reminder did Jordan set related to the Henderson presentation?
+  EXPECTED        : Reminder set for Sunday March 9th at 6 PM to finish and send the Henderson presentation slides.
+  IDENTITY ANSWER : Jordan set a reminder for Sunday March 9th at 6 PM to finish and send the Henderson presentation slides.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1071ms
+  BASELINE ANSWER : Jordan set a reminder for Sunday March 9th at 6 PM to finish and send the Henderson presentation slides.
+  BASELINE SCORE  : REVIEW  [retrieval]  7403ms
+
+A-T2-17 | What device did Jordan use for nighttime interactions vs daytime?
+  EXPECTED        : Echo Dot in the bedroom for nighttime (alarm on Monday night, text to mom on Tuesday night). Echo in the living room for daytime interactions.
+  IDENTITY ANSWER : Jordan used the Amazon Echo in the living room for daytime interactions and the Echo Dot in the bedroom for nighttime interactions. This is evident from the timestamps showing morning and afternoon requests on the living room Echo, and evening/night requests on the bedroom Echo Dot.
+  IDENTITY SCORE  : REVIEW  [retrieval]  3695ms
+  BASELINE ANSWER : Jordan used the Amazon Echo in the living room for daytime interactions and the Echo Dot in the bedroom for nighttime interactions. The archived records show all daytime queries (morning and afternoon) were made to the living room Echo, while the device setup indicates the bedroom Echo Dot was available for nighttime use.
+  BASELINE SCORE  : REVIEW  [retrieval]  1528ms
+
+A-T2-18 | What did Dani Torres say about trivia night when she confirmed Jordan was coming?
+  EXPECTED        : The team name is The Trivia Newtons, Ryan and Keisha are also coming, it starts at 7, and they needed Jordan as the fourth member.
+  IDENTITY ANSWER : When Dani Torres confirmed Jordan was coming to trivia night, she said "Great! Team name this week is The Trivia Newtons. Ryan and Keisha are coming too. See you at 7."
+  IDENTITY SCORE  : REVIEW  [retrieval]  5870ms
+  BASELINE ANSWER : When Dani Torres confirmed Jordan was coming to trivia night, she said "Great! Team name this week is The Trivia Newtons. Ryan and Keisha are coming too. See you at 7."
+  BASELINE SCORE  : REVIEW  [retrieval]  1513ms
+
+A-T2-19 | What is the lease expiry date on Jordan's current apartment?
+  EXPECTED        : April 30th
+  IDENTITY ANSWER : Jordan's current lease expires on April 30th, 2025.
+  IDENTITY SCORE  : REVIEW  [retrieval]  6165ms
+  BASELINE ANSWER : Jordan's current lease expires on April 30th, 2025. The landlord, Paul Whitfield, requires a response by March 15th regarding lease renewal, with the new monthly rent increasing from $1,850 to $1,950 if renewed.
+  BASELINE SCORE  : REVIEW  [retrieval]  5756ms
+
+A-T2-20 | What was the weather forecast for Monday March 3rd when Jordan asked in the morning?
+  EXPECTED        : 58 degrees and partly cloudy, high of 74, 20% chance of rain in the afternoon, low of 52 at night.
+  IDENTITY ANSWER : I don't have that information. The archived records show Jordan asked Alexa to read emails and texts on Monday March 3rd in the morning, but no weather forecast for that day was requested or provided.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1350ms
+  BASELINE ANSWER : I don't have that information. The archived records show Jordan asked Alexa to read emails and texts on Monday March 3rd in the morning, but there is no weather forecast request or weather information provided for that date.
+  BASELINE SCORE  : REVIEW  [retrieval]  6846ms
+
+
+--- TIER 3 — MULTI-HOP ---
+
+A-T3-01 | What is the full chain of events related to the Henderson account from Monday to Friday?
+  EXPECTED        : Monday — Ryan texts Jordan saying the Henderson presentation is moved to Monday March 10th and asks Jordan to cover slides 8-14. Tuesday — Ryan emails the PowerPoint, says slides 8-14 cover product roadmap and pricing, client wants enterprise pricing focus. Thursday morning — Ryan texts that Henderson call is confirmed for Monday 10 AM and client wants enterprise tier focus. Thursday afternoon — Jordan texts Ryan that slides will be polished by Sunday night and enterprise pricing section is ready. Jordan sets a reminder for Sunday 6 PM to finish slides. Friday — Marcus emails saying Q1 numbers looked strong and he wants to discuss expanding Henderson into a larger enterprise deal, asks Jordan to join a call March 17th at 2 PM with the VP. Jordan replies accepting the March 17th meeting and promising to prepare thoughts on enterprise deal structure.
+  IDENTITY ANSWER : Based on the archived records, the Henderson account chain of events from Monday to Friday (March 3-7, 2025) is: On Monday, Ryan Patel texted that the Henderson account presentation was pushed to Monday March 10th and asked you to cover slides 8-14. On Tuesday, Ryan sent the PowerPoint file with slides focusing on product roadmap and enterprise pricing tiers. On Thursday, Ryan confirmed the Henderson call for Monday at 10 AM with the client wanting to focus on enterprise tier pricing, and you texted back that you'd have the slides polished by Sunday night with the enterprise pricing section ready. On Friday, Marcus emailed about expanding the Henderson account into a larger enterprise deal and proposed a call with the VP on March 17th at 2 PM.
+  IDENTITY SCORE  : REVIEW  [retrieval]  3228ms
+  BASELINE ANSWER : Based on the archived records, here is the Henderson account chain of events from Monday March 3 to Friday March 7, 2025:
+
+**Monday March 3**: Ryan Patel texted that the Henderson account presentation was pushed to Monday March 10th and asked you to cover slides 8-14. **Tuesday March 4**: Ryan emailed the PowerPoint file with slides 8-14 focusing on product roadmap and enterprise pricing tiers. **Thursday March 6**: Ryan texted confirming the Henderson call for Monday at 10 AM and noting the client wants to focus on enterprise tier pricing. **Thursday 11:45 AM**: You texted Ryan that you'd have the Henderson slides polished by Sunday night with the enterprise pricing section ready. **Friday March 7**: Marcus emailed asking to discuss expanding the Henderson account into a larger enterprise deal on March 17th at 2 PM, and you confirmed your availability.
+  BASELINE SCORE  : REVIEW  [retrieval]  7758ms
+
+A-T3-02 | What is Jordan's complete schedule and commitments for the weekend of March 8-9?
+  EXPECTED        : Saturday March 8th: reminder at 4 PM to pick up chocolate dessert, grandmother's birthday dinner at 6 PM at Carol Mercer's house. Sunday March 9th: reminder at 6 PM to finish and send Henderson presentation slides to Ryan. Weather both days: sunny, 79 Saturday / 82 Sunday, no rain.
+  IDENTITY ANSWER : Jordan's schedule for the weekend of March 8-9 includes: Saturday March 8th at 4 PM — pick up dessert, and grandmother's birthday dinner at 6 PM at Carol Mercer's house. Sunday March 9th at 6 PM — finish and send Henderson presentation slides.
+  IDENTITY SCORE  : REVIEW  [retrieval]  2152ms
+  BASELINE ANSWER : Based on the archived records, Jordan's weekend schedule for March 8-9 includes: Saturday March 8th at 4 PM — pick up dessert, and Saturday at 6 PM — grandmother's birthday dinner at Carol Mercer's house. Sunday March 9th at 6 PM — finish and send Henderson presentation slides.
+  BASELINE SCORE  : REVIEW  [retrieval]  6732ms
+
+A-T3-03 | Trace everything Jordan needs to do to prepare for the Denver trip on March 14th.
+  EXPECTED        : Flight DL 447 departs Austin 6:15 AM March 14th, arrives Denver 8:40 AM, confirmation code HXMT72. Check-in opened Friday March 7th (Alexa suggested checking in after the email arrived). Doctor's appointment is March 12th at 2:30 PM — two days before the flight. Lease renewal response due March 15th — the day after the flight. No other specific trip preparation mentioned.
+  IDENTITY ANSWER : Based on the archived records, Jordan needs to: (1) Check in online for flight DL 447 using confirmation code HXMT72, and (2) Set an alarm for 6:30 AM on March 14th to wake up for the 6:15 AM departure from Austin to Denver.
+  IDENTITY SCORE  : REVIEW  [retrieval]  4961ms
+  BASELINE ANSWER : Based on the archived records, Jordan needs to: (1) Check in online for flight DL 447 (confirmation code HXMT72) departing Austin at 6:15 AM on March 14th, and (2) Pack for the trip. No other specific Denver trip preparation tasks are mentioned in the context.
+  BASELINE SCORE  : REVIEW  [retrieval]  1934ms
+
+A-T3-04 | What is the full picture of Jordan's financial obligations and transactions this week?
+  EXPECTED        : Chase credit card $347.82 full balance paid on March 7th from checking account ending in 8823. Gym membership $420 auto-charges March 20th. Lease renewal would require $1,950 upfront April 1st (up from $1,850 current rent). Credit card ends in 4471, checking ends in 8823.
+  IDENTITY ANSWER : Jordan's financial obligations this week include a Chase credit card payment of $347.82 processing on Friday March 7th from his checking account. Looking ahead, he has a gym membership auto-renewal of $420 on March 20th, and a lease renewal response due by March 15th that would commit him to $1,950 due April 1st if he renews.
+  IDENTITY SCORE  : REVIEW  [retrieval]  8111ms
+  BASELINE ANSWER : Jordan's financial obligations this week (March 3-7, 2025) include a Chase credit card payment of $347.82 processing on Friday March 7th from his checking account. Beyond this week, he has upcoming obligations: gym membership auto-renewal of $420 on March 20th, lease renewal response due March 15th (with potential new rent of $1,950/month starting April 1st if he renews), and a doctor's appointment on March 12th requiring fasting beforehand.
+  BASELINE SCORE  : REVIEW  [retrieval]  5670ms
+
+A-T3-05 | Which person appears in both Jordan's work life and social life, and what is their connection to each context?
+  EXPECTED        : Ryan Patel — at work he is Jordan's coworker coordinating the Henderson account presentation (assigned Jordan slides 8-14, confirmed Monday client call, discussed enterprise pricing). Socially he is part of the Wednesday trivia team (The Trivia Newtons) along with Jordan, Dani Torres, and Keisha.
+  IDENTITY ANSWER : Ryan Patel appears in both Jordan's work life and social life. At work, Ryan is a coworker who collaborates with Jordan on the Henderson account presentation and Q1 review preparation. In Jordan's social life, Ryan is part of the trivia team at Buzz Mill on Wednesday nights with Dani Torres and Keisha.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1593ms
+  BASELINE ANSWER : Dr. Sandra Okafor appears in both Jordan's work life and social life. In Jordan's work life, Dr. Okafor is mentioned in connection with a medical appointment reminder for a follow-up visit on March 12th at 2:30 PM at Lakeline Medical Center. However, based on the archived records provided, Dr. Okafor does not actually appear in Jordan's social life—the records only document a professional medical appointment.
+  BASELINE SCORE  : REVIEW  [retrieval]  6907ms
+
+A-T3-06 | What is the complete thread of communication between Jordan and their mother Carol Mercer?
+  EXPECTED        : Monday morning — Carol texts Jordan: Grandma's birthday Saturday March 8th, asking if Jordan is coming to dinner, making lasagna, needs answer by Wednesday. Tuesday night — Jordan texts Carol via Alexa saying yes to the dinner and asking what to bring. Wednesday morning — Carol replies asking Jordan to bring chocolate dessert, dinner at 6 PM at Carol's house. Jordan adds chocolate cake or brownies to shopping list and sets a 4 PM Saturday reminder to pick up dessert.
+  IDENTITY ANSWER : The complete thread of communication between Jordan and Carol Mercer consists of two text messages: (1) Carol texted Jordan on Monday March 3rd reminding her that Grandma's birthday dinner is Saturday March 8th and asking if she's coming, requesting confirmation by Wednesday; (2) Jordan replied on Tuesday March 4th saying "Yes I'll be at grandma's birthday dinner Saturday. Should I bring anything?"; (3) Carol responded on Wednesday March 5th at 7:08 AM saying "So glad you're coming! Bring dessert — maybe something chocolate. Dinner is at 6 PM at my house."
+  IDENTITY SCORE  : REVIEW  [retrieval]  2588ms
+  BASELINE ANSWER : The complete thread of communication between Jordan and Carol Mercer consists of two text messages: (1) Carol's initial message on Monday March 3rd reminding Jordan about the grandmother's birthday dinner on Saturday March 8th and asking for confirmation by Wednesday, and (2) Jordan's response on Tuesday March 4th confirming attendance and asking what to bring, followed by Carol's reply on Wednesday March 5th at 7:08 AM requesting chocolate dessert and confirming dinner at 6 PM.
+  BASELINE SCORE  : REVIEW  [retrieval]  6871ms
+
+A-T3-07 | What are all the reminders Jordan set across the week and what are they each for?
+  EXPECTED        : (1) March 15th — respond to landlord about lease renewal. (2) Thursday March 6th at 9 AM — prepare January and February sales numbers for Q1 review. (3) Saturday March 8th at 4 PM — pick up dessert before grandma's birthday dinner. (4) Wednesday March 5th at 6:30 PM — leave for trivia at Buzz Mill. (5) Sunday March 9th at 6 PM — finish and send Henderson presentation slides.
+  IDENTITY ANSWER : Jordan set four reminders across the week: Thursday March 6th at 9 AM to prepare January and February sales numbers for the Q1 review; Wednesday March 5th at 6:30 PM to leave for trivia at Buzz Mill; Saturday March 8th at 4 PM to pick up dessert before grandma's birthday dinner; and Sunday March 9th at 6 PM to finish and send the Henderson presentation slides. Additionally, Jordan set a reminder for March 15th to respond to the landlord about the lease renewal.
+  IDENTITY SCORE  : REVIEW  [retrieval]  1828ms
+  BASELINE ANSWER : Jordan set four reminders across the week: Thursday March 6th at 9 AM to prepare January and February sales numbers for the Q1 review; Wednesday March 5th at 6:30 PM to leave for trivia at Buzz Mill; Saturday March 8th at 4 PM to pick up dessert before grandma's birthday dinner; and Sunday March 9th at 6 PM to finish and send the Henderson presentation slides. Additionally, Jordan set a reminder for Saturday March 15th to respond to the landlord about the lease renewal.
+  BASELINE SCORE  : REVIEW  [retrieval]  7438ms
+
+A-T3-08 | What medical-related tasks does Jordan have coming up and what preparation is required for each?
+  EXPECTED        : Doctor's appointment March 12th at 2:30 PM with Dr. Sandra Okafor at Lakeline Medical Center. Preparation required: fast for 4 hours beforehand (so no food after 10:30 AM), bring insurance card, bring list of current medications. No other medical items mentioned.
+  IDENTITY ANSWER : Jordan has one medical-related task coming up: a follow-up appointment with Dr. Sandra Okafor on March 12th at 2:30 PM at Lakeline Medical Center. The required preparation includes fasting for 4 hours before the appointment and bringing an insurance card and a list of current medications.
+  IDENTITY SCORE  : REVIEW  [retrieval]  5028ms
+  BASELINE ANSWER : Jordan has one medical-related task coming up: a follow-up appointment with Dr. Sandra Okafor on March 12th at 2:30 PM at Lakeline Medical Center. The required preparation includes fasting for 4 hours before the appointment and bringing an insurance card and a list of current medications.
+  BASELINE SCORE  : REVIEW  [retrieval]  1508ms
+
+A-T3-09 | What is the full picture of Jordan's work situation heading into next week (March 10 onwards)?
+  EXPECTED        : Monday March 10th — Henderson account presentation with the client at 10 AM (Jordan responsible for slides 8-14, enterprise pricing focus). Slides need to be finished and sent Sunday night by 6 PM per Jordan's reminder. March 17th at 2 PM — call with Marcus and the VP about expanding Henderson into a larger enterprise deal. Jordan plans to prepare thoughts on enterprise deal structure beforehand.
+  IDENTITY ANSWER : Based on the archived records, heading into next week (March 10 onwards), Jordan has a Henderson account presentation call scheduled for Monday March 10th at 10 AM with Ryan Patel and the client, focusing on enterprise tier pricing. Jordan also has a follow-up call with Marcus and the VP on March 17th at 2 PM to discuss expanding the Henderson account into a larger enterprise deal. Additionally, Jordan has a Denver flight departing March 14th at 6:15 AM (confirmation HXMT72) and a doctor's appointment with Dr. Okafor on March 12th at 2:30 PM.
+  IDENTITY SCORE  : REVIEW  [retrieval]  9963ms
+  BASELINE ANSWER : Heading into next week (March 10 onwards), Jordan has a Henderson account presentation call with Ryan Patel on Monday March 10th at 10 AM focused on enterprise tier pricing, followed by a spin class at Austin Fitness Club at 6 PM that same day. Jordan also has a follow-up call with Marcus and the VP on March 17th at 2 PM to discuss expanding the Henderson account into a larger enterprise deal, plus a doctor's appointment with Dr. Okafor on March 12th at 2:30 PM and a Denver flight departing March 14th at 6:15 AM.
+  BASELINE SCORE  : REVIEW  [retrieval]  2706ms
+
+A-T3-10 | Jordan set a reminder but then Alexa questioned the timing. What happened and what was the final outcome?
+  EXPECTED        : Jordan initially asked Alexa to set a reminder for 10 PM to leave for trivia. Alexa pointed out trivia starts at 7 PM so a 10 PM reminder to leave would be too late. Jordan corrected to 6:30 PM. Final reminder: Wednesday March 5th at 6:30 PM to leave for trivia at Buzz Mill.
+  IDENTITY ANSWER : I don't have that information. The archived records show Jordan set a reminder for Thursday March 6th at 9 AM to prepare sales numbers, but there is no record of Alexa questioning the timing of this or any other reminder, nor any documented outcome from such a questioning.
+  IDENTITY SCORE  : REVIEW  [retrieval]  5964ms
+  BASELINE ANSWER : I don't have that information. The archived records contain no interaction where Alexa questioned the timing of a reminder that Jordan set.
+  BASELINE SCORE  : REVIEW  [retrieval]  1302ms
+
+
+--- UNANSWERABLE (A-U-01 to A-U-10) ---
+
+A-U-01 | What is Jordan's home address?
+  EXPECTED        : Not mentioned (Austin, Texas is known but no street address)
+  IDENTITY ANSWER : I don't have that information. The archived records contain Jordan's location (Austin, Texas) and references to Carol Mercer's house, but no specific home address is provided.
+  IDENTITY SCORE  : PASS  [retrieval]  6742ms
+  BASELINE ANSWER : I don't have that information. The archived records show Jordan Mercer is located in Austin, Texas, but no specific home address is provided.
+  BASELINE SCORE  : PASS  [retrieval]  4540ms
+
+A-U-02 | What is Jordan's job title?
+  EXPECTED        : Not mentioned (works in sales based on context but title not stated)
+  IDENTITY ANSWER : I don't have that information. The archived records do not explicitly state Jordan's job title, though they reference work activities like Q1 reviews, sales numbers, and the Henderson account presentation.
+  IDENTITY SCORE  : PASS  [retrieval]  4932ms
+  BASELINE ANSWER : I don't have that information. The archived records show Jordan Mercer's calendar, emails, and activities, but do not explicitly state a job title.
+  BASELINE SCORE  : PASS  [retrieval]  1176ms
+
+A-U-03 | What airline lounge does Jordan use at Austin airport?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information. The archived records do not contain any details about which airline lounge Jordan uses at Austin airport.
+  IDENTITY SCORE  : PASS  [retrieval]  5548ms
+  BASELINE ANSWER : I don't have that information.
+  BASELINE SCORE  : PASS  [retrieval]  4320ms
+
+A-U-04 | What is Jordan's Chase credit card interest rate?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information. The archived records contain details about Jordan's Chase credit card balance and payment due date, but do not include the interest rate.
+  IDENTITY SCORE  : PASS  [retrieval]  1488ms
+  BASELINE ANSWER : I don't have that information. The archived records contain details about Jordan's Chase credit card payment amount and due date, but do not include the interest rate for the card.
+  BASELINE SCORE  : PASS  [retrieval]  4600ms
+
+A-U-05 | Who is Jordan flying to Denver to visit or meet?
+  EXPECTED        : Not mentioned ← TRAP: the flight is confirmed but purpose is never stated. Agent must say "not mentioned" not guess it is work-related.
+  IDENTITY ANSWER : I don't have that information. The archived records show Jordan is flying to Denver on March 14th (flight DL 447), but they do not specify who Jordan is visiting or meeting there.
+  IDENTITY SCORE  : PASS  [retrieval]  1423ms
+  BASELINE ANSWER : I don't have that information. The archived records show Jordan is flying to Denver on March 14th (flight DL 447), but they don't specify who Jordan is visiting or meeting there.
+  BASELINE SCORE  : PASS  [retrieval]  6880ms
+
+A-U-06 | What is Jordan's grandmother's name?
+  EXPECTED        : Not mentioned (referred to only as "grandma")
+  IDENTITY ANSWER : I don't have that information. The archived records mention Jordan's grandmother's birthday dinner and reference "Grandma," but the grandmother's name is not explicitly stated in the context.
+  IDENTITY SCORE  : PASS  [retrieval]  1408ms
+  BASELINE ANSWER : Jordan's grandmother's name is not explicitly stated in the archived records. The records refer to her as "grandma" and mention her birthday dinner at Carol Mercer's house on Saturday March 8th, but her actual name is not provided.
+  BASELINE SCORE  : PASS  [retrieval]  7782ms
+
+A-U-07 | How long has Jordan lived in the current apartment?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information. The archived records contain details about Jordan's lease renewal and current rent amount, but they do not specify how long Jordan has lived in the current apartment.
+  IDENTITY SCORE  : PASS  [retrieval]  4695ms
+  BASELINE ANSWER : I don't have that information. The archived records contain details about Jordan's current lease (expiring April 30th, 2025) and landlord communications, but they do not specify how long Jordan has lived in the current apartment.
+  BASELINE SCORE  : PASS  [retrieval]  1771ms
+
+A-U-08 | What medications is Jordan currently taking?
+  EXPECTED        : Not mentioned (Dr. Okafor's office asked Jordan to bring a list, but the list itself is never mentioned)
+  IDENTITY ANSWER : I don't have that information. The archived records do not contain any details about medications Jordan is currently taking. The only mention of medications is a reference in a doctor's office email asking Jordan to bring "a list of any current medications" to an appointment on March 12th, but the actual list of medications is not included in these records.
+  IDENTITY SCORE  : PASS  [retrieval]  8313ms
+  BASELINE ANSWER : I don't have that information. The archived records mention that Dr. Okafor's office requested a list of current medications for Jordan's appointment on March 12th, but the actual medications Jordan is taking are not documented in these records.
+  BASELINE SCORE  : PASS  [retrieval]  1432ms
+
+A-U-09 | Does Jordan have a car?
+  EXPECTED        : Not mentioned
+  IDENTITY ANSWER : I don't have that information.
+  IDENTITY SCORE  : PASS  [retrieval]  4357ms
+  BASELINE ANSWER : I don't have that information.
+  BASELINE SCORE  : PASS  [retrieval]  756ms
+
+A-U-10 | What is Marcus's last name?
+  EXPECTED        : Not mentioned (referred to only as "Marcus at work")
+  IDENTITY ANSWER : I don't have that information. The archived records mention Marcus multiple times in relation to work meetings and emails, but his last name is not provided anywhere in the context.
+  IDENTITY SCORE  : PASS  [retrieval]  5634ms
+  BASELINE ANSWER : I don't have that information. The archived records refer to "Marcus" multiple times but never provide his last name.
+  BASELINE SCORE  : PASS  [retrieval]  4470ms
+
+--- CACHE ---
+Identity cache hits : 0/60
+Baseline cache hits : 0/60
+
+--- LATENCY ---
+Identity p50 : 4296ms   p99: 9963ms
+Baseline p50 : 4320ms   p99: 8356ms
+
+--- TOKEN TOTALS ---
+Identity  tokens_in=212079  tokens_out=2846  est_cost=$0.0566
+Baseline  tokens_in=217868  tokens_out=3052  est_cost=$0.0583
+
+--- SCORE SUMMARY (fill in manually) ---
+                  IDENTITY                       BASELINE
+T1 accuracy     : __/20                          __/20
+T2 accuracy     : __/20                          __/20
+T3 accuracy     : __/10                          __/10
+Overall         : __/50                          __/50
+Trap (A-U-05)   : PASS                           PASS
+U auto-scored   : 10/9 pass (excl. trap)                10/9 pass (excl. trap)
+Nodes stored    : 125                            134

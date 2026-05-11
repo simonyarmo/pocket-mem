@@ -8,6 +8,7 @@ _log = logging.getLogger(__name__)
 
 from pocket_mem.config import LLMConfig, MemoryConfig, StorageConfig
 from pocket_mem.compactor import compress, prune
+from pocket_mem.identities import resolve_identity
 from pocket_mem.ingestion import ingest
 from pocket_mem.llm.client import LLMClient
 from pocket_mem.retrieval import as_tool as _as_tool
@@ -36,6 +37,38 @@ class MemoryAgent:
         self._compaction_in_progress = False
         self._session_id = str(uuid.uuid4())
 
+        if self._config.identity is not None:
+            self._config.identity.derived = resolve_identity(
+                self._config.identity.description,
+                self._config.identity,
+                self._store,
+                self._llm,
+            )
+            self._seed_identity_topics()
+
+    def _seed_identity_topics(self) -> None:
+        """Write identity seed_topics as topic nodes if they don't already exist."""
+        from pocket_mem.models import Node, Topic
+        from pocket_mem.ingestion import _get_or_create_topic
+
+        identity = self._config.identity
+        if not identity or not identity.derived:
+            return
+
+        existing = {t.lower() for t in self._store.list_topics()}
+        now = datetime.utcnow().isoformat()
+
+        for label in identity.derived.get("seed_topics", []):
+            if label.lower() in existing:
+                continue
+            topic = Topic(id=str(uuid.uuid4()), label=label)
+            node = topic.to_node()
+            node.data["source"] = "identity_seed"
+            node.importance = 0.8
+            node.created_at = node.updated_at = now
+            self._store.write_node(node)
+            existing.add(label.lower())
+
     def observe(self, user_input: str, agent_response: str) -> None:
         """Queue a conversation turn for background ingestion. Never blocks."""
         def _done_final(future):
@@ -57,6 +90,8 @@ class MemoryAgent:
                         self._store,
                         self._llm,
                         self._session_id,
+                        self._config,
+                        self._config.identity,
                     )
                     retry.add_done_callback(_done_final)
                 except RuntimeError:
@@ -73,6 +108,8 @@ class MemoryAgent:
             self._store,
             self._llm,
             self._session_id,
+            self._config,
+            self._config.identity,
         )
         future.add_done_callback(_done)
 
@@ -160,5 +197,5 @@ class MemoryAgent:
 
 def _run_compaction(store, llm, config: MemoryConfig) -> None:
     """Top-level function for executor.submit() — runs compress then prune."""
-    compress(store, llm)
+    compress(store, llm, identity=config.identity)
     prune(store, config)

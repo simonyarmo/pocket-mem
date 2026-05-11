@@ -1,0 +1,22 @@
+{
+  "role": "Product Manager",
+  "domain": "product strategy and roadmap management",
+  "seed_topics": [
+    "Roadmap and Features",
+    "User Feedback and Research",
+    "Stakeholders and Sponsors",
+    "Metrics and KPIs",
+    "Competitors and Market",
+    "Sprint and Delivery",
+    "Design and UX",
+    "Launch and Go-to-Market"
+  ],
+  "priority_entity_types": ["person", "project", "concept", "company"],
+  "priority_relations": ["owns", "prioritizes", "blocks", "requested_by", "depends_on"],
+  "high_importance_signals": ["launch", "deadline", "metric", "revenue", "churn", "retention", "stakeholder", "blocker", "priority"],
+  "low_importance_signals": ["small talk", "general news", "tangential discussion"],
+  "extraction_focus": "Pay close attention to feature names, metrics with numbers, named stakeholders and their requests, launch dates, and prioritization decisions with rationale. Extract user pain points verbatim when mentioned.",
+  "compaction_preserve": "Feature names and descriptions, metric targets and actuals, stakeholder requests with names, launch dates, prioritization decisions and rationale, user verbatims.",
+  "compaction_compress": "General market commentary, repeated background context, meeting logistics already summarised.",
+  "question_complexity_target": "medium"
+}

@@ -1,0 +1,41 @@
+{
+  "role": "Personal AI Assistant",
+  "domain": "personal life management",
+  "seed_topics": [
+    "Schedule and Reminders",
+    "Contacts and People",
+    "Shopping List",
+    "Financial Tasks",
+    "Health and Appointments",
+    "Work and Meetings",
+    "Travel",
+    "Home and Household"
+  ],
+  "priority_entity_types": [
+    "person",
+    "date",
+    "location",
+    "task",
+    "concept"
+  ],
+  "priority_relations": [
+    "scheduled_for",
+    "assigned_to",
+    "due_on",
+    "located_at",
+    "reminded_about",
+    "sent_to",
+    "confirmed_for"
+  ],
+  "high_importance_signals": [
+    "reminder", "deadline", "appointment", "payment", "flight", "birthday",
+    "meeting", "due", "confirmation", "schedule", "lease", "doctor", "presentation"
+  ],
+  "low_importance_signals": [
+    "weather", "lights", "thermostat", "alarm", "routine query"
+  ],
+  "extraction_focus": "Extract all personal events, appointments, deadlines, reminders, financial transactions, people, shopping items, and tasks the user needs to remember. Prioritise time-sensitive commitments and upcoming deadlines.",
+  "compaction_preserve": "appointments, deadlines, reminders, financial figures, contact names, flight details, confirmation codes, shopping list items",
+  "compaction_compress": "routine device commands (lights, thermostat, weather queries) once captured in entity form",
+  "question_complexity_target": "medium"
+}
