@@ -20,6 +20,7 @@ It works with any agent, any LLM, and any Python project. There is no server to 
 - [Visualizing memory](#visualizing-memory)
 - [Sharing memory](#sharing-memory)
 - [Storage options](#storage-options)
+- [Identity](#identity)
 
 ---
 
@@ -439,6 +440,66 @@ agent = MemoryAgent(project="my-app", path="/home/user/shared-memory/")
 ```
 
 Cloud storage (shared multi-user memory graphs) is planned for v2.
+
+---
+
+## Identity
+
+An identity tells pocket-mem who the agent is and what it should care about. When set, it shapes how memories are prioritised and surfaced at retrieval time — high-signal entities get boosted, and the memory graph is pre-seeded with topic buckets that match the agent's domain.
+
+Identity is optional and backward-compatible. Agents without an identity work exactly as before.
+
+### Configuring identity
+
+```python
+from pocket_mem import MemoryAgent, MemoryConfig, IdentityConfig
+
+config = MemoryConfig(
+    identity=IdentityConfig(
+        description=(
+            "Paralegal at a litigation law firm. I read all case notes to track "
+            "clients, opposing parties, deadlines, damages, and filings so I can "
+            "brief attorneys on case status."
+        )
+    )
+)
+
+agent = MemoryAgent(project="my-case-files", config=config)
+```
+
+One sentence describing the agent's role and what it pays attention to is enough. The library derives seed topics, entity priorities, and importance signals automatically.
+
+### How identity works
+
+Identity shaping happens at **retrieval time**, not at extraction. Every observation is stored the same way regardless of identity. When `recall()` is called, the importance scorer gives more weight to entities and relationships that match the configured role — a paralegal's agent surfaces client names and deadlines more prominently than passing remarks.
+
+This design means you can add, change, or remove an identity at any time without re-ingesting your data.
+
+### Prebuilt identities
+
+For common roles, pocket-mem matches your description against a set of prebuilt configurations automatically — no API call needed:
+
+| Role | What it tracks |
+|------|----------------|
+| Paralegal | Clients, opposing parties, filings, deadlines, damages, settlements |
+| Executive Assistant | People, projects, decisions, costs, risks, technical initiatives |
+| Personal AI Assistant | Schedule, reminders, contacts, shopping lists, financial tasks |
+
+For roles not covered by a prebuilt, pass a `derivation_api_key` to derive a configuration via LLM:
+
+```python
+import os
+from pocket_mem import MemoryAgent, MemoryConfig, IdentityConfig
+
+config = MemoryConfig(
+    identity=IdentityConfig(
+        description="Customer support agent for a B2B SaaS product...",
+        derivation_api_key=os.environ["GEMINI_API_KEY"],
+    )
+)
+```
+
+Derived configurations are cached in the memory store so the LLM call only happens once per unique description.
 
 ---
 
