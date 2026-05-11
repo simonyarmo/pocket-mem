@@ -115,8 +115,12 @@ def check_qa_cache(query: str, store: StoreInterface) -> str | None:
 
     for node in cache_nodes:
         expires = node.data.get("expires_at")
-        if expires and datetime.fromisoformat(expires) < datetime.now(timezone.utc):
-            continue
+        if expires:
+            dt = datetime.fromisoformat(expires)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            if dt < datetime.now(timezone.utc):
+                continue
         if not node.data.get("verified"):
             continue
         if node.embedding is None:
